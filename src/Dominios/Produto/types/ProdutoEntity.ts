@@ -12,9 +12,14 @@ export const produtoEschema = z.object({
     grupo: z.object(ProdutoGrupoEntity).optional(),
     subgrupo: z.object(ProdutoSubGrupoEntity).optional(),
     produto_grupoId: z.string().optional(),
-    produto_sub_grupoId: z.string(),
+    produto_sub_grupoId: z.string().optional(),
 
 
+    sigla_unidade_primaria_id: z.string().optional(),
+    fator_conversao_primaria: z.string().optional(),
+    ha_segunda_unidade: z.string().optional(),
+    sigla_unidade_secundaria_id: z.string().optional(),
+    fator_conversao_secundaria: z.string().optional(),
 
     codigo_produto: z.string(),
 

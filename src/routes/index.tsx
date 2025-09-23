@@ -1,3 +1,5 @@
+// https://javascript.plainenglish.io/zustand-and-tanstack-query-the-dynamic-duo-that-simplified-my-react-state-management-e71b924efb90
+
 import { createFileRoute } from '@tanstack/react-router'
 
 import {
@@ -16,7 +18,9 @@ import { ProdutoUniMedSiglaForm } from '@/Dominios/Produto/forms/ProdutoUniMedSi
 import { zdb_SheetCadForm } from '@/infra/servicos/zustand/zdb_SheetCadForm'
 import { useEffect, useState } from 'react'
 
-
+import { graphql } from '@/infra/graphql/'
+import { execute } from '@/infra/graphql/execute'
+import { useQuery } from '@tanstack/react-query'
 
 
 export const Route = createFileRoute('/')({
@@ -30,7 +34,30 @@ function App() {
 
   const [abreSheetForm, setAbreSheetForm] = useState(false)
 
+  const todasPessoasQ = graphql(`
+      query todasPessoas {
+      pessoas {
+          _id
+          nome_fantasia
+        }
+      } 
+      `)
+
+
+  const i = async () => {
+    const { data } = useQuery({
+      queryKey: ['pessoas'],
+      queryFn: () => execute(todasPessoasQ)
+    })
+    console.log('todasPessoasQ >>', data)
+
+  }
+  i()
+
   useEffect(() => {
+
+
+
 
     console.log('formulario, aberto >>', formulario)
 

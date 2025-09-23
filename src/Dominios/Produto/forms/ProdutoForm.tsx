@@ -17,6 +17,9 @@ import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFo
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
 import { CampoLinhaForm } from '@/Dominios/comuns/components/forms/CampoLinhaForm';
 import { TopoForm } from '@/Dominios/comuns/components/forms/topoForm';
+import { fakerPT_BR as faker, simpleFaker } from '@faker-js/faker';
+
+
 
 
 type produtoFormProps = z.infer<typeof produtoEschema>;
@@ -39,36 +42,80 @@ export function ProdutoForm(props: Tprops) {
     const _form = useForm<produtoFormProps>({
         resolver: zodResolver(produtoEschema),
         defaultValues: {
-            codigo_produto: '',
-            codigo_ncm: '',
+            codigo_produto: simpleFaker.string.alphanumeric({ length: 10 }).toUpperCase(),
+            codigo_ncm: simpleFaker.string.alphanumeric({ length: 10 }).toUpperCase(),
 
-            licenca_anvisa_num: '',
-            codigo_rms: '',
-
-            data_validade_licenca_anvisa: undefined,
-            situacao: '',
-
-            descricao: '',
-            referencia: '',
-            descricao_tecnica: '',
+            sigla_unidade_primaria_id: faker.number.romanNumeral().toString(),
+            fator_conversao_primaria: faker.number.romanNumeral().toString(),
+            ha_segunda_unidade: faker.number.romanNumeral().toString(),
+            sigla_unidade_secundaria_id: faker.number.romanNumeral().toString(),
+            fator_conversao_secundaria: faker.number.romanNumeral().toString(),
 
 
-            grupo_produto_id: '',
-            sub_grupo_produto_id: '',
-            marca_produto_id: '',
-            tipo_produto: '',
+            licenca_anvisa_num: faker.number.romanNumeral().toString(),
+            codigo_rms: faker.number.romanNumeral().toString(),
 
-            temp_max_conservacao: '',
-            temp_min_conservacao: '',
+            data_validade_licenca_anvisa: faker.date.anytime(),
+            situacao: faker.number.romanNumeral().toString(),
+
+            descricao: faker.number.romanNumeral().toString(),
+            referencia: faker.number.romanNumeral().toString(),
+            descricao_tecnica: faker.number.romanNumeral().toString(),
+
+
+            grupo_produto_id: faker.number.romanNumeral().toString(),
+            sub_grupo_produto_id: faker.number.romanNumeral().toString(),
+            marca_produto_id: '12345abcde',
+            tipo_produto: faker.number.romanNumeral().toString(),
+
+            temp_max_conservacao: faker.number.romanNumeral().toString(),
+            temp_min_conservacao: faker.number.romanNumeral().toString(),
 
             peso_bruto: '9999999999',
             peso_liquido: '999999999',
 
 
-            imagem: '',
-            observacoes: '',
+            imagem: faker.number.romanNumeral().toString(),
+            observacoes: faker.number.romanNumeral().toString(),
         }
     });
+    // defaultValuesCopy: {
+    //     codigo_produto: faker.number.romanNumeral().toString(),
+    //         codigo_ncm: '',
+
+    //         sigla_unidade_primaria_id: '',
+    //             fator_conversao_primaria: '',
+    //                 ha_segunda_unidade: '',
+    //                     sigla_unidade_secundaria_id: '',
+    //                         fator_conversao_secundaria: '',
+
+
+    //         licenca_anvisa_num: '',
+    //             codigo_rms: '',
+
+    //         data_validade_licenca_anvisa: undefined,
+    //             situacao: '',
+
+    //         descricao: '',
+    //             referencia: '',
+    //                 descricao_tecnica: '',
+
+
+    //         grupo_produto_id: '',
+    //             sub_grupo_produto_id: '',
+    //                 marca_produto_id: '',
+    //                     tipo_produto: '',
+
+    //         temp_max_conservacao: '',
+    //             temp_min_conservacao: '',
+
+    //         peso_bruto: '9999999999',
+    //             peso_liquido: '999999999',
+
+
+    //         imagem: '',
+    //             observacoes: '',
+    // }
 
 
     const _onCancelar = (v: Tcf) => {
@@ -123,6 +170,53 @@ export function ProdutoForm(props: Tprops) {
 
                             </CampoLinhaForm>
 
+
+                            <CampoLinhaForm>
+                                <div>
+                                    <SSelect
+                                        form={_form}
+                                        label="Sigla unidade de med."
+                                        name="sigla_unidade_primaria_id"
+                                        options={[
+                                            { value: '12345abcde', label: 'ATIVO' },
+                                            { value: '12345PIOPU', label: 'DESATIVADO' },
+                                            { value: 'JKHSDGF435', label: 'EXCLUÍDO' },
+                                        ]}
+                                    />
+                                </div>
+                                <div>
+                                    <SSelect
+                                        form={_form}
+                                        label="Sigla unidade de med."
+                                        name="sigla_unidade_secundaria_id"
+                                        options={[
+                                            { value: '12345abcde', label: 'ATIVO' },
+                                            { value: '12345PIOPU', label: 'DESATIVADO' },
+                                            { value: 'JKHSDGF435', label: 'EXCLUÍDO' },
+                                        ]}
+                                    />
+                                </div>
+                            </CampoLinhaForm>
+
+                            <CampoLinhaForm>
+
+                                <div>
+                                    <InputTexto
+                                        form={_form}
+                                        label="fator conversao primaria"
+                                        name="fator_conversao_primaria"
+                                    />
+                                </div>
+                                <div>
+                                    <InputTexto
+                                        form={_form}
+                                        label="fator conversao secundaria"
+                                        name="fator_conversao_secundaria"
+                                    />
+                                </div>
+
+
+                            </CampoLinhaForm>
 
                             <CampoLinhaForm>
                                 <div>

@@ -8,6 +8,9 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // optimizeDeps: {
+  //   exclude: ['@graphql-typed-document-node/core'],
+  // },
   //plugins: [TanStackRouterVite({ autoCodeSplitting: true }), viteReact()],
   plugins: [
     // Please make sure that '@tanstack/router-plugin' is passed before '@vitejs/plugin-react'
@@ -28,4 +31,13 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/graphql': {
+        target: 'http://localhost:65300/graphql/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/graphql/, ''),
+      },
+    }
+  }
 })

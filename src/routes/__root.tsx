@@ -7,11 +7,13 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
 
 import { ModeToggle } from '@/infra/tema/mode-toggle'
+import { TanStackQueryProvider } from '@/providers/TanStackQueryProvider'
 
 
 export const Route = createRootRoute({
   component: () => (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <TanStackQueryProvider>
+      <ThemeProvider defaultTheme="system" storageKey="da-ui-theme">
       <SidebarProvider>
         <AppSidebar />
         <main className='w-screen h-screen'>
@@ -35,5 +37,6 @@ export const Route = createRootRoute({
         </main>
       </SidebarProvider>
     </ThemeProvider>
+    </TanStackQueryProvider>
   ),
 })
