@@ -1,0 +1,9 @@
+mutation _InseriNovoGrupoDeProduto {
+  inseriNovoGrupoDeProduto(
+    insProdutoGrupoDto: { descricao: "teste", titulo: "TESTE TIT" }
+  ) {
+    _id
+    _criado_em
+
+  }
+}

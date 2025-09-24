@@ -1,17 +1,25 @@
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/infra/sideBar/sidebar'
 import { ThemeProvider } from '@/infra/tema/theme-provider'
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client"
+import { ApolloProvider } from "@apollo/client/react"
 import { TanstackDevtools } from '@tanstack/react-devtools'
 import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-
 
 import { ModeToggle } from '@/infra/tema/mode-toggle'
 import { TanStackQueryProvider } from '@/providers/TanStackQueryProvider'
 
 
+
+const client = new ApolloClient({
+  link: new HttpLink({ uri: "graphql" }),
+  cache: new InMemoryCache(),
+});
+
 export const Route = createRootRoute({
   component: () => (
+    <ApolloProvider client={client}>
     <TanStackQueryProvider>
       <ThemeProvider defaultTheme="system" storageKey="da-ui-theme">
       <SidebarProvider>
@@ -38,5 +46,6 @@ export const Route = createRootRoute({
       </SidebarProvider>
     </ThemeProvider>
     </TanStackQueryProvider>
+    </ApolloProvider>
   ),
 })

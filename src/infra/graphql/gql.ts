@@ -15,16 +15,22 @@ import * as types from './graphql';
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n      query todasPessoas {\n      pessoas {\n          _id\n          nome_fantasia\n        }\n      } \n      ": typeof types.TodasPessoasDocument,
+    "query Pessoas {\n  pessoas {\n    _id\n    _criado_em\n    _criado_por_id\n    _atualizado_em\n    _atualizado_por_id\n    _excluido_em\n    _excluido_por_id\n    filial\n    razao_social\n    nome_fantasia\n    cnpj_cpf\n    inscricao_estadual\n    pessoa_juridica\n    tipo_natureza_juridica_id\n    cnae\n  }\n} \n": typeof types.PessoasDocument,
+    "\n  query Pessoas {\n  pessoas {\n    _id\n    _criado_em\n    _criado_por_id\n    _atualizado_em\n    _atualizado_por_id\n    _excluido_em\n    _excluido_por_id\n    filial\n    razao_social\n    nome_fantasia\n    cnpj_cpf\n    inscricao_estadual\n    pessoa_juridica\n    tipo_natureza_juridica_id\n    cnae\n  }\n}\n": typeof types.PessoasDocument,
 };
 const documents: Documents = {
-    "\n      query todasPessoas {\n      pessoas {\n          _id\n          nome_fantasia\n        }\n      } \n      ": types.TodasPessoasDocument,
+    "query Pessoas {\n  pessoas {\n    _id\n    _criado_em\n    _criado_por_id\n    _atualizado_em\n    _atualizado_por_id\n    _excluido_em\n    _excluido_por_id\n    filial\n    razao_social\n    nome_fantasia\n    cnpj_cpf\n    inscricao_estadual\n    pessoa_juridica\n    tipo_natureza_juridica_id\n    cnae\n  }\n} \n": types.PessoasDocument,
+    "\n  query Pessoas {\n  pessoas {\n    _id\n    _criado_em\n    _criado_por_id\n    _atualizado_em\n    _atualizado_por_id\n    _excluido_em\n    _excluido_por_id\n    filial\n    razao_social\n    nome_fantasia\n    cnpj_cpf\n    inscricao_estadual\n    pessoa_juridica\n    tipo_natureza_juridica_id\n    cnae\n  }\n}\n": types.PessoasDocument,
 };
 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n      query todasPessoas {\n      pessoas {\n          _id\n          nome_fantasia\n        }\n      } \n      "): typeof import('./graphql').TodasPessoasDocument;
+export function graphql(source: "query Pessoas {\n  pessoas {\n    _id\n    _criado_em\n    _criado_por_id\n    _atualizado_em\n    _atualizado_por_id\n    _excluido_em\n    _excluido_por_id\n    filial\n    razao_social\n    nome_fantasia\n    cnpj_cpf\n    inscricao_estadual\n    pessoa_juridica\n    tipo_natureza_juridica_id\n    cnae\n  }\n} \n"): typeof import('./graphql').PessoasDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Pessoas {\n  pessoas {\n    _id\n    _criado_em\n    _criado_por_id\n    _atualizado_em\n    _atualizado_por_id\n    _excluido_em\n    _excluido_por_id\n    filial\n    razao_social\n    nome_fantasia\n    cnpj_cpf\n    inscricao_estadual\n    pessoa_juridica\n    tipo_natureza_juridica_id\n    cnae\n  }\n}\n"): typeof import('./graphql').PessoasDocument;
 
 
 export function graphql(source: string) {

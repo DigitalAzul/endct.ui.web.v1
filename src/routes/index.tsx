@@ -18,9 +18,9 @@ import { ProdutoUniMedSiglaForm } from '@/Dominios/Produto/forms/ProdutoUniMedSi
 import { zdb_SheetCadForm } from '@/infra/servicos/zustand/zdb_SheetCadForm'
 import { useEffect, useState } from 'react'
 
-import { graphql } from '@/infra/graphql/'
-import { execute } from '@/infra/graphql/execute'
-import { useQuery } from '@tanstack/react-query'
+import { gql } from "@apollo/client"
+
+import { useQuery } from "@apollo/client/react"
 
 
 export const Route = createFileRoute('/')({
@@ -32,34 +32,44 @@ function App() {
   const { formulario, fecharFormulario, canalCadForms } = zdb_SheetCadForm()
 
 
-  const [abreSheetForm, setAbreSheetForm] = useState(false)
+  const [abreSheetForm, setAbreSheetForm] = useState(false);
 
-  const todasPessoasQ = graphql(`
-      query todasPessoas {
-      pessoas {
-          _id
-          nome_fantasia
-        }
-      } 
-      `)
-
-
-  const i = async () => {
-    const { data } = useQuery({
-      queryKey: ['pessoas'],
-      queryFn: () => execute(todasPessoasQ)
-    })
-    console.log('todasPessoasQ >>', data)
-
+  // const C = gql(`
+  //   query Pessoas {
+  //   pessoas {
+  //   _atualizado_em
+  //   }
+  //   }
+  //   `)
+  const OBTER_GRUPO_PRODUTOS = gql(`
+  query Pessoas {
+  pessoas {
+    _id
+    _criado_em
+    _criado_por_id
+    _atualizado_em
+    _atualizado_por_id
+    _excluido_em
+    _excluido_por_id
+    filial
+    razao_social
+    nome_fantasia
+    cnpj_cpf
+    inscricao_estadual
+    pessoa_juridica
+    tipo_natureza_juridica_id
+    cnae
   }
-  i()
+}
+`);
+
+  const { loading, error, data } = useQuery(OBTER_GRUPO_PRODUTOS);
+
+
+  console.log('formulario, aberto >>', loading, error, data)
+
 
   useEffect(() => {
-
-
-
-
-    console.log('formulario, aberto >>', formulario)
 
     if (formulario.aberto == true) {
       setAbreSheetForm(true)

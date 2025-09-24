@@ -1,7 +1,5 @@
-/* eslint-disable */
-import type { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
-export type InputMaybe<T> = T | null | undefined;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -14,7 +12,6 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
   DateTime: { input: any; output: any; }
 };
 
@@ -284,49 +281,3 @@ export type UsuarioDto = {
   role: Scalars['String']['output'];
   snome: Scalars['String']['output'];
 };
-
-export type PessoasQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type PessoasQuery = { __typename?: 'Query', pessoas: Array<{ __typename?: 'PessoaDto', _id?: string | null, _criado_em: any, _criado_por_id: string, _atualizado_em?: any | null, _atualizado_por_id?: string | null, _excluido_em?: any | null, _excluido_por_id?: string | null, filial: boolean, razao_social: string, nome_fantasia: string, cnpj_cpf: string, inscricao_estadual: string, pessoa_juridica: boolean, tipo_natureza_juridica_id: string, cnae: string }> };
-
-export class TypedDocumentString<TResult, TVariables>
-  extends String
-  implements DocumentTypeDecoration<TResult, TVariables>
-{
-  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
-  private value: string;
-  public __meta__?: Record<string, any> | undefined;
-
-  constructor(value: string, __meta__?: Record<string, any> | undefined) {
-    super(value);
-    this.value = value;
-    this.__meta__ = __meta__;
-  }
-
-  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
-    return this.value;
-  }
-}
-
-export const PessoasDocument = new TypedDocumentString(`
-    query Pessoas {
-  pessoas {
-    _id
-    _criado_em
-    _criado_por_id
-    _atualizado_em
-    _atualizado_por_id
-    _excluido_em
-    _excluido_por_id
-    filial
-    razao_social
-    nome_fantasia
-    cnpj_cpf
-    inscricao_estadual
-    pessoa_juridica
-    tipo_natureza_juridica_id
-    cnae
-  }
-}
-    `) as unknown as TypedDocumentString<PessoasQuery, PessoasQueryVariables>;

@@ -1,4 +1,6 @@
 
+//import { graphql } from '@/infra/graphql/';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from 'zod';
@@ -11,9 +13,11 @@ import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
 import { TopoForm } from '@/Dominios/comuns/components/forms/topoForm';
-import { useState } from 'react';
 import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
 
+
+import { gql } from "@apollo/client";
+import { useMutation } from '@apollo/client/react';
 
 type FormProps = z.infer<typeof ProdutoGrupoEntity>;
 type Tprops = {
@@ -23,10 +27,27 @@ type Tprops = {
 
 }
 
+export type InsProdutoGrupoEntradaDto = {
+    descricao: string,
+    titulo: string,
+}
+
+const CAD_GRUPO_PRODUTOS = gql(` mutation InseriNovoGrupoDeProduto($insProdutoGrupoDto: InsProdutoGrupoEntradaDto!) {
+  inseriNovoGrupoDeProduto(insProdutoGrupoDto: $insProdutoGrupoDto) {
+    _id
+  }
+} 
+`)
+
+
 
 export function ProdutoGrupoForm(props: Tprops) {
 
-    const [loading, setLoading] = useState(false)
+
+
+    const [cadPro, { data, loading, error }] = useMutation(CAD_GRUPO_PRODUTOS);
+
+    console.log(data, loading, error)
 
 
 
@@ -42,6 +63,7 @@ export function ProdutoGrupoForm(props: Tprops) {
     });
 
 
+
     const _onCancelar = (v: Tcf) => {
         console.log(v)
     }
@@ -49,7 +71,23 @@ export function ProdutoGrupoForm(props: Tprops) {
         console.log('resetou')
         _form.reset()
     }
-    const _onSubmit: SubmitHandler<FormProps> = (data: FormProps) => console.log(data)
+
+
+
+
+
+
+
+
+
+
+
+
+    const _onSubmit: SubmitHandler<InsProdutoGrupoEntradaDto> = async (dataForm: InsProdutoGrupoEntradaDto) => {
+        console.log(dataForm)
+
+        cadPro({ variables: { insProdutoGrupoDto: { ...dataForm } } })
+    }
 
 
     return (

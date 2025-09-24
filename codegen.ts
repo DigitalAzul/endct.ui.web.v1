@@ -1,24 +1,27 @@
-import type { CodegenConfig } from '@graphql-codegen/cli'
+import type { CodegenConfig } from "@graphql-codegen/cli";
+
 
 const config: CodegenConfig = {
-    schema: 'http://localhost:65300/graphql',
-    documents: ['src/**/*.tsx'],
-    ignoreNoDocuments: true,
+    schema: "http://localhost:65300/graphql",
+    documents: ["src/**/*.tsx"],
     generates: {
-        './src/infra/graphql/': {
-            preset: 'client',
+        "./src/infra/graphql/": {
+            overwrite: true,
+            preset: "client",
             config: {
-                documentMode: 'string',
-                useTypeImports: true
+                useTypeImports: true,
+                documentMode: 'string'
+            },
+        },
+        "./src/infra/graphql/types.ts": {
+            plugins: ["typescript"],
+            config: {
+                useIndexSignature: true
             }
         },
-        './src/infra/graphql/schema.graphql': {
-            plugins: ['schema-ast'],
-            config: {
-                includeDirectives: true,
-            }
-        }
-    }
-}
+    },
+    ignoreNoDocuments: true,
+};
 
-export default config
+
+export default config;
