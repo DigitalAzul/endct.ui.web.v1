@@ -7,9 +7,9 @@ export const ProdutoGrupoEntity = z.object({
 
 
 
-    titulo: z.string(),
+    titulo: z.string().min(1),
 
 
 
-    descricao: z.string(),
+    descricao: z.string().min(1)
 })

@@ -18,8 +18,8 @@ import { ProdutoUniMedSiglaForm } from '@/Dominios/Produto/forms/ProdutoUniMedSi
 import { zdb_SheetCadForm } from '@/infra/servicos/zustand/zdb_SheetCadForm'
 import { useEffect, useState } from 'react'
 
-import { gql } from "@apollo/client"
 
+import { OBTER_GRUPO_PRODUTOS } from '@/infra/graphql/query/obt_grupo_prod'
 import { useQuery } from "@apollo/client/react"
 
 
@@ -34,41 +34,18 @@ function App() {
 
   const [abreSheetForm, setAbreSheetForm] = useState(false);
 
-  // const C = gql(`
-  //   query Pessoas {
-  //   pessoas {
-  //   _atualizado_em
-  //   }
-  //   }
-  //   `)
-  const OBTER_GRUPO_PRODUTOS = gql(`
-  query Pessoas {
-  pessoas {
-    _id
-    _criado_em
-    _criado_por_id
-    _atualizado_em
-    _atualizado_por_id
-    _excluido_em
-    _excluido_por_id
-    filial
-    razao_social
-    nome_fantasia
-    cnpj_cpf
-    inscricao_estadual
-    pessoa_juridica
-    tipo_natureza_juridica_id
-    cnae
-  }
-}
-`);
 
   const { loading, error, data } = useQuery(OBTER_GRUPO_PRODUTOS);
-
-
   console.log('formulario, aberto >>', loading, error, data)
 
 
+
+  const _callBackFunction = (c: Tcf) => {
+    if (c.exe == 'DISMISS') {
+      fecharFormulario('')
+      setAbreSheetForm(false)
+    }
+  }
   useEffect(() => {
 
     if (formulario.aberto == true) {
@@ -84,34 +61,22 @@ function App() {
     const i = () => {
       switch (formulario.form) {
         case 'CAD_PRODUTO':
-          return <ProdutoForm callBackFunction={function ({ }: Tcf) {
-            throw new Error('Function not implemented.')
-          }} />
+          return <ProdutoForm callBackFunction={(c) => _callBackFunction(c)} />
           break;
         case 'CAD_PROD_GRUPO':
-          return <ProdutoGrupoForm callBackFunction={function ({ }: Tcf) {
-            throw new Error('Function not implemented.')
-          }} />
+          return <ProdutoGrupoForm callBackFunction={(c) => _callBackFunction(c)} />
           break;
         case 'CAD_PROD_SUB_GRUPO':
-          return <ProdutoGrupoForm callBackFunction={function ({ }: Tcf) {
-            throw new Error('Function not implemented.')
-          }} />
+          return <ProdutoGrupoForm callBackFunction={(c) => _callBackFunction(c)} />
           break;
         case 'CAD_PROD_MARCA':
-          return <ProdutoMarcaForm callBackFunction={function ({ }: Tcf) {
-            throw new Error('Function not implemented.')
-          }} />
+          return <ProdutoMarcaForm callBackFunction={(c) => _callBackFunction(c)} />
           break;
         case 'CAD_PROD_UNI_MED':
-          return <ProdutoUniMedidaForm callBackFunction={function ({ }: Tcf) {
-            throw new Error('Function not implemented.')
-          }} />
+          return <ProdutoUniMedidaForm callBackFunction={(c) => _callBackFunction(c)} />
           break;
         case 'CAD_PROD_UNI_MED_SIGLA':
-          return <ProdutoUniMedSiglaForm callBackFunction={function ({ }: Tcf) {
-            throw new Error('Function not implemented.')
-          }} />
+          return <ProdutoUniMedSiglaForm callBackFunction={(c) => _callBackFunction(c)} />
           break;
 
         default:

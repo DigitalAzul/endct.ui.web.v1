@@ -11,13 +11,15 @@ import InputTextarea from '@/components/da/Inputs/Textarea';
 import InputTexto from '@/components/da/Inputs/Texto';
 import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useState } from 'react';
 import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
 
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
 import { CampoLinhaForm } from '@/Dominios/comuns/components/forms/CampoLinhaForm';
 import { TopoForm } from '@/Dominios/comuns/components/forms/topoForm';
+import { CAD_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_cad_produto';
+import { useMutation } from '@apollo/client/react';
 import { fakerPT_BR as faker, simpleFaker } from '@faker-js/faker';
+
 
 
 
@@ -32,9 +34,6 @@ type Tprops = {
 
 
 export function ProdutoForm(props: Tprops) {
-
-    const [loading, setLoading] = useState(false)
-
 
 
     const { formState: { errors } } = useForm<produtoFormProps>()
@@ -125,7 +124,24 @@ export function ProdutoForm(props: Tprops) {
         console.log('resetou')
         _form.reset()
     }
-    const _onSubmit: SubmitHandler<produtoFormProps> = (data: produtoFormProps) => console.log(data)
+
+    const [cadPro, { data, loading, error }] = useMutation(CAD_PRODUTOS, {
+        onCompleted(data, clientOptions) {
+            if (!error) {
+                console.log(data, clientOptions)
+                props.callBackFunction({ exe: 'DISMISS', data: [] })
+            }
+        },
+    });
+
+    console.log(data, loading, error)
+
+    const _onSubmit: SubmitHandler<produtoFormProps> = (dataForm: produtoFormProps) => {
+
+        cadPro({ variables: { insProdutoEntraDto: { ...dataForm } } })
+
+
+    }
 
 
     return (
