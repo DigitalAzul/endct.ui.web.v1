@@ -13,6 +13,11 @@ import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
 
+import SSelectGruposProduto from '@/components/da/Inputs/SSelectGruposProduto ';
+import SSelectMarcaProduto from '@/components/da/Inputs/SSelectMarcaProduto';
+import SSelectSigla from '@/components/da/Inputs/SSelectSiglaProduto';
+import SSelectSubGruposProduto from '@/components/da/Inputs/SSelectSubGruposProduto';
+import InputSwitch from '@/components/da/Inputs/Switch';
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
 import { CampoLinhaForm } from '@/Dominios/comuns/components/forms/CampoLinhaForm';
 import { TopoForm } from '@/Dominios/comuns/components/forms/topoForm';
@@ -44,11 +49,11 @@ export function ProdutoForm(props: Tprops) {
             codigo_produto: simpleFaker.string.alphanumeric({ length: 10 }).toUpperCase(),
             codigo_ncm: simpleFaker.string.alphanumeric({ length: 10 }).toUpperCase(),
 
-            sigla_unidade_primaria_id: faker.number.romanNumeral().toString(),
-            fator_conversao_primaria: faker.number.romanNumeral().toString(),
-            ha_segunda_unidade: faker.number.romanNumeral().toString(),
-            sigla_unidade_secundaria_id: faker.number.romanNumeral().toString(),
-            fator_conversao_secundaria: faker.number.romanNumeral().toString(),
+            sigla_unidade_primaria_id: '01K60RQPYY3A5SBM6M94PJEM6B',//faker.number.romanNumeral().toString(),//
+            fator_conversao_primaria: faker.number.romanNumeral().toString(), //
+            ha_segunda_unidade: faker.number.romanNumeral().toString(),//
+            sigla_unidade_secundaria_id: '01K60RQPYY3A5SBM6M94PJEM6B',//faker.number.romanNumeral().toString(),//
+            fator_conversao_secundaria: faker.number.romanNumeral().toString(),//
 
 
             licenca_anvisa_num: faker.number.romanNumeral().toString(),
@@ -78,43 +83,6 @@ export function ProdutoForm(props: Tprops) {
             observacoes: faker.number.romanNumeral().toString(),
         }
     });
-    // defaultValuesCopy: {
-    //     codigo_produto: faker.number.romanNumeral().toString(),
-    //         codigo_ncm: '',
-
-    //         sigla_unidade_primaria_id: '',
-    //             fator_conversao_primaria: '',
-    //                 ha_segunda_unidade: '',
-    //                     sigla_unidade_secundaria_id: '',
-    //                         fator_conversao_secundaria: '',
-
-
-    //         licenca_anvisa_num: '',
-    //             codigo_rms: '',
-
-    //         data_validade_licenca_anvisa: undefined,
-    //             situacao: '',
-
-    //         descricao: '',
-    //             referencia: '',
-    //                 descricao_tecnica: '',
-
-
-    //         grupo_produto_id: '',
-    //             sub_grupo_produto_id: '',
-    //                 marca_produto_id: '',
-    //                     tipo_produto: '',
-
-    //         temp_max_conservacao: '',
-    //             temp_min_conservacao: '',
-
-    //         peso_bruto: '9999999999',
-    //             peso_liquido: '999999999',
-
-
-    //         imagem: '',
-    //             observacoes: '',
-    // }
 
 
     const _onCancelar = (v: Tcf) => {
@@ -134,7 +102,6 @@ export function ProdutoForm(props: Tprops) {
         },
     });
 
-    console.log(data, loading, error)
 
     const _onSubmit: SubmitHandler<produtoFormProps> = (dataForm: produtoFormProps) => {
 
@@ -189,18 +156,20 @@ export function ProdutoForm(props: Tprops) {
 
                             <CampoLinhaForm>
                                 <div>
-                                    <SSelect
+                                    <SSelectSigla
                                         form={_form}
-                                        label="Sigla unidade de med."
+                                        label="unidade de med. primaria"
                                         name="sigla_unidade_primaria_id"
-                                        options={[
-                                            { value: '12345abcde', label: 'ATIVO' },
-                                            { value: '12345PIOPU', label: 'DESATIVADO' },
-                                            { value: 'JKHSDGF435', label: 'EXCLUÍDO' },
-                                        ]}
                                     />
                                 </div>
                                 <div>
+                                    <InputSwitch
+                                        form={_form}
+                                        label="há segunda unidade?"
+                                        name="ha_segunda_unidade"
+                                    />
+                                </div>
+                                {/* <div>
                                     <SSelect
                                         form={_form}
                                         label="Sigla unidade de med."
@@ -210,6 +179,13 @@ export function ProdutoForm(props: Tprops) {
                                             { value: '12345PIOPU', label: 'DESATIVADO' },
                                             { value: 'JKHSDGF435', label: 'EXCLUÍDO' },
                                         ]}
+                                    />
+                                </div> */}
+                                <div>
+                                    <SSelectSigla
+                                        form={_form}
+                                        label="unidade de med. secundaria"
+                                        name="sigla_unidade_secundaria_id"
                                     />
                                 </div>
                             </CampoLinhaForm>
@@ -314,19 +290,30 @@ export function ProdutoForm(props: Tprops) {
                             <CampoLinhaForm>
 
                                 <div>
-                                    <SSelect
+                                    <SSelectGruposProduto
                                         form={_form}
                                         label="Grupo do produto"
+                                        name="grupo_produto_id"
+                                    />
+                                    {/* <SSelect
+                                        form={_form}
+                                        label="Grupo do produto xxxx"
                                         name="grupo_produto_id"
                                         options={[
                                             { value: '12345abcde', label: 'JURIDICA' },
                                             { value: '12345PIOPU', label: 'FISICA' },
                                             { value: 'JKHSDGF435', label: 'PÚBLICA' },
                                         ]}
-                                    />
+                                    /> */}
                                 </div>
                                 <div>
-                                    <SSelect
+                                    <SSelectSubGruposProduto
+                                        form={_form}
+                                        label="Sub Grupo do produto"
+                                        name="sub_grupo_produto_id"
+                                    />
+
+                                    {/* <SSelect
                                         form={_form}
                                         label="Sub Grupo do produto"
                                         name="sub_grupo_produto_id"
@@ -335,7 +322,7 @@ export function ProdutoForm(props: Tprops) {
                                             { value: '12345PIOPU', label: 'FISICA' },
                                             { value: 'JKHSDGF435', label: 'PÚBLICA' },
                                         ]}
-                                    />
+                                    /> */}
                                 </div>
 
                             </CampoLinhaForm>
@@ -343,15 +330,10 @@ export function ProdutoForm(props: Tprops) {
                             <CampoLinhaForm>
 
                                 <div>
-                                    <SSelect
+                                    <SSelectMarcaProduto
                                         form={_form}
                                         label="marca do produto"
                                         name="marca_produto_id"
-                                        options={[
-                                            { value: '12345abcde', label: 'JURIDICA' },
-                                            { value: '12345PIOPU', label: 'FISICA' },
-                                            { value: 'JKHSDGF435', label: 'PÚBLICA' },
-                                        ]}
                                     />
                                 </div>
 
@@ -418,7 +400,6 @@ export function ProdutoForm(props: Tprops) {
 
 
                             <CampoLinhaForm>
-                                {/* FALTA FAZER UP LOAD */}
                                 <div className='w-full'>
                                     <InputTextarea
                                         form={_form}
@@ -428,6 +409,7 @@ export function ProdutoForm(props: Tprops) {
                                     />
                                 </div>
 
+                                {/* FALTA FAZER UP LOAD */}
                                 <div className='h-[100px] w-full'>
                                     <InputTexto
                                         form={_form}

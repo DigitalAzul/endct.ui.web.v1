@@ -19,8 +19,6 @@ import { zdb_SheetCadForm } from '@/infra/servicos/zustand/zdb_SheetCadForm'
 import { useEffect, useState } from 'react'
 
 
-import { OBTER_GRUPO_PRODUTOS } from '@/infra/graphql/query/obt_grupo_prod'
-import { useQuery } from "@apollo/client/react"
 
 
 export const Route = createFileRoute('/')({
@@ -35,8 +33,7 @@ function App() {
   const [abreSheetForm, setAbreSheetForm] = useState(false);
 
 
-  const { loading, error, data } = useQuery(OBTER_GRUPO_PRODUTOS);
-  console.log('formulario, aberto >>', loading, error, data)
+  //const { loading, error, data } = useQuery(OBTER_GRUPO_PRODUTOS);
 
 
 

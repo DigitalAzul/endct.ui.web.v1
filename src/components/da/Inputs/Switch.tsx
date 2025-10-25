@@ -32,6 +32,7 @@ export default function InputSwitch(props: TextInputProps) {
 
     function handleChange(realChangeFn: Function, formattedValue: boolean) {
 
+        console.log(formattedValue)
         setValue(formattedValue)
         realChangeFn(formattedValue);
 
@@ -47,15 +48,18 @@ export default function InputSwitch(props: TextInputProps) {
                 return (
                     <FormItem>
                         <FormLabel className="uppercase">{props.label}</FormLabel>
-                        <FormControl>
-                            <Switch
-                                checked={field.value}
-                                onCheckedChange={(ev) => {
-                                    handleChange(_change, ev);
-                                }}
-                                value={value}
-                            />
-                        </FormControl>
+                        <div className="flex items-center gap-3 border p-1 px-2 rounded-3xl w-[130px]">
+                            <FormControl>
+                                <Switch
+                                    checked={field.value}
+                                    onCheckedChange={(ev) => {
+                                        handleChange(_change, ev);
+                                    }}
+                                    value={value}
+                                />
+                            </FormControl>
+                            <span>{value ? 'SIM' : 'NÃO'}</span>
+                        </div>
                         <FormMessage />
                     </FormItem>
                 );
