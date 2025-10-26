@@ -1,6 +1,6 @@
 
-import type { ProdutoUniMedSiglaEntity } from "@/Dominios/Produto/types/ProdutoUniMedSiglaEntity";
-import { OBTER_SIGLA_UNIDADE_MEDIDA } from "@/infra/graphql/query/query_SiglaUnidadeMedida";
+import type { ProdutoSituacaoEntity } from "@/Dominios/Produto/types/ProdutoSituacaoEntity";
+import { OBTER_SITUACAO_PRODUTO } from "@/infra/graphql/query/query_Produto_Situacao";
 import { useLazyQuery } from "@apollo/client/react";
 import { RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -21,27 +21,27 @@ type TextInputProps = {
     options?: TOptions[];
     requerido?: boolean
 };
-type Topcoes = {
+type TOpcoes = {
     value: string,
     label: string
 }
-type produtoUniMedSiglaEntity = z.infer<typeof ProdutoUniMedSiglaEntity>;
+type produtoSituacaoEntity = z.infer<typeof ProdutoSituacaoEntity>;
 
 
-export default function SSelectSigla(props: TextInputProps) {
+export default function SSelectSituacaoProduto(props: TextInputProps) {
 
-    const opcoes: Topcoes[] = []
-    const [obtSigla, { loading, error, data }] = useLazyQuery<{ ListarTodasSiglasUnidadeMedidaDeProduto: produtoUniMedSiglaEntity[] }>(OBTER_SIGLA_UNIDADE_MEDIDA);
+    const opcoes: TOpcoes[] = []
+    const [obtSituacao, { loading, error, data }] = useLazyQuery<{ Produto_Situacao: produtoSituacaoEntity[] }>(OBTER_SITUACAO_PRODUTO);
 
 
 
 
     if (data && !loading && !error) {
-        data.ListarTodasSiglasUnidadeMedidaDeProduto.map((a: produtoUniMedSiglaEntity) => {
+        data.Produto_Situacao.map((a: produtoSituacaoEntity) => {
             opcoes.push(
                 {
-                    value: a._id,
-                    label: a.sigla
+                    value: a.value,
+                    label: a.label
                 }
             )
         })
@@ -52,7 +52,7 @@ export default function SSelectSigla(props: TextInputProps) {
     const [value, setValue] = useState(initialValue);
 
     useEffect(() => {
-        obtSigla()
+        obtSituacao()
         setValue(initialValue);
     }, [initialValue]);
 
@@ -90,12 +90,12 @@ export default function SSelectSigla(props: TextInputProps) {
                                             }
                                             defaultValue={value}
                                         >
-                                            <SelectTrigger className="w-[180px]">
+                                            <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Selecione" />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {
-                                                    opcoes.map((r: Topcoes) => (
+                                                    opcoes.map((r: TOpcoes) => (
 
                                                         <SelectItem value={r.value} key={r.value}>{r.label}</SelectItem>
                                                     ))

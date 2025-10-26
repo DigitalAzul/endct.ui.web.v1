@@ -1,7 +1,7 @@
-import { cn } from "@/infra/lib/utils"
-import * as SeparatorPrimitive from "@radix-ui/react-separator"
 import * as React from "react"
+import * as SeparatorPrimitive from "@radix-ui/react-separator"
 
+import { cn } from "@/infra/lib/utils"
 
 function Separator({
   className,

@@ -13,13 +13,14 @@ export const produtoEschema = z.object({
     subgrupo: z.object(ProdutoSubGrupoEntity).optional(),
     produto_grupoId: z.string().optional(),
     produto_sub_grupoId: z.string().optional(),
+    produto_marcaId: z.string(),
 
 
-    sigla_unidade_primaria_id: z.string().optional(),
-    fator_conversao_primaria: z.string().optional(),
-    ha_segunda_unidade: z.string().optional(),
-    sigla_unidade_secundaria_id: z.string().optional(),
-    fator_conversao_secundaria: z.string().optional(),
+    sigla_unidade_primariaId: z.string().optional(),
+    fator_conversao_primaria: z.float64().optional(),
+    ha_segunda_unidade: z.boolean().optional(),
+    sigla_unidade_secundariaId: z.string().optional(),
+    fator_conversao_secundaria: z.float64().optional(),
 
     codigo_produto: z.string(),
 
@@ -38,18 +39,6 @@ export const produtoEschema = z.object({
 
 
     data_validade_licenca_anvisa: z.date(),
-
-
-
-    grupo_produto_id: z.string(),
-
-
-
-    sub_grupo_produto_id: z.string(),
-
-
-
-    marca_produto_id: z.string(),
 
 
 
@@ -85,7 +74,7 @@ export const produtoEschema = z.object({
 
 
 
-    tipo_produto: z.string(), // REVENDA | CONSUMO fazer outra tabela
+    classificacao: z.string(), // REVENDA | CONSUMO fazer outra tabela
 
 
 
@@ -98,14 +87,4 @@ export const produtoEschema = z.object({
 })
 
 
-export const testeEschema = z.object({
 
-    nome: z.string().min(2),
-    cpfcnpj: z.string().min(11, { message: 'CPF inválido' }).max(14, { message: 'CNPJ Inválido' }),
-    descricao: z.string().min(1),
-    custo: z.float32(),
-    importado: z.boolean(),
-    uf: z.string(),
-    tipo_pessoa: z.string().min(1),
-    marca: z.string().min(1)
-})

@@ -11,7 +11,8 @@ type TextInputProps = {
     name: string;
     label?: string;
     placeholder?: string;
-    maxLenth?: number
+    maxLenth?: number;
+    requerido?: boolean
 };
 
 
@@ -57,7 +58,7 @@ export default function InputTexto(props: TextInputProps) {
 
                 return (
                     <FormItem>
-                        <FormLabel className="uppercase">{props.label}</FormLabel>
+                        <FormLabel className="uppercase">{props.label} {props?.requerido ? <span className="w-1 h-1 rounded-full bg-amber-600"></span> : ''}</FormLabel>
                         <FormControl>
                             <Input
                                 placeholder={props.placeholder}

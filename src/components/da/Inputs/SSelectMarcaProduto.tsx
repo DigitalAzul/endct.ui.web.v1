@@ -18,7 +18,8 @@ type TextInputProps = {
     form: UseFormReturn<any>;
     name: string;
     label: string;
-    options?: TOptions[]
+    options?: TOptions[];
+    requerido?: boolean
 };
 type Topcoes = {
     value: string,
@@ -36,8 +37,6 @@ export default function SSelectMarcaProduto(props: TextInputProps) {
 
 
     if (data && !loading && !error) {
-        console.log('data Sigla::: ', JSON.stringify(data))
-        console.log('data Sigla::: ', data.Produto_Marcas[0])
         data.Produto_Marcas.map((a: produtoMarcaEntity) => {
             opcoes.push(
                 {
@@ -71,7 +70,7 @@ export default function SSelectMarcaProduto(props: TextInputProps) {
 
                 return (
                     <FormItem>
-                        <FormLabel className="uppercase">{props.label}</FormLabel>
+                        <FormLabel className="uppercase">{props.label} {props?.requerido ? <span className="w-1 h-1 rounded-full bg-amber-600"></span> : ''}</FormLabel>
                         <FormControl>
                             {loading ?
                                 <span className="flex items-center gap-2 text-muted-foreground animate-pulse"><RefreshCw size={14} className="animate-spin" />Obtendo dados...</span>
@@ -91,7 +90,7 @@ export default function SSelectMarcaProduto(props: TextInputProps) {
                                             }
                                             defaultValue={value}
                                         >
-                                            <SelectTrigger className="w-[180px]">
+                                            <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Selecione" />
                                             </SelectTrigger>
                                             <SelectContent>

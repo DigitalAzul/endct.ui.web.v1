@@ -1,6 +1,6 @@
 
-import type { ProdutoGrupoEntity } from "@/Dominios/Produto/types/ProdutoGrupoEntity";
-import { OBTER_PRODUTO_GRUPOS } from "@/infra/graphql/query/query_Produto_Grupo";
+import type { ProdutoSubGrupoEntity } from "@/Dominios/Produto/types/ProdutoSubGrupoEntity";
+import { OBTER_PRODUTO_SUB_GRUPOS } from "@/infra/graphql/query/query_Produto_SubGrupo";
 import { useLazyQuery } from "@apollo/client/react";
 import { RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -18,27 +18,26 @@ type TextInputProps = {
     form: UseFormReturn<any>;
     name: string;
     label: string;
-    options?: TOptions[]
+    options?: TOptions[];
+    requerido?: boolean
 };
 type TOpcoes = {
     value: string,
     label: string
 }
-type produtoGrupoEntity = z.infer<typeof ProdutoGrupoEntity>;
+type produtoSubGrupoEntity = z.infer<typeof ProdutoSubGrupoEntity>;
 
 
 export default function SSelectSubGruposProduto(props: TextInputProps) {
 
     const opcoes: TOpcoes[] = []
-    const [obtGrupos, { loading, error, data }] = useLazyQuery<{ Produto_Grupos: produtoGrupoEntity[] }>(OBTER_PRODUTO_GRUPOS);
+    const [obtSubGrupos, { loading, error, data }] = useLazyQuery<{ Produto_SubGrupos: produtoSubGrupoEntity[] }>(OBTER_PRODUTO_SUB_GRUPOS);
 
 
 
 
     if (data && !loading && !error) {
-        console.log('data Sigla::: ', JSON.stringify(data))
-        console.log('data Sigla::: ', data.Produto_Grupos[0])
-        data.Produto_Grupos.map((a: produtoGrupoEntity) => {
+        data.Produto_SubGrupos.map((a: produtoSubGrupoEntity) => {
             opcoes.push(
                 {
                     value: a._id,
@@ -53,7 +52,7 @@ export default function SSelectSubGruposProduto(props: TextInputProps) {
     const [value, setValue] = useState(initialValue);
 
     useEffect(() => {
-        obtGrupos()
+        obtSubGrupos()
         setValue(initialValue);
     }, [initialValue]);
 
@@ -71,7 +70,7 @@ export default function SSelectSubGruposProduto(props: TextInputProps) {
 
                 return (
                     <FormItem>
-                        <FormLabel className="uppercase">{props.label}</FormLabel>
+                        <FormLabel className="uppercase">{props.label} {props?.requerido ? <span className="w-1 h-1 rounded-full bg-amber-600"></span> : ''}</FormLabel>
                         <FormControl>
                             {loading ?
                                 <span className="flex items-center gap-2 text-muted-foreground animate-pulse"><RefreshCw size={14} className="animate-spin" />Obtendo dados...</span>
@@ -91,10 +90,10 @@ export default function SSelectSubGruposProduto(props: TextInputProps) {
                                             }
                                             defaultValue={value}
                                         >
-                                            <SelectTrigger className="w-[180px]">
+                                            <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Selecione" />
                                             </SelectTrigger>
-                                            <SelectContent>
+                                            <SelectContent className="w-full">
                                                 {
                                                     opcoes.map((r: TOpcoes) => (
 

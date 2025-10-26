@@ -11,7 +11,8 @@ type TextInputProps = {
     name: string;
     label?: string;
     placeholder?: string;
-    maxLenth?: number
+    maxLenth?: number;
+    requerido?: boolean
 };
 
 
@@ -47,7 +48,7 @@ export default function InputSwitch(props: TextInputProps) {
                 const _change = field.onChange;
                 return (
                     <FormItem>
-                        <FormLabel className="uppercase">{props.label}</FormLabel>
+                        <FormLabel className="uppercase">{props.label} {props?.requerido ? <span className="w-1 h-1 rounded-full bg-amber-600"></span> : ''}</FormLabel>
                         <div className="flex items-center gap-3 border p-1 px-2 rounded-3xl w-[130px]">
                             <FormControl>
                                 <Switch
