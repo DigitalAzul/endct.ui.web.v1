@@ -4,7 +4,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from 'zod';
-import { ProdutoGrupoEntity } from '../types/ProdutoGrupoEntity';
+import { ProdutoGrupoArgs } from '../types/ProdutoGrupoEntity';
 
 
 import InputTextarea from '@/components/da/Inputs/Textarea';
@@ -20,7 +20,7 @@ import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFo
 import { CAD_GRUPO_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_cad_grupo_produto';
 import { useMutation } from '@apollo/client/react';
 
-type FormProps = z.infer<typeof ProdutoGrupoEntity>;
+type FormProps = z.infer<typeof ProdutoGrupoArgs>;
 type Tprops = {
     create?: crudForm,
     callBackFunction: TcallBackFunction,
@@ -57,7 +57,7 @@ export function ProdutoGrupoForm(props: Tprops) {
     const { formState: { errors } } = useForm<FormProps>()
 
     const _form = useForm<FormProps>({
-        resolver: zodResolver(ProdutoGrupoEntity),
+        resolver: zodResolver(ProdutoGrupoArgs),
         defaultValues: {
             titulo: '',
             descricao: '',

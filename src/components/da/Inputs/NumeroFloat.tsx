@@ -12,6 +12,7 @@ type TextInputProps = {
     label?: string;
     placeholder?: string;
     maxLenth?: number;
+    decimais?: number;
     requerido?: boolean;
     desabilitado?: boolean;
 };
@@ -19,7 +20,7 @@ type TextInputProps = {
 
 
 
-export default function InputNumero(props: TextInputProps) {
+export default function InputNumeroFloat(props: TextInputProps) {
 
 
     const initialValue = props.form.getValues()[props.name]
@@ -31,22 +32,47 @@ export default function InputNumero(props: TextInputProps) {
         : 254;
 
     const [value, setValue] = useState(initialValue);
+    const [decimais, setDecimais] = useState(props.decimais);
 
-    useEffect(() => { setValue(initialValue); }, [initialValue]);
+    useEffect(() => {
+        setValue(initialValue);
+        setDecimais(props.decimais)
+    }, [initialValue]);
 
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     function handleChange(realChangeFn: Function, formattedValue: string) {
 
         const v = formattedValue.substring(0, maxLenth)
+        let digits
 
-        const digits = v.match(/[0-9]+/g);
+        const _digits = v.replace(/\D+/, '')
+        const m = "/^(\d+)(\d{1})$/"
+        switch (decimais) {
+            case 1:
+                digits = _digits.replace(/^(\d+)(\d{1})$/, '$1,$2');
+                break;
+            case 2:
+                digits = _digits.replace(/^(\d+)(\d{2})$/, '$1,$2');
+                break;
+            case 3:
+                digits = _digits.replace(/^(\d+)(\d{3})$/, '$1,$2');
+                break;
+            case 4:
+                digits = _digits.replace(/^(\d+)(\d{4})$/, '$1,$2');
+                break;
+
+            default:
+                break;
+        }
+
+
         if (digits) {
-            setValue(parseInt(digits[0]))
-            realChangeFn(parseInt(digits[0]));
+            setValue(digits)
+            realChangeFn(digits);
         } else {
-            setValue(0)
-            realChangeFn(0);
+            setValue("")
+            realChangeFn("");
 
         }
     }
@@ -65,7 +91,7 @@ export default function InputNumero(props: TextInputProps) {
                         <FormControl>
                             <Input
                                 placeholder={props.placeholder}
-                                type="number"
+                                type="text"
                                 {...field}
 
                                 onChange={(ev) => {
@@ -74,7 +100,6 @@ export default function InputNumero(props: TextInputProps) {
                                 }}
                                 value={value}
                                 disabled={props.desabilitado}
-                                className="[-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
                             />
                         </FormControl>
                         <FormMessage />

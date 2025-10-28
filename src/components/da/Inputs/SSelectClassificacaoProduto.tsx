@@ -1,5 +1,5 @@
 
-import type { ProdutoClassificacaoEntity } from "@/Dominios/Produto/types/ProdutoClassificacaoEntity";
+import type { ProdutoClassificacaoEntity } from "@/Dominios/Produto/types/ProdutoTypesComuns";
 import { OBTER_CLASIFICACAO_PRODUTO } from "@/infra/graphql/query/query_Produto_Classificacao";
 import { useLazyQuery } from "@apollo/client/react";
 import { RefreshCw } from "lucide-react";

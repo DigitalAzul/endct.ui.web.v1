@@ -19,7 +19,7 @@ type TextInputProps = {
 
 
 
-export default function InputNumero(props: TextInputProps) {
+export default function InputNumero2(props: TextInputProps) {
 
 
     const initialValue = props.form.getValues()[props.name]
@@ -40,15 +40,26 @@ export default function InputNumero(props: TextInputProps) {
 
         const v = formattedValue.substring(0, maxLenth)
 
-        const digits = v.match(/[0-9]+/g);
-        if (digits) {
-            setValue(parseInt(digits[0]))
-            realChangeFn(parseInt(digits[0]));
+        if (v) {
+
+            console.log(Intl.NumberFormat('en-US', { maximumFractionDigits: 2, }).format(Number(v)));
+            const _v = Intl.NumberFormat('en-US', { maximumFractionDigits: 2, }).format(Number(v))
+            setValue(parseFloat(_v))
+            realChangeFn(parseFloat(_v));
         } else {
             setValue(0)
             realChangeFn(0);
 
         }
+        // const digits = v.match(/[0-9]+/g);
+        // if (digits) {
+        //     setValue(parseInt(digits[0]))
+        //     realChangeFn(parseInt(digits[0]));
+        // } else {
+        //     setValue(0)
+        //     realChangeFn(0);
+
+        // }
     }
 
     return (

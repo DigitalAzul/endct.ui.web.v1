@@ -12,13 +12,15 @@ import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
 
+import InputNumero2 from '@/components/da/Inputs/Numero2';
 import SSelectClassificacaoProduto from '@/components/da/Inputs/SSelectClassificacaoProduto';
 import SSelectGruposProduto from '@/components/da/Inputs/SSelectGruposProduto ';
 import SSelectMarcaProduto from '@/components/da/Inputs/SSelectMarcaProduto';
+import SSelectProdutoEscalaTemperatura from '@/components/da/Inputs/SSelectProdutoEscalaTemperatura';
 import SSelectSigla from '@/components/da/Inputs/SSelectSiglaProduto';
+import SSelectSimNao from '@/components/da/Inputs/SSelectSimNao';
 import SSelectSituacaoProduto from '@/components/da/Inputs/SSelectSituacaoProduto';
 import SSelectSubGruposProduto from '@/components/da/Inputs/SSelectSubGruposProduto';
-import InputSwitch from '@/components/da/Inputs/Switch';
 import {
     Item,
     ItemContent,
@@ -30,7 +32,7 @@ import { CampoLinhaForm } from '@/Dominios/comuns/components/forms/CampoLinhaFor
 import { TopoForm } from '@/Dominios/comuns/components/forms/topoForm';
 import { CAD_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_cad_produto';
 import { useMutation } from '@apollo/client/react';
-import { fakerPT_BR as faker, simpleFaker } from '@faker-js/faker';
+import { useState } from 'react';
 
 
 
@@ -47,47 +49,48 @@ type Tprops = {
 
 export function ProdutoForm(props: Tprops) {
 
+    const [_escala_temperatura, setEscalaTemperatura] = useState('NAO_APLICADO')
+    const _callBackFunction = (a: any) => {
+        setEscalaTemperatura(a)
+    }
 
-    const { formState: { errors } } = useForm<produtoFormProps>()
+    const [_segundaUnidade, setSegundaUnidade] = useState(false)
+    const cbSegundaUnd = () => {
+        setSegundaUnidade(!_segundaUnidade)
+    }
+
+    const { formState: { errors } } = useForm<produtoFormProps>({ mode: "onChange" })
 
     const _form = useForm<produtoFormProps>({
         resolver: zodResolver(produtoEschema),
-        defaultValues: {
-            codigo_produto: simpleFaker.string.alphanumeric({ length: 10 }).toUpperCase(),
-            codigo_ncm: simpleFaker.string.alphanumeric({ length: 10 }).toUpperCase(),
+         defaultValues: {
+        //     produto_marcaId: string,
+        //     produto_grupoId: string,
+        //     produto_sub_grupoId: string,
+        //     sigla_unidade_primariaId: string,
+        //     fator_conversao_primaria: number,
+             ha_segunda_unidade: false,
+        //     codigo_produto: string,
+        //     licenca_anvisa_num: string,
+        //     data_validade_licenca_anvisa: Date,
+        //     referencia: string,
+        //     peso_bruto: number,
+        //     peso_liquido: number,
+        //     situacao: unknown,
+        //     classificacao: unknown,
+        //     escala_temperatura: unknown,
+        //     temp_max_conservacao: number,
+        //     temp_min_conservacao: number,
+            
+        //     fator_conversao_secundaria: number,
+        //     sigla_unidade_secundariaId: '',
+        //     codigo_ncm: string | undefined,
+        //     codigo_rms: '',
+        //     descricao: '',
+        //     descricao_tecnica: '',
+        //     observacoes: '',
+        //     imagem: '',
 
-            sigla_unidade_primariaId: '01K60RQPYY3A5SBM6M94PJEM6B',//faker.number.romanNumeral().toString(),//
-            fator_conversao_primaria: 1, //
-            ha_segunda_unidade: true,//
-            sigla_unidade_secundariaId: '01K60RQPYY3A5SBM6M94PJEM6B',//faker.number.romanNumeral().toString(),//
-            fator_conversao_secundaria: 1.1,//
-
-
-            licenca_anvisa_num: faker.number.romanNumeral().toString(),
-            codigo_rms: faker.number.romanNumeral().toString(),
-
-            data_validade_licenca_anvisa: faker.date.anytime(),
-            situacao: faker.number.romanNumeral().toString(),
-
-            descricao: faker.number.romanNumeral().toString(),
-            referencia: faker.number.romanNumeral().toString(),
-            descricao_tecnica: faker.number.romanNumeral().toString(),
-
-
-            produto_grupoId: faker.number.romanNumeral().toString(),
-            produto_sub_grupoId: faker.number.romanNumeral().toString(),
-            produto_marcaId: '12345abcde',
-            classificacao: faker.number.romanNumeral().toString(),
-
-            temp_max_conservacao: faker.number.romanNumeral().toString(),
-            temp_min_conservacao: faker.number.romanNumeral().toString(),
-
-            peso_bruto: '9999999999',
-            peso_liquido: '999999999',
-
-
-            imagem: faker.number.romanNumeral().toString(),
-            observacoes: faker.number.romanNumeral().toString(),
         }
     });
 
@@ -215,53 +218,70 @@ export function ProdutoForm(props: Tprops) {
                                         <ItemSeparator className='mt-2 mb-3' />
 
                                         <CampoLinhaForm>
+
                                             <div>
-                                                <SSelectSigla
-                                                    form={_form}
-                                                    label="unidade de med. primaria"
-                                                    name="sigla_unidade_primariaId"
-                                                    requerido
-                                                />
-                                            </div>
-                                            <div>
-                                                <InputSwitch
+
+                                                <SSelectSimNao
                                                     form={_form}
                                                     label="há segunda unidade?"
                                                     name="ha_segunda_unidade"
                                                     requerido
-                                                />
-                                            </div>
-
-                                            <div>
-                                                <SSelectSigla
-                                                    form={_form}
-                                                    label="unidade de med. secundaria"
-                                                    name="sigla_unidade_secundariaId"
+                                                    callBackFunction={() => cbSegundaUnd()}
                                                 />
                                             </div>
                                         </CampoLinhaForm>
 
+                                        <ItemSeparator className='mt-2 mb-3' />
+
+                                        <div className='grid grid-cols-2 gap-3 items-center'>
+
+                                            <CampoColunaForm>
+                                                <div>
+                                                    <SSelectSigla
+                                                        form={_form}
+                                                        label="unidade de med. primaria"
+                                                        name="sigla_unidade_primariaId"
+                                                        requerido
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <InputNumero
+                                                        form={_form}
+                                                        label="fator conversao primaria"
+                                                        name="fator_conversao_primaria"
+                                                    />
+                                                </div>
+
+                                            </CampoColunaForm>
 
 
-                                        <CampoLinhaForm>
+                                            <CampoColunaForm>
 
-                                            <div>
-                                                <InputTexto
-                                                    form={_form}
-                                                    label="fator conversao primaria"
-                                                    name="fator_conversao_primaria"
-                                                />
-                                            </div>
-                                            <div>
-                                                <InputTexto
-                                                    form={_form}
-                                                    label="fator conversao secundaria"
-                                                    name="fator_conversao_secundaria"
-                                                />
-                                            </div>
+                                                <div>
+                                                    <SSelectSigla
+                                                        form={_form}
+                                                        label="unidade de med. secundaria"
+                                                        name="sigla_unidade_secundariaId"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <InputNumero
+                                                        form={_form}
+                                                        label="fator conversao secundaria"
+                                                        name="fator_conversao_secundaria"
+                                                    />
+                                                </div>
 
 
-                                        </CampoLinhaForm>
+                                            </CampoColunaForm>
+
+                                        </div>
+
+
+
+
+
                                     </ItemContent>
                                 </Item>
 
@@ -329,11 +349,32 @@ export function ProdutoForm(props: Tprops) {
                             <div className='p-4'>
                                 <Item variant="outline">
                                     <ItemContent>
-                                        <ItemTitle className='text-2xl uppercase font-black'>classificação/conservação</ItemTitle>
+                                        <ItemTitle className='text-2xl uppercase font-black'>classificação/peso</ItemTitle>
 
                                         <ItemSeparator className='mt-2 mb-3' />
 
+                                        <CampoLinhaForm>
 
+                                            <div className='w-[47%]'>
+                                                <SSelectClassificacaoProduto
+                                                    form={_form}
+                                                    label="classificacao do produto"
+                                                    name="classificacao"
+                                                />
+                                            </div>
+
+
+                                            <div className='w-[47%]'>
+                                                <SSelectMarcaProduto
+                                                    form={_form}
+                                                    label="marca do produto"
+                                                    name="produto_marcaId"
+                                                    requerido
+                                                />
+                                            </div>
+
+
+                                        </CampoLinhaForm>
                                         <CampoLinhaForm>
 
                                             <div className='w-[47%]'>
@@ -355,49 +396,11 @@ export function ProdutoForm(props: Tprops) {
 
                                         </CampoLinhaForm>
 
-                                        <CampoLinhaForm>
-
-                                            <div className='w-[47%]'>
-                                                <SSelectMarcaProduto
-                                                    form={_form}
-                                                    label="marca do produto"
-                                                    name="produto_marcaId"
-                                                    requerido
-                                                />
-                                            </div>
-
-                                            <div className='w-[47%]'>
-                                                <SSelectClassificacaoProduto
-                                                    form={_form}
-                                                    label="classificacao do produto"
-                                                    name="classificacao"
-                                                />
-                                            </div>
-
-                                        </CampoLinhaForm>
 
 
 
-                                        <CampoLinhaForm>
 
-                                            <div className='w-[47%]'>
-                                                <InputNumero
-                                                    form={_form}
-                                                    label="temp max. ( celcus )"
-                                                    name="temp_max_conservacao"
-                                                    requerido
-                                                />
-                                            </div>
 
-                                            <div className='w-[47%]'>
-                                                <InputNumero
-                                                    form={_form}
-                                                    label="temp mim. ( celcus )"
-                                                    name="temp_max_conservacao"
-                                                />
-                                            </div>
-
-                                        </CampoLinhaForm>
 
 
                                         <CampoLinhaForm>
@@ -426,6 +429,59 @@ export function ProdutoForm(props: Tprops) {
                             </div>
 
 
+                            <div className='p-4'>
+                                <Item variant="outline">
+                                    <ItemContent>
+                                        <ItemTitle className='text-2xl uppercase font-black'>conservação</ItemTitle>
+
+                                        <ItemSeparator className='mt-2 mb-3' />
+                                        <CampoLinhaForm>
+                                            <div className='w-[47%]'>
+                                                <SSelectProdutoEscalaTemperatura
+                                                    form={_form}
+                                                    label="escala de temperatura"
+                                                    name="escala_temperatura"
+                                                    callBackFunction={(a: any) => _callBackFunction(a)}
+                                                />
+                                            </div>
+                                        </CampoLinhaForm>
+
+
+                                        <CampoLinhaForm>
+                                            <div className='w-[47%]'>
+                                                <InputNumero2
+                                                    form={_form}
+                                                    label={`temp max. ( ${_escala_temperatura} )`}
+                                                    name="temp_max_conservacao"
+                                                    placeholder='36,5'
+                                                    desabilitado={_escala_temperatura == 'NAO_APLICADO'}
+                                                    
+                                                />
+                                            </div>
+
+                                            <div className='w-[47%]'>
+                                                <InputNumero2
+                                                    form={_form}
+                                                    label={`temp min. ( ${_escala_temperatura} )`}
+                                                    name="temp_min_conservacao"
+                                                    placeholder='36,5'
+                                                    desabilitado={_escala_temperatura == 'NAO_APLICADO'}
+                                                    
+                                                />
+                                            </div>
+
+                                        </CampoLinhaForm>
+
+
+
+                                    </ItemContent>
+
+
+
+
+
+                                </Item>
+                            </div>
 
 
 

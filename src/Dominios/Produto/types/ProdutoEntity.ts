@@ -1,87 +1,96 @@
 
 import { z } from 'zod';
-import { ProdutoGrupoEntity } from './ProdutoGrupoEntity';
-import { ProdutoSubGrupoEntity } from './ProdutoSubGrupoEntity';
+import { ESCALA_TEMRATURA_ENUM } from './ProdutoTypesComuns';
+import { PRODUTO_CLASSIFICACAO_ENUN, SITUACAO_PRODUTO } from './comuns/produto.enum';
 
 
 
 
 export const produtoEschema = z.object({
 
-
-    grupo: z.object(ProdutoGrupoEntity).optional(),
-    subgrupo: z.object(ProdutoSubGrupoEntity).optional(),
-    produto_grupoId: z.string().optional(),
-    produto_sub_grupoId: z.string().optional(),
     produto_marcaId: z.string(),
 
 
-    sigla_unidade_primariaId: z.string().optional(),
-    fator_conversao_primaria: z.float64().optional(),
-    ha_segunda_unidade: z.boolean().optional(),
-    sigla_unidade_secundariaId: z.string().optional(),
-    fator_conversao_secundaria: z.float64().optional(),
+    produto_grupoId: z.string(),
+
+
+    produto_sub_grupoId: z.string(),
+
+
+    sigla_unidade_primariaId: z.string(),
+
+
+    fator_conversao_primaria: z.number(),
+
+
+    ha_segunda_unidade: z.boolean(),
+
 
     codigo_produto: z.string(),
-
-
-
-    codigo_ncm: z.string(),
-
-
-
-    codigo_rms: z.string(),
-
 
 
     licenca_anvisa_num: z.string(),
 
 
-
     data_validade_licenca_anvisa: z.date(),
 
 
-
-    descricao: z.string(),
-
+    referencia: z.string(),
 
 
-    descricao_tecnica: z.string(),
+    peso_bruto: z.float64(),
 
 
-
-    observacoes: z.string(),
-
+    peso_liquido: z.float64(),
 
 
-    imagem: z.string(),
+    situacao: z.enum(SITUACAO_PRODUTO),
 
 
-
-    referencia: z.string(), // perguntar
-
+    classificacao: z.enum(PRODUTO_CLASSIFICACAO_ENUN),
 
 
-    peso_bruto: z.any(),
+    escala_temperatura: z.enum(ESCALA_TEMRATURA_ENUM),
+
+
+    fator_conversao_secundaria: z.number(),
 
 
 
-    peso_liquido: z.string(),
+
+    sigla_unidade_secundariaId: z.string().optional(),
+
+    codigo_ncm: z.string().optional(),
+
+
+    codigo_rms: z.string().optional(),
+
+
+    descricao: z.string().optional(),
+
+
+    descricao_tecnica: z.string().optional(),
+
+
+    observacoes: z.string().optional(),
+
+
+    imagem: z.string().optional(),
+
+
+    temp_max_conservacao: z.float64(),
+
+
+    temp_min_conservacao: z.float64(),
 
 
 
-    situacao: z.string(), // perguntar
 
 
 
-    classificacao: z.string(), // REVENDA | CONSUMO fazer outra tabela
 
-
-
-    temp_max_conservacao: z.string(),
-
-
-    temp_min_conservacao: z.string(),
+    // grupo: z.object(ProdutoGrupoEntity).optional(),
+    // subgrupo: z.object(ProdutoSubGrupoEntity).optional(),
 
 
 })

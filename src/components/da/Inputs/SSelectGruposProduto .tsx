@@ -95,7 +95,6 @@ export default function SSelectGruposProduto(props: TextInputProps) {
                                             <SelectContent className="w-full">
                                                 {
                                                     opcoes.map((r: TOpcoes) => (
-
                                                         <SelectItem value={r.value} key={r.value}>{r.label}</SelectItem>
                                                     ))
                                                 }
