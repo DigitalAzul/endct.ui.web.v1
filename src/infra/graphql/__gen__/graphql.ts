@@ -1,5 +1,4 @@
 /* eslint-disable */
-import type { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -18,39 +17,14 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
-export type InsProdutoEntraDto = {
-  codigo_ncm: Scalars['String']['input'];
-  codigo_produto: Scalars['String']['input'];
-  codigo_rms: Scalars['String']['input'];
-  data_validade_licenca_anvisa: Scalars['String']['input'];
-  descricao: Scalars['String']['input'];
-  descricao_tecnica: Scalars['String']['input'];
-  imagem: Scalars['String']['input'];
-  licenca_anvisa_num: Scalars['String']['input'];
-  marca_produto_id: Scalars['String']['input'];
-  observacoes: Scalars['String']['input'];
-  peso_bruto: Scalars['String']['input'];
-  peso_liquido: Scalars['String']['input'];
-  produto_grupoId: Scalars['String']['input'];
-  produto_sub_grupoId: Scalars['String']['input'];
-  referencia: Scalars['String']['input'];
-  situacao: Scalars['String']['input'];
-  temp_max_conservacao: Scalars['String']['input'];
-  tipo_produto: Scalars['String']['input'];
+export type ClassificacaoProdutoSchema = {
+  __typename?: 'ClassificacaoProdutoSchema';
+  label: Scalars['String']['output'];
+  value: Scalars['String']['output'];
 };
 
-export type InsProdutoGrupoEntradaDto = {
-  descricao: Scalars['String']['input'];
-  titulo: Scalars['String']['input'];
-};
-
-export type InsProdutoGrupoRespostaDto = {
-  __typename?: 'InsProdutoGrupoRespostaDto';
-  AlteracaoDataHora: Scalars['String']['output'];
-  AlteracaoUsuario: Scalars['String']['output'];
-  CodigoGrupoProduto: Scalars['String']['output'];
-  Descricao: Scalars['String']['output'];
-  Imagem: Scalars['String']['output'];
+export type GrupoProdutoSchema = {
+  __typename?: 'GrupoProdutoSchema';
   _atualizado_em?: Maybe<Scalars['DateTime']['output']>;
   _atualizado_por_id?: Maybe<Scalars['String']['output']>;
   _criado_em?: Maybe<Scalars['DateTime']['output']>;
@@ -58,6 +32,46 @@ export type InsProdutoGrupoRespostaDto = {
   _excluido_em?: Maybe<Scalars['DateTime']['output']>;
   _excluido_por_id?: Maybe<Scalars['String']['output']>;
   _id?: Maybe<Scalars['String']['output']>;
+  descricao: Scalars['String']['output'];
+  titulo: Scalars['String']['output'];
+};
+
+export type InsProdutoEntraDto = {
+  classificacao: Scalars['String']['input'];
+  codigo_ncm?: InputMaybe<Scalars['String']['input']>;
+  codigo_produto: Scalars['String']['input'];
+  codigo_rms?: InputMaybe<Scalars['String']['input']>;
+  data_validade_licenca_anvisa: Scalars['String']['input'];
+  descricao?: InputMaybe<Scalars['String']['input']>;
+  descricao_tecnica?: InputMaybe<Scalars['String']['input']>;
+  escala_temperatura: Scalars['String']['input'];
+  fator_conversao_primaria: Scalars['Float']['input'];
+  fator_conversao_secundaria?: InputMaybe<Scalars['Float']['input']>;
+  ha_segunda_unidade: Scalars['Boolean']['input'];
+  imagem?: InputMaybe<Scalars['String']['input']>;
+  licenca_anvisa_num: Scalars['String']['input'];
+  observacoes?: InputMaybe<Scalars['String']['input']>;
+  peso_bruto: Scalars['Float']['input'];
+  peso_liquido: Scalars['Float']['input'];
+  produto_grupoId: Scalars['String']['input'];
+  produto_marcaId: Scalars['String']['input'];
+  produto_sub_grupoId: Scalars['String']['input'];
+  referencia: Scalars['String']['input'];
+  sigla_unidade_primariaId: Scalars['String']['input'];
+  sigla_unidade_secundariaId?: InputMaybe<Scalars['String']['input']>;
+  situacao: Scalars['String']['input'];
+  temp_max_conservacao?: InputMaybe<Scalars['Float']['input']>;
+  temp_min_conservacao?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type InserirGrupoProdutoArgs = {
+  descricao: Scalars['String']['input'];
+  titulo: Scalars['String']['input'];
+};
+
+export type InserirMarcaProdutoDto = {
+  descricao: Scalars['String']['input'];
+  titulo: Scalars['String']['input'];
 };
 
 export type InserirNovoUsuarioInput = {
@@ -76,18 +90,108 @@ export type InserirPessoaInputDto = {
   tipo_natureza_juridica_id: Scalars['String']['input'];
 };
 
+export type InserirProdutoGrupoRespostaDto = {
+  __typename?: 'InserirProdutoGrupoRespostaDto';
+  _atualizado_em?: Maybe<Scalars['DateTime']['output']>;
+  _atualizado_por_id?: Maybe<Scalars['String']['output']>;
+  _criado_em?: Maybe<Scalars['DateTime']['output']>;
+  _criado_por_id?: Maybe<Scalars['String']['output']>;
+  _excluido_em?: Maybe<Scalars['DateTime']['output']>;
+  _excluido_por_id?: Maybe<Scalars['String']['output']>;
+  _id?: Maybe<Scalars['String']['output']>;
+  descricao: Scalars['String']['output'];
+  titulo: Scalars['String']['output'];
+};
+
+export type InserirSiglaUnidadeMedidaProdutoDto = {
+  descricao: Scalars['String']['input'];
+  sigla: Scalars['String']['input'];
+};
+
+export type InserirSubGrupoProdutoDto = {
+  descricao: Scalars['String']['input'];
+  titulo: Scalars['String']['input'];
+};
+
+export type InserirSubGrupoProdutoRespostaDto = {
+  __typename?: 'InserirSubGrupoProdutoRespostaDto';
+  _atualizado_em?: Maybe<Scalars['DateTime']['output']>;
+  _atualizado_por_id?: Maybe<Scalars['String']['output']>;
+  _criado_em?: Maybe<Scalars['DateTime']['output']>;
+  _criado_por_id?: Maybe<Scalars['String']['output']>;
+  _excluido_em?: Maybe<Scalars['DateTime']['output']>;
+  _excluido_por_id?: Maybe<Scalars['String']['output']>;
+  _id?: Maybe<Scalars['String']['output']>;
+  descricao: Scalars['String']['output'];
+  grupo_produtoId: Scalars['String']['output'];
+  titulo: Scalars['String']['output'];
+};
+
+export type InserirUnidadeMedidaProdutoDto = {
+  descricao: Scalars['String']['input'];
+  fator_conversao_primaria: Scalars['Float']['input'];
+  fator_conversao_secundaria: Scalars['Float']['input'];
+  ha_segunda_unidade: Scalars['Boolean']['input'];
+  sigla_unidade_primariaId: Scalars['String']['input'];
+  sigla_unidade_secundariaId: Scalars['String']['input'];
+  titulo: Scalars['String']['input'];
+};
+
+export type MarcaProdutoSchema = {
+  __typename?: 'MarcaProdutoSchema';
+  _atualizado_em?: Maybe<Scalars['DateTime']['output']>;
+  _atualizado_por_id?: Maybe<Scalars['String']['output']>;
+  _criado_em?: Maybe<Scalars['DateTime']['output']>;
+  _criado_por_id?: Maybe<Scalars['String']['output']>;
+  _excluido_em?: Maybe<Scalars['DateTime']['output']>;
+  _excluido_por_id?: Maybe<Scalars['String']['output']>;
+  _id?: Maybe<Scalars['String']['output']>;
+  descricao: Scalars['String']['output'];
+  titulo: Scalars['String']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  AtualizeEstaPessoa: PessoaDto;
+  CriarNovaMarcaDeProduto: MarcaProdutoSchema;
+  CriarNovaPessoa: PessoaDto;
+  CriarNovaSiglaDeUnidadeDeMedidaDeProduto: SiglaUnidadeMedidaProdutoSchema;
+  CriarNovaUnidadeMedidaProduto: UnidadeMedidaProdutoSchema;
   CriarNovoUsuario: UsuarioDto;
-  InserirNovoProduto: ProdutoSchema;
-  InserirPessoa: PessoaDto;
-  inseriNovoGrupoDeProduto: InsProdutoGrupoRespostaDto;
-  removePessoa: PessoaDto;
-  removeProduto: ProdutoSchema;
+  Produto_Edicao: ProdutoSchema;
+  Produto_Grupo_Novo: InserirProdutoGrupoRespostaDto;
+  Produto_Novo: ProdutoSchema;
+  Produto_Remover: ProdutoSchema;
+  Produto_SubGrupo_Novo: InserirSubGrupoProdutoRespostaDto;
+  RemovaEstaPessoa: PessoaDto;
   removeUsuario: UsuarioDto;
-  updateMercador: PessoaDto;
-  updateProduto: ProdutoSchema;
   updateUsuario: UsuarioDto;
+};
+
+
+export type MutationAtualizeEstaPessoaArgs = {
+  _id: Scalars['String']['input'];
+  updatePessoaInput: UpdatePessoaInputDto;
+};
+
+
+export type MutationCriarNovaMarcaDeProdutoArgs = {
+  InserirMarcaProdutoDto: InserirMarcaProdutoDto;
+};
+
+
+export type MutationCriarNovaPessoaArgs = {
+  inserirPessoaInput: InserirPessoaInputDto;
+};
+
+
+export type MutationCriarNovaSiglaDeUnidadeDeMedidaDeProdutoArgs = {
+  InserirSiglaUnidadeMedidaProdutoDto: InserirSiglaUnidadeMedidaProdutoDto;
+};
+
+
+export type MutationCriarNovaUnidadeMedidaProdutoArgs = {
+  InserirUnidadeMedidaProdutoDto: InserirUnidadeMedidaProdutoDto;
 };
 
 
@@ -96,43 +200,38 @@ export type MutationCriarNovoUsuarioArgs = {
 };
 
 
-export type MutationInserirNovoProdutoArgs = {
+export type MutationProduto_EdicaoArgs = {
+  updateProdutoInput: UpdateProdutoInput;
+};
+
+
+export type MutationProduto_Grupo_NovoArgs = {
+  insProdutoGrupoDto: InserirGrupoProdutoArgs;
+};
+
+
+export type MutationProduto_NovoArgs = {
   insProdutoEntraDto: InsProdutoEntraDto;
 };
 
 
-export type MutationInserirPessoaArgs = {
-  inserirPessoaInput: InserirPessoaInputDto;
-};
-
-
-export type MutationInseriNovoGrupoDeProdutoArgs = {
-  insProdutoGrupoDto: InsProdutoGrupoEntradaDto;
-};
-
-
-export type MutationRemovePessoaArgs = {
-  id: Scalars['String']['input'];
-};
-
-
-export type MutationRemoveProdutoArgs = {
+export type MutationProduto_RemoverArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type MutationProduto_SubGrupo_NovoArgs = {
+  inserirSubGrupoProdutoDto: InserirSubGrupoProdutoDto;
+};
+
+
+export type MutationRemovaEstaPessoaArgs = {
+  id: Scalars['String']['input'];
 };
 
 
 export type MutationRemoveUsuarioArgs = {
   id: Scalars['Int']['input'];
-};
-
-
-export type MutationUpdateMercadorArgs = {
-  updatePessoaInput: UpdatePessoaInputDto;
-};
-
-
-export type MutationUpdateProdutoArgs = {
-  updateProdutoInput: UpdateProdutoInput;
 };
 
 
@@ -150,6 +249,14 @@ export type NaturezaJuridicaDto = {
   _excluido_por_id?: Maybe<Scalars['String']['output']>;
   _id?: Maybe<Scalars['String']['output']>;
   titulo: Scalars['String']['output'];
+};
+
+export type PaginatedResponse = {
+  __typename?: 'PaginatedResponse';
+  items: Array<PessoaDto>;
+  page: Scalars['Float']['output'];
+  size: Scalars['Float']['output'];
+  totalItems: Scalars['Float']['output'];
 };
 
 export type PessoaDto = {
@@ -181,47 +288,127 @@ export type ProdutoSchema = {
   _excluido_em?: Maybe<Scalars['DateTime']['output']>;
   _excluido_por_id?: Maybe<Scalars['String']['output']>;
   _id?: Maybe<Scalars['String']['output']>;
-  codigo_ncm: Scalars['String']['output'];
+  classificacao: Scalars['String']['output'];
+  codigo_ncm?: Maybe<Scalars['String']['output']>;
   codigo_produto: Scalars['String']['output'];
-  codigo_rms: Scalars['String']['output'];
+  codigo_rms?: Maybe<Scalars['String']['output']>;
   data_validade_licenca_anvisa: Scalars['String']['output'];
-  descricao: Scalars['String']['output'];
-  descricao_tecnica: Scalars['String']['output'];
-  grupo_produto_id: Scalars['String']['output'];
-  imagem: Scalars['String']['output'];
+  descricao?: Maybe<Scalars['String']['output']>;
+  descricao_tecnica?: Maybe<Scalars['String']['output']>;
+  escala_temperatura: Scalars['String']['output'];
+  fator_conversao_primaria: Scalars['Float']['output'];
+  fator_conversao_secundaria?: Maybe<Scalars['Float']['output']>;
+  ha_segunda_unidade: Scalars['Boolean']['output'];
+  imagem?: Maybe<Scalars['String']['output']>;
   licenca_anvisa_num: Scalars['String']['output'];
-  marca_produto_id: Scalars['String']['output'];
-  observacoes: Scalars['String']['output'];
-  peso_bruto: Scalars['String']['output'];
-  peso_liquido: Scalars['String']['output'];
+  observacoes?: Maybe<Scalars['String']['output']>;
+  peso_bruto: Scalars['Float']['output'];
+  peso_liquido: Scalars['Float']['output'];
+  produto_grupoId: Scalars['String']['output'];
+  produto_marcaId: Scalars['String']['output'];
+  produto_sub_grupoId: Scalars['String']['output'];
   referencia: Scalars['String']['output'];
+  sigla_unidade_primariaId: Scalars['String']['output'];
+  sigla_unidade_secundariaId?: Maybe<Scalars['String']['output']>;
   situacao: Scalars['String']['output'];
-  sub_grupo_produto_id: Scalars['String']['output'];
-  temp_max_conservacao: Scalars['String']['output'];
-  tipo_produto: Scalars['String']['output'];
+  temp_max_conservacao?: Maybe<Scalars['Float']['output']>;
+  temp_min_conservacao?: Maybe<Scalars['Float']['output']>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  pessoa: PessoaDto;
-  pessoas: Array<PessoaDto>;
-  produto: ProdutoSchema;
+  ListarPessoaPeloID: PessoaDto;
+  ListarSiglaUnidadeMedidaDeProduto?: Maybe<SiglaUnidadeMedidaProdutoSchema>;
+  ListarTodasPessoas: Array<PessoaDto>;
+  ListarTodasSiglasUnidadeMedidaDeProduto?: Maybe<Array<SiglaUnidadeMedidaProdutoSchema>>;
+  Paginacao: PaginatedResponse;
+  Produto_Classificacao: Array<ClassificacaoProdutoSchema>;
+  Produto_Grupos?: Maybe<Array<GrupoProdutoSchema>>;
+  Produto_Marcas?: Maybe<Array<MarcaProdutoSchema>>;
+  Produto_PorID: ProdutoSchema;
+  Produto_Situacao: Array<SituacaoProdutoSchema>;
+  Produto_SubGrupos?: Maybe<Array<SubGrupoProdutoSchema>>;
+  Produtos: Array<ProdutoSchema>;
+  UnidadesMedidaProduto?: Maybe<Array<UnidadeMedidaProdutoSchema>>;
   usuario: UsuarioDto;
 };
 
 
-export type QueryPessoaArgs = {
+export type QueryListarPessoaPeloIdArgs = {
   id: Scalars['String']['input'];
 };
 
 
-export type QueryProdutoArgs = {
+export type QueryListarSiglaUnidadeMedidaDeProdutoArgs = {
+  _id: Scalars['String']['input'];
+};
+
+
+export type QueryPaginacaoArgs = {
+  FilteringParams: _Filtering;
+  PaginationParams: _Pagination;
+  SortingParams: _Sorting;
+};
+
+
+export type QueryProduto_PorIdArgs = {
   id: Scalars['Int']['input'];
 };
 
 
 export type QueryUsuarioArgs = {
   id: Scalars['Int']['input'];
+};
+
+export type SiglaUnidadeMedidaProdutoSchema = {
+  __typename?: 'SiglaUnidadeMedidaProdutoSchema';
+  _atualizado_em?: Maybe<Scalars['DateTime']['output']>;
+  _atualizado_por_id?: Maybe<Scalars['String']['output']>;
+  _criado_em?: Maybe<Scalars['DateTime']['output']>;
+  _criado_por_id?: Maybe<Scalars['String']['output']>;
+  _excluido_em?: Maybe<Scalars['DateTime']['output']>;
+  _excluido_por_id?: Maybe<Scalars['String']['output']>;
+  _id?: Maybe<Scalars['String']['output']>;
+  descricao: Scalars['String']['output'];
+  sigla: Scalars['String']['output'];
+};
+
+export type SituacaoProdutoSchema = {
+  __typename?: 'SituacaoProdutoSchema';
+  label: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type SubGrupoProdutoSchema = {
+  __typename?: 'SubGrupoProdutoSchema';
+  _atualizado_em?: Maybe<Scalars['DateTime']['output']>;
+  _atualizado_por_id?: Maybe<Scalars['String']['output']>;
+  _criado_em?: Maybe<Scalars['DateTime']['output']>;
+  _criado_por_id?: Maybe<Scalars['String']['output']>;
+  _excluido_em?: Maybe<Scalars['DateTime']['output']>;
+  _excluido_por_id?: Maybe<Scalars['String']['output']>;
+  _id?: Maybe<Scalars['String']['output']>;
+  descricao: Scalars['String']['output'];
+  titulo: Scalars['String']['output'];
+};
+
+export type UnidadeMedidaProdutoSchema = {
+  __typename?: 'UnidadeMedidaProdutoSchema';
+  _atualizado_em?: Maybe<Scalars['DateTime']['output']>;
+  _atualizado_por_id?: Maybe<Scalars['String']['output']>;
+  _criado_em?: Maybe<Scalars['DateTime']['output']>;
+  _criado_por_id?: Maybe<Scalars['String']['output']>;
+  _excluido_em?: Maybe<Scalars['DateTime']['output']>;
+  _excluido_por_id?: Maybe<Scalars['String']['output']>;
+  _id?: Maybe<Scalars['String']['output']>;
+  descricao: Scalars['String']['output'];
+  fator_conversao_primaria: Scalars['Float']['output'];
+  fator_conversao_secundaria: Scalars['Float']['output'];
+  ha_segunda_unidade: Scalars['Boolean']['output'];
+  sigla_primaria: SiglaUnidadeMedidaProdutoSchema;
+  sigla_secundaria: SiglaUnidadeMedidaProdutoSchema;
+  sigla_unidade_primariaId: Scalars['String']['output'];
+  sigla_unidade_secundariaId: Scalars['String']['output'];
 };
 
 export type UpdatePessoaInputDto = {
@@ -235,7 +422,6 @@ export type UpdatePessoaInputDto = {
   cnae?: InputMaybe<Scalars['String']['input']>;
   cnpj_cpf?: InputMaybe<Scalars['String']['input']>;
   filial?: InputMaybe<Scalars['Boolean']['input']>;
-  id: Scalars['String']['input'];
   inscricao_estadual?: InputMaybe<Scalars['String']['input']>;
   nome_fantasia?: InputMaybe<Scalars['String']['input']>;
   pessoa_juridica?: InputMaybe<Scalars['Boolean']['input']>;
@@ -244,25 +430,32 @@ export type UpdatePessoaInputDto = {
 };
 
 export type UpdateProdutoInput = {
+  classificacao?: InputMaybe<Scalars['String']['input']>;
   codigo_ncm?: InputMaybe<Scalars['String']['input']>;
   codigo_produto?: InputMaybe<Scalars['String']['input']>;
   codigo_rms?: InputMaybe<Scalars['String']['input']>;
   data_validade_licenca_anvisa?: InputMaybe<Scalars['String']['input']>;
   descricao?: InputMaybe<Scalars['String']['input']>;
   descricao_tecnica?: InputMaybe<Scalars['String']['input']>;
+  escala_temperatura?: InputMaybe<Scalars['String']['input']>;
+  fator_conversao_primaria?: InputMaybe<Scalars['Float']['input']>;
+  fator_conversao_secundaria?: InputMaybe<Scalars['Float']['input']>;
+  ha_segunda_unidade?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['Int']['input'];
   imagem?: InputMaybe<Scalars['String']['input']>;
   licenca_anvisa_num?: InputMaybe<Scalars['String']['input']>;
-  marca_produto_id?: InputMaybe<Scalars['String']['input']>;
   observacoes?: InputMaybe<Scalars['String']['input']>;
-  peso_bruto?: InputMaybe<Scalars['String']['input']>;
-  peso_liquido?: InputMaybe<Scalars['String']['input']>;
+  peso_bruto?: InputMaybe<Scalars['Float']['input']>;
+  peso_liquido?: InputMaybe<Scalars['Float']['input']>;
   produto_grupoId?: InputMaybe<Scalars['String']['input']>;
+  produto_marcaId?: InputMaybe<Scalars['String']['input']>;
   produto_sub_grupoId?: InputMaybe<Scalars['String']['input']>;
   referencia?: InputMaybe<Scalars['String']['input']>;
+  sigla_unidade_primariaId?: InputMaybe<Scalars['String']['input']>;
+  sigla_unidade_secundariaId?: InputMaybe<Scalars['String']['input']>;
   situacao?: InputMaybe<Scalars['String']['input']>;
-  temp_max_conservacao?: InputMaybe<Scalars['String']['input']>;
-  tipo_produto?: InputMaybe<Scalars['String']['input']>;
+  temp_max_conservacao?: InputMaybe<Scalars['Float']['input']>;
+  temp_min_conservacao?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type UpdateUsuarioInput = {
@@ -285,10 +478,23 @@ export type UsuarioDto = {
   snome: Scalars['String']['output'];
 };
 
-export type PessoasQueryVariables = Exact<{ [key: string]: never; }>;
+export type _Filtering = {
+  property: Scalars['String']['input'];
+  rule: Scalars['String']['input'];
+  value: Scalars['String']['input'];
+};
 
+export type _Pagination = {
+  limit: Scalars['Float']['input'];
+  offset: Scalars['Float']['input'];
+  page: Scalars['Float']['input'];
+  size: Scalars['Float']['input'];
+};
 
-export type PessoasQuery = { __typename?: 'Query', pessoas: Array<{ __typename?: 'PessoaDto', _id?: string | null, _criado_em: any, _criado_por_id: string, _atualizado_em?: any | null, _atualizado_por_id?: string | null, _excluido_em?: any | null, _excluido_por_id?: string | null, filial: boolean, razao_social: string, nome_fantasia: string, cnpj_cpf: string, inscricao_estadual: string, pessoa_juridica: boolean, tipo_natureza_juridica_id: string, cnae: string }> };
+export type _Sorting = {
+  direction: Scalars['String']['input'];
+  property: Scalars['String']['input'];
+};
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -308,25 +514,3 @@ export class TypedDocumentString<TResult, TVariables>
     return this.value;
   }
 }
-
-export const PessoasDocument = new TypedDocumentString(`
-    query Pessoas {
-  pessoas {
-    _id
-    _criado_em
-    _criado_por_id
-    _atualizado_em
-    _atualizado_por_id
-    _excluido_em
-    _excluido_por_id
-    filial
-    razao_social
-    nome_fantasia
-    cnpj_cpf
-    inscricao_estadual
-    pessoa_juridica
-    tipo_natureza_juridica_id
-    cnae
-  }
-}
-    `) as unknown as TypedDocumentString<PessoasQuery, PessoasQueryVariables>;

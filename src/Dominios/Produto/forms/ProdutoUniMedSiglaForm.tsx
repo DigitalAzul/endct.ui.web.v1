@@ -37,7 +37,7 @@ export function ProdutoUniMedSiglaForm(props: Tprops) {
     const _form = useForm<FormProps>({
         resolver: zodResolver(ProdutoUniMedSiglaEntity),
         defaultValues: {
-            titulo: '',
+            sigla: '',
             descricao: '',
 
         }
