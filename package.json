@@ -4,9 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 3000 --host 0.0.0.0",
-    "start": "vite --port 3000",
+    "-start": "vite --port 3000",
     "build": "vite build && tsc",
-    "serve": "vite preview",
+    "-serve": "vite preview",
     "test": "vitest run",
     "codegen": "graphql-codegen"
   },

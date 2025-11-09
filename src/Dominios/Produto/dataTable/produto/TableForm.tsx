@@ -1,65 +1,16 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { Separator } from "@/components/ui/separator";
 import { OBTER_PRODUTOS_TODOS } from "@/infra/graphql/query/query_ProdutosFilters";
 import { useLazyQuery } from "@apollo/client/react";
-import { ChevronDown, GripVertical } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import type z from "zod";
 import type { ProdutoEntity } from "../../types/ProdutoEntity";
 import { GrupoAcoesProduto } from "./comuns/GrupoAcoes";
 import { ProdutoPesquisaSheet } from "./comuns/ProdutoPesquisaSheet";
 import { ProdutoTupla } from "./prdutoTupla";
 
-function menuItemHeader(props: { titulo: string | number, label: string }) {
-
-    return (
-        <div className="flex flex-col">
-            <div className={`text-[16px]  leading-relaxed ${props.titulo == 'ausente' ? 'opacity-30 lowercase line-through' : 'opacity-100 uppercase'}`}>{props.titulo} </div>
-            <div className="-translate-y-1 text-[12px] font-light uppercase leading-relaxed">{props.label}</div>
-
-        </div>
-    )
-}
-function menuItem(props: { titulo: string | number, label: string }) {
-
-    return (
-        <div className="flex flex-col gap-1">
-            <div className="text-[12px] font-light uppercase">{props.label}</div>
-            <div className="text-[16px] uppercase leading-3">{props.titulo} </div>
-
-        </div>
-    )
-}
-function menuEsquerdo() {
-
-    return (
-        <div className=" w-[40px] rounded-l-[10px] flex flex-row  justify-between ">
-
-            <div className="flex flex-col justify-around items-center translate-x-[6px]">
-                <Checkbox />
-                <ChevronDown />
-            </div>
 
 
-            <Separator orientation="vertical" />
-        </div>
-    )
-}
 
-function menuDireito() {
-
-    return (
-        <div className="w-[40px]  rounded-r-[10px] flex flex-row justify-between">
-
-
-            <Separator orientation="vertical" />
-
-            <div className="flex flex-col justify-around items-center -translate-x-[6px]">
-                <GripVertical />
-            </div>
-        </div>
-    )
-}
 
 type produtoEntity = z.infer<typeof ProdutoEntity>;
 
@@ -76,10 +27,8 @@ export function TableForm() {
     }, [])
 
 
-    const [qLinhas, setQlinha] = useState(2)
 
-    const _heigth = 120;
-    const _class = `flex flex-row justify-between min-h-[${_heigth}px] rounded-[10px] border`
+
 
     return (
 
@@ -101,12 +50,13 @@ export function TableForm() {
                                 className="L1 flex flex-wrap flex-row justify-start items-center gap-4">
 
                                 <div className="text-amber-600 font-black">
-                                    <ProdutoTupla.Item label='código' texto={a.codigo_produto} />
+                                    <ProdutoTupla.Item label='código' texto={a.codigo_produto} size="1.4rem" />
                                 </div>
 
                                 <div className="text-amber-600 font-black">
-                                    <ProdutoTupla.Item label='produto' texto={a.descricao ? a.descricao : ''} />
+                                    <ProdutoTupla.Item label='produto' texto={a.descricao ? a.descricao : ''} size="1.4rem" />
                                 </div>
+
                                 <div>
                                     <ProdutoTupla.Item label='referência' texto={a.referencia} />
                                 </div>

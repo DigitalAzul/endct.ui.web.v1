@@ -1,14 +1,14 @@
 import type { ReactNode } from "react"
 
 
-interface IProdutoTuplaItemProps {
+interface ITuplaItemProps {
     children?: ReactNode
     label: string
     texto: string
     size?: string
 }
 
-export function ProdutoTuplaItem({ label, texto, size }: IProdutoTuplaItemProps) {
+export function TuplaItem({ label, texto, size }: ITuplaItemProps) {
 
     const _classTit = size ? `text-[${size}]` : `text-[16px]`
     return (
