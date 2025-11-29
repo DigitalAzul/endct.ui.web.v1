@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/item";
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
 import { CampoLinhaForm } from '@/Dominios/comuns/components/forms/CampoLinhaForm';
-import { TopoForm } from '@/Dominios/comuns/components/forms/topoForm';
+import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
 import { CAD_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_cad_produto';
 import { useMutation } from '@apollo/client/react';
 import { useState } from 'react';
@@ -47,56 +47,56 @@ type Tprops = {
 }
 
 
-export function ProdutoForm(props: Tprops) {
+export function CADProdutoForm(props: Tprops) {
 
     const [_escala_temperatura, setEscalaTemperatura] = useState('NAO_APLICADO')
     const _callBackFunction = (a: any) => {
         setEscalaTemperatura(a)
     }
-
     const [_segundaUnidade, setSegundaUnidade] = useState(false)
     const cbSegundaUnd = () => {
         setSegundaUnidade(!_segundaUnidade)
     }
+    let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
     const { formState: { errors } } = useForm<produtoFormProps>({ mode: "onChange" })
 
     const _form = useForm<produtoFormProps>({
         resolver: zodResolver(produtoEschema),
-         defaultValues: {
-        //     produto_marcaId: string,
-        //     produto_grupoId: string,
-        //     produto_sub_grupoId: string,
-        //     sigla_unidade_primariaId: string,
-        //     fator_conversao_primaria: number,
-             ha_segunda_unidade: false,
-        //     codigo_produto: string,
-        //     licenca_anvisa_num: string,
-        //     data_validade_licenca_anvisa: Date,
-        //     referencia: string,
-        //     peso_bruto: number,
-        //     peso_liquido: number,
-        //     situacao: unknown,
-        //     classificacao: unknown,
-        //     escala_temperatura: unknown,
-        //     temp_max_conservacao: number,
-        //     temp_min_conservacao: number,
-            
-        //     fator_conversao_secundaria: number,
-        //     sigla_unidade_secundariaId: '',
-        //     codigo_ncm: string | undefined,
-        //     codigo_rms: '',
-        //     descricao: '',
-        //     descricao_tecnica: '',
-        //     observacoes: '',
-        //     imagem: '',
+        defaultValues: {
+            //     produto_marcaId: string,
+            //     produto_grupoId: string,
+            //     produto_sub_grupoId: string,
+            //     sigla_unidade_primariaId: string,
+            //     fator_conversao_primaria: number,
+            ha_segunda_unidade: false,
+            //     codigo_produto: string,
+            //     licenca_anvisa_num: string,
+            //     data_validade_licenca_anvisa: Date,
+            //     referencia: string,
+            //     peso_bruto: number,
+            //     peso_liquido: number,
+            //     situacao: unknown,
+            //     classificacao: unknown,
+            //     escala_temperatura: unknown,
+            //     temp_max_conservacao: number,
+            //     temp_min_conservacao: number,
+
+            //     fator_conversao_secundaria: number,
+            //     sigla_unidade_secundariaId: '',
+            //     codigo_ncm: string | undefined,
+            //     codigo_rms: '',
+            //     descricao: '',
+            //     descricao_tecnica: '',
+            //     observacoes: '',
+            //     imagem: '',
 
         }
     });
 
 
     const _onCancelar = (v: Tcf) => {
-        console.log(v)
+        props.callBackFunction({ exe: 'DISMISS', data: [] })
     }
     const _onResetar = () => {
         console.log('resetou')
@@ -108,6 +108,9 @@ export function ProdutoForm(props: Tprops) {
             if (!error) {
                 console.log('(data, clientOptions', data, clientOptions)
                 props.callBackFunction({ exe: 'DISMISS', data: [] })
+            }
+            if (error) {
+                errorGql = { erro: true, msg: error.message }
             }
         },
     });
@@ -134,7 +137,7 @@ export function ProdutoForm(props: Tprops) {
                             _cancela={(v: Tcf) => _onCancelar(v)}
                             _situacao={{
                                 loading: loading,
-                                errors: errors
+                                errors: errorGql
                             }}
                             acao={'cadastrando'}
                             entidade={'produto'}
@@ -174,6 +177,15 @@ export function ProdutoForm(props: Tprops) {
 
                                         <CampoColunaForm>
 
+
+                                            <div>
+                                                <InputTexto
+                                                    form={_form}
+                                                    label="referencia"
+                                                    name="referencia"
+                                                />
+                                            </div>
+
                                             <div>
                                                 <InputTextarea
                                                     form={_form}
@@ -184,13 +196,6 @@ export function ProdutoForm(props: Tprops) {
                                                 />
                                             </div>
 
-                                            <div>
-                                                <InputTexto
-                                                    form={_form}
-                                                    label="referencia"
-                                                    name="referencia"
-                                                />
-                                            </div>
 
                                             <div>
                                                 <InputTextarea
@@ -455,7 +460,7 @@ export function ProdutoForm(props: Tprops) {
                                                     name="temp_max_conservacao"
                                                     placeholder='36,5'
                                                     desabilitado={_escala_temperatura == 'NAO_APLICADO'}
-                                                    
+
                                                 />
                                             </div>
 
@@ -466,7 +471,7 @@ export function ProdutoForm(props: Tprops) {
                                                     name="temp_min_conservacao"
                                                     placeholder='36,5'
                                                     desabilitado={_escala_temperatura == 'NAO_APLICADO'}
-                                                    
+
                                                 />
                                             </div>
 

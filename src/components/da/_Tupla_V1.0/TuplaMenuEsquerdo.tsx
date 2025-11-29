@@ -1,5 +1,4 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { Separator } from "@/components/ui/separator";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState, type ElementType } from "react";
 
@@ -9,7 +8,7 @@ interface ITuplaMenuEsquerdoProps {
     expandidoFn?: () => void;
 }
 
-export function TuplaMenuEsquerdo({ expandidoFn = () => { } }: ITuplaMenuEsquerdoProps) {
+export function TuplaMenuEsquerdo({ icon: Icon, expandidoFn = () => { } }: ITuplaMenuEsquerdoProps) {
 
     const [espandido, setExpadido] = useState(false)
 
@@ -19,7 +18,7 @@ export function TuplaMenuEsquerdo({ expandidoFn = () => { } }: ITuplaMenuEsquerd
     }
 
     return (
-        <div className=" w-[60px] h-[70px] rounded-l-[10px] flex flex-row  justify-between px-2 ">
+        <div className=" w-[60px] h-[150px] rounded-l-[10px] flex flex-row  justify-between px-2 ">
 
             <div className="flex flex-col justify-around items-center">
                 <Checkbox />
@@ -36,7 +35,7 @@ export function TuplaMenuEsquerdo({ expandidoFn = () => { } }: ITuplaMenuEsquerd
                 </div>
 
             </div>
-            <Separator orientation="vertical" />
+
 
 
         </div>

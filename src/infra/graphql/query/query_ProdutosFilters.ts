@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const OBTER_PRODUTOS_TODOS = gql(`
-query Produto_Todos {
+query Produtos {
   Produtos {
     _id
     _criado_em
@@ -17,7 +17,6 @@ query Produto_Todos {
     fator_conversao_primaria
     ha_segunda_unidade
     codigo_produto
-    descricao
     licenca_anvisa_num
     data_validade_licenca_anvisa
     referencia
@@ -27,9 +26,15 @@ query Produto_Todos {
     classificacao
     escala_temperatura
     sigla_unidade_secundariaId
+    fator_conversao_secundaria
+    codigo_ncm
+    codigo_rms
+    descricao
+    descricao_tecnica
+    observacoes
+    imagem
     temp_max_conservacao
     temp_min_conservacao
   }
 }
-
 `);

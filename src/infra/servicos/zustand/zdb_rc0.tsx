@@ -1,4 +1,3 @@
-import type { IRotas } from '@/Dominios/comuns/types/Formularios';
 import { ulid } from "ulid";
 import { create } from 'zustand';
 
@@ -7,7 +6,7 @@ import { create } from 'zustand';
 
 
 interface zIRC0 {
-    rotas: IRotas;
+    rotas: any, //IRotas;
     getRotas: () => void;
 
 }

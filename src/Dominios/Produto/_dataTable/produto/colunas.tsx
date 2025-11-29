@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ENTITY_FORMS, ENTITY_FORMS_ACAO } from "@/infra/servicos/zustand/types/eventTypes";
 
-import { zdb_RC0 } from "@/infra/servicos/zustand/zdb_rc0";
+import { zdb_RC0 } from "@/infra/servicos/zustand/zEventosForm";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowDownAZ, MoreVertical } from "lucide-react";
 import type { UsuarioEntity } from "../../formularios/usuario/types/zUsuarioEntity";

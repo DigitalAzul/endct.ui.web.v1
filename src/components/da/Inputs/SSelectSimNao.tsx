@@ -85,7 +85,6 @@ export default function SSelectSimNao(props: TextInputProps) {
             render={({ field }) => {
                 field.value = value;
                 const _change = field.onChange;
-                console.log('render', value);
                 return (
                     <FormItem>
                         <FormLabel className="uppercase">{props.label} {props?.requerido ? <span className="w-1 h-1 rounded-full bg-amber-600"></span> : ''}</FormLabel>

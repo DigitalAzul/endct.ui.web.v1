@@ -1,4 +1,4 @@
-import type { TZLink } from '@/Dominios/comuns/types/Formularios';
+import { PRODUTO_FORMULARIOS, type TZLink } from '@/Dominios/comuns/types/Formularios';
 import { create } from 'zustand';
 
 
@@ -17,7 +17,7 @@ interface zIFormularios {
 export const zdb_SheetCadForm = create<zIFormularios>()((set) => ({
     formulario: {
         id: '',
-        form: 'NENHUM',
+        form: PRODUTO_FORMULARIOS.NENHUM,
         tituloJanela: '',
         titulo: '',
         subTitulo: '',
@@ -43,7 +43,7 @@ export const zdb_SheetCadForm = create<zIFormularios>()((set) => ({
             {
                 formulario: {
                     id: '',
-                    form: 'NENHUM',
+                    form: PRODUTO_FORMULARIOS.NENHUM,
                     tituloJanela: '',
                     titulo: '',
                     subTitulo: '',

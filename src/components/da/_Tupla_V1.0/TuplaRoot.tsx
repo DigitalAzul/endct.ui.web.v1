@@ -8,7 +8,7 @@ interface ITuplaRootProps {
 
 export function TuplaRoot({ children }: ITuplaRootProps) {
     return (
-        <div className="w-full flex flex-row justify-between xmin-h-[100px] rounded-[10px] border">
+        <div className="flex flex-row justify-between min-h-[120px] rounded-[10px] border">
             {children}
         </div>
     )

@@ -10,7 +10,7 @@ import {
   SheetTitle
 } from "@/components/da/shadcn/sheet"
 import type { Tcf } from '@/Dominios/comuns/types/crudFormEnum'
-import { ProdutoForm } from '@/Dominios/Produto/forms/ProdutoForm'
+import { ProdutoForm } from '@/Dominios/Produto/forms/CAD.ProdutoForm'
 import { ProdutoGrupoForm } from '@/Dominios/Produto/forms/ProdutoGrupoForm'
 import { ProdutoMarcaForm } from '@/Dominios/Produto/forms/ProdutoMarcaForm'
 import { ProdutoUniMedidaForm } from '@/Dominios/Produto/forms/ProdutoUniMedidaForm'
@@ -25,15 +25,14 @@ export const Route = createFileRoute('/')({
   component: App,
 })
 
+
 function App() {
+
 
   const { formulario, fecharFormulario, canalCadForms } = zdb_SheetCadForm()
 
 
   const [abreSheetForm, setAbreSheetForm] = useState(false);
-
-
-  //const { loading, error, data } = useQuery(OBTER_GRUPO_PRODUTOS);
 
 
 
