@@ -386,7 +386,7 @@ export function CADProdutoForm(props: Tprops) {
                                                 <SSelectGruposProduto
                                                     form={_form}
                                                     label="Grupo do produto"
-                                                    name="produto_grupoId"
+                                                    name="grupoId"
                                                 />
                                             </div>
                                             <div className='w-[47%]'>

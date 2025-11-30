@@ -1,6 +1,6 @@
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/da/shadcn/sheet";
 import type { Tcf } from "@/Dominios/comuns/types/crudFormEnum";
-import { ProdutoForm } from "@/Dominios/Produto/forms/CAD.ProdutoForm";
+import { CADProdutoForm } from "@/Dominios/Produto/forms/CAD.ProdutoForm";
 import { ProdutoGrupoForm } from "@/Dominios/Produto/forms/ProdutoGrupoForm";
 import { ProdutoMarcaForm } from "@/Dominios/Produto/forms/ProdutoMarcaForm";
 import { ProdutoPsqForm } from "@/Dominios/Produto/forms/ProdutoPsqForm";
@@ -37,7 +37,7 @@ export function ProdutoPesquisaSheet({ abrir }: IProdutoPesquisaSheet) {
     const i = () => {
         switch (formulario.form) {
             case 'CAD_PRODUTO':
-                return <ProdutoForm callBackFunction={(c) => _callBackFunction(c)} />
+                return <CADProdutoForm callBackFunction={(c) => _callBackFunction(c)} />
                 break;
             case 'CAD_PROD_GRUPO':
                 return <ProdutoGrupoForm callBackFunction={(c) => _callBackFunction(c)} />
