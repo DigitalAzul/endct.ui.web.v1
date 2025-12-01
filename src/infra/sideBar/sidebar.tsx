@@ -1,63 +1,43 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
     SidebarGroup,
-    SidebarGroupContent,
     SidebarGroupLabel,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarMenuSub,
+    SidebarMenuSubButton,
+    SidebarMenuSubItem
 } from "@/components/ui/sidebar"
 import type { IGrupoRota, TZLink } from "@/Dominios/comuns/types/Formularios"
-import { ChevronDown, Circle } from "lucide-react"
-import { useEffect } from "react"
+import { Link } from "@tanstack/react-router"
+import { BadgeCheck, ChevronDown, ChevronRight, ChevronsUpDown, LogOut, SunMoon } from "lucide-react"
+import { useEffect, useRef } from "react"
 import { zdb_RC0 } from "../servicos/zustand/zdb_rc0"
-import { zdb_SheetCadForm } from "../servicos/zustand/zdb_SheetCadForm"
+import { useTheme } from "../tema/theme-provider"
 
-const items = [
-    {
-        formulario: "CAD_PRODUTO",
-        titulo: "Produtos",
-        url: "#",
-        icon: Circle,
-    },
-    {
-        formulario: "CAD_PRODUTO",
-        titulo: "Inbox",
-        url: "#",
-        icon: Circle,
-    },
-    {
-        formulario: "CAD_PRODUTO",
-        titulo: "Calendar",
-        url: "#",
-        icon: Circle,
-    },
-    {
-        formulario: "CAD_PRODUTO",
-        titulo: "Search",
-        url: "#",
-        icon: Circle,
-    },
-    {
-        formulario: "CAD_PRODUTO",
-        titulo: "Settings",
-        url: "#",
-        icon: Circle,
-    },
-]
 
 
 
 export function AppSidebar() {
 
-
+    const { setTheme, theme } = useTheme()
     const { getRotas, rotas } = zdb_RC0()
 
-    const { abrirFormulario, pingCanalCadForms } = zdb_SheetCadForm()
+    const isMobile = useRef(false)
+    const usuarioCorrente = useRef({
+        avatar: 'pnome',
+        pnome: 'pnome',
+        email: 'Email@email.com',
+
+    })
 
     useEffect(() => {
         const i = async () => {
@@ -66,19 +46,17 @@ export function AppSidebar() {
         i()
 
     }, [])
-    function _AbrirFormulario(form: string) {
 
-        rotas.grupos.map((r: IGrupoRota) => {
-            const _r = r.links.find((i: TZLink) => i.form == form)
-            pingCanalCadForms()
-            if (_r) abrirFormulario(_r)
-        })
-        // const f = rotas.find((i: IRotas) => i.grupo.links.form == form)
-        // pingCanalCadForms()
-        // if (f) abrirFormulario(f)
+
+    const _avatarFallBack = (nome: string) => {
+        const _split = nome.split(" ");
+        if (_split.length > 1) {
+
+            return _split[0].toString().slice(0, 1).toUpperCase() + _split[1].toString().slice(0, 1).toUpperCase()
+        } else {
+            return _split[0].toString().slice(0, 2).toUpperCase()
+        }
     }
-
-
 
     return (
         <Sidebar>
@@ -106,7 +84,47 @@ export function AppSidebar() {
             </SidebarHeader>
             <SidebarContent>
 
-                {rotas.grupos.map((r: IGrupoRota) => (
+
+
+                <SidebarGroup>
+                    <SidebarGroupLabel className="text-xl mb-2">Cadastros Gerais</SidebarGroupLabel>
+                    <SidebarMenu>
+                        {rotas.grupos.map((r: IGrupoRota) => (
+                            <Collapsible
+                                key={r.titulo}
+                                asChild
+                                className="group/collapsible"
+                            >
+                                <SidebarMenuItem>
+                                    <CollapsibleTrigger asChild>
+                                        <SidebarMenuButton tooltip={r.titulo}>
+                                            <span>{r.titulo}</span>
+                                            <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                                        </SidebarMenuButton>
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent>
+                                        <SidebarMenuSub>
+                                            {r.links.map((i: TZLink) => (
+                                                <SidebarMenuSubItem key={i.titulo}>
+                                                    <SidebarMenuSubButton asChild>
+                                                        <Link
+                                                            to={i.url}
+                                                        >
+                                                            {i.titulo}
+                                                        </Link>
+                                                    </SidebarMenuSubButton>
+                                                </SidebarMenuSubItem>
+                                            ))}
+                                        </SidebarMenuSub>
+                                    </CollapsibleContent>
+                                </SidebarMenuItem>
+                            </Collapsible>
+                        ))}
+                    </SidebarMenu>
+                </SidebarGroup>
+
+
+                {/* {rotas.grupos.map((r: IGrupoRota) => (
                     <SidebarGroup
                         key={r.id}
                     >
@@ -116,23 +134,110 @@ export function AppSidebar() {
                                 {r.links.map((i: TZLink) => (
                                     <SidebarMenuItem key={i.id}>
                                         <SidebarMenuButton asChild
-                                            onClick={() => _AbrirFormulario(i.form)}
+
                                         >
-                                            <p>
-                                                <span>{i.titulo}</span>
-                                            </p>
+                                            <Link
+                                                to={i.url}
+                                            >
+                                                {i.titulo}
+                                            </Link>
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
                                 ))}
                             </SidebarMenu>
                         </SidebarGroupContent>
                     </SidebarGroup>
-                ))}
+                ))} */}
 
 
                 <SidebarGroup />
             </SidebarContent>
-            <SidebarFooter />
+
+
+            <SidebarFooter>
+
+
+
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <SidebarMenuButton
+                                    size="lg"
+                                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                                >
+                                    <Avatar className="h-8 w-8 rounded-lg">
+                                        <AvatarImage src={usuarioCorrente.current?.avatar} alt={usuarioCorrente.current?.pnome} />
+                                        <AvatarFallback className="rounded-lg">{_avatarFallBack(usuarioCorrente.current?.pnome ? usuarioCorrente.current.pnome : '')}</AvatarFallback>
+                                    </Avatar>
+                                    <div className="grid flex-1 text-left text-sm leading-tight">
+                                        <span className="truncate font-medium">{usuarioCorrente.current?.pnome}</span>
+                                        <span className="truncate text-xs">{usuarioCorrente.current?.email}</span>
+                                    </div>
+                                    <ChevronsUpDown className="ml-auto size-4" />
+                                </SidebarMenuButton>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+                                side={isMobile ? "bottom" : "top"}
+                                align="end"
+                                sideOffset={4}
+                            >
+                                <DropdownMenuLabel className="p-0 font-normal">
+                                    <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                                        <Avatar className="h-8 w-8 rounded-lg">
+                                            <AvatarImage src={usuarioCorrente.current?.avatar} alt={usuarioCorrente.current?.pnome} />
+                                            <AvatarFallback className="rounded-lg">{_avatarFallBack(usuarioCorrente.current?.pnome ? usuarioCorrente.current.pnome : '')}</AvatarFallback>
+                                        </Avatar>
+                                        <div className="grid flex-1 text-left text-sm leading-tight">
+                                            <span className="truncate font-medium">{usuarioCorrente.current?.pnome}</span>
+                                            <span className="truncate text-xs">{usuarioCorrente.current?.email}</span>
+                                        </div>
+                                    </div>
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuGroup>
+                                    <DropdownMenuItem>
+                                        <SunMoon />
+                                        Tema: <Badge variant={"secondary"}
+                                            className={`${theme == 'dark' ? 'bg-slate-700' : 'bg-inherit'}`}
+                                            onClick={() => setTheme('dark')}
+                                        >Escuro</Badge>
+                                        <Badge variant={"secondary"}
+                                            className={`${theme == 'light' ? 'bg-slate-300' : 'bg-inherit'}`}
+                                            onClick={() => setTheme('light')}
+                                        >Claro</Badge>
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuGroup>
+                                    <DropdownMenuItem>
+                                        <BadgeCheck />
+                                        OPÇÃO 1
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <BadgeCheck />
+                                        OPÇÃO 2
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <BadgeCheck />
+                                        OPÇÃO 3
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                    onClick={() => console.log()}
+                                >
+                                    <LogOut />
+                                    Sair da Aplicação
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </SidebarMenuItem>
+                </SidebarMenu>
+            </SidebarFooter>
+
+
         </Sidebar>
     )
 }

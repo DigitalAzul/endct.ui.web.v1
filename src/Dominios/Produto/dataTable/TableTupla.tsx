@@ -8,10 +8,11 @@ import { pause } from "@/infra/lib/utils";
 import { EVENTO, FORMULARIO } from "@/infra/servicos/zustand/types/eventTypes";
 import { zEVFormSheet } from "@/infra/servicos/zustand/zEventosForm";
 import { useLazyQuery } from "@apollo/client/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type z from "zod";
 import { CADProdutoForm } from "../forms/CAD.ProdutoForm";
 import { EDTProdutoForm } from "../forms/EDT.ProdutoForm";
+import { ProdutoPsqForm } from "../forms/ProdutoPsqForm";
 import { ProdutoEntity } from "../types/ProdutoEntity";
 
 
@@ -21,7 +22,6 @@ type Entity = z.infer<typeof ProdutoEntity>;
 
 
 export function TableFormProduto() {
-    const _abreSheetForm = useRef(false);
     const { setFormSheet, formSheet } = zEVFormSheet()
     const [abreSheetForm, setAbreSheetForm] = useState(false);
 
@@ -53,9 +53,12 @@ export function TableFormProduto() {
     // ************* SHEETS ********************
 
     useEffect(() => {
-        console.log('efect')
-        FabriqueFormSheet()
-        setAbreSheetForm(true)
+        if (formSheet.acao == 'NENHUM' && formSheet.form == 'NENHUM' && formSheet.entity == null && formSheet.dados == null) {
+            return
+        } else {
+            FabriqueFormSheet()
+            setAbreSheetForm(true)
+        }
     }, [formSheet])
 
 
@@ -81,6 +84,10 @@ export function TableFormProduto() {
                 FabriqueFormSheet()
                 setAbreSheetForm(true)
                 break;
+            case 'PROD_PSQ_AVANCAO':
+                FabriqueFormSheet()
+                setAbreSheetForm(true)
+                break;
 
         }
 
@@ -90,7 +97,6 @@ export function TableFormProduto() {
             obtProdutos()
             await pause(500)
             setAbreSheetForm(false)
-            console.log(_abreSheetForm.current)
         }
     }
 
@@ -103,6 +109,10 @@ export function TableFormProduto() {
                     break;
                 case EVENTO.EDITAR:
                     return <EDTProdutoForm
+                        callBackFunction={(c) => _evCallback(c)} />
+                    break;
+                case EVENTO.FILTRAR:
+                    return <ProdutoPsqForm
                         callBackFunction={(c) => _evCallback(c)} />
                     break;
 
@@ -121,7 +131,6 @@ export function TableFormProduto() {
                     </SheetHeader>
                     <div className="h-screen">
                         {i()}
-
                     </div>
                 </SheetContent>
             </Sheet>

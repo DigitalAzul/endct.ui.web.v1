@@ -15,11 +15,11 @@ export enum PRODUTO_FORMULARIOS {
 
 export type TZLink = {
     id: string,
-    form: PRODUTO_FORMULARIOS;
     tituloJanela: string;
     titulo: string;
     subTitulo: string;
     aberto: boolean;
+    url: string
 }
 
 export type IGrupoRota = {

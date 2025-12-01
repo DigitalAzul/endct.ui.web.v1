@@ -25,55 +25,55 @@ export const zdb_RC0 = create<zIRC0>()((set) => ({
                 grupos: [
                     {
                         id: ulid(),
-                        titulo: 'produto',
+                        titulo: 'PRODUTO ',
                         links: [
                             {
                                 id: ulid(),
-                                form: "CAD_PRODUTO",
                                 tituloJanela: 'Cadastro de Produto',
                                 titulo: 'Produto',
                                 subTitulo: '',
+                                url: '/produto/produto',
                                 aberto: false,
 
                             },
                             {
                                 id: ulid(),
-                                form: 'CAD_PROD_GRUPO',
                                 tituloJanela: 'Cadastro de Grupo de Produto',
                                 titulo: 'Grupo de Produtos',
                                 subTitulo: '',
+                                url: '/produto/grupo',
                                 aberto: false,
                             },
                             {
                                 id: ulid(),
-                                form: 'CAD_PROD_SUB_GRUPO',
                                 tituloJanela: 'Cadastro de sub Produto',
                                 titulo: 'Sub Grupo Produtos',
                                 subTitulo: '',
+                                url: '/produto/subGrupo',
                                 aberto: false,
                             },
                             {
                                 id: ulid(),
-                                form: 'CAD_PROD_MARCA',
                                 tituloJanela: 'Cadastro de Marca',
                                 titulo: 'Marcas',
                                 subTitulo: '',
                                 aberto: false,
+                                url: '/produto/marca',
                             },
                             {
                                 id: ulid(),
-                                form: 'CAD_PROD_UNI_MED',
                                 tituloJanela: 'Cadastro de Uni. Medida',
                                 titulo: 'Unidade de Medida',
                                 subTitulo: '',
                                 aberto: false,
+                                url: '/produto/unidmedida',
                             },
                             {
                                 id: ulid(),
-                                form: 'CAD_PROD_UNI_MED_SIGLA',
                                 tituloJanela: 'Cadastro de Sigla Unid.',
                                 titulo: 'Sigla Unidade',
                                 subTitulo: '',
+                                url: '/produto/usigla',
                                 aberto: false,
                             },
                         ]

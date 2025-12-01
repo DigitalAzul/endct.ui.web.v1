@@ -14,7 +14,7 @@ import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
 import { CampoLinhaForm } from '@/Dominios/comuns/components/forms/CampoLinhaForm';
-import { TopoForm } from '@/Dominios/comuns/components/forms/topoForm';
+import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
 import { useState } from 'react';
 import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
 import { ProdutoPsqAvancado } from '../types/ProdutoEntity';
@@ -33,6 +33,7 @@ export function ProdutoPsqForm(props: Tprops) {
 
     const [loading, setLoading] = useState(false)
 
+    let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
 
     const { formState: { errors }, reset } = useForm<FormProps>()
@@ -79,7 +80,7 @@ export function ProdutoPsqForm(props: Tprops) {
                             _cancela={(v: Tcf) => _onCancelar(v)}
                             _situacao={{
                                 loading: loading,
-                                errors: errors
+                                errors: errorGql
                             }}
                             acao={'produto'}
                             entidade={'pesquisa avançada de produtos'}

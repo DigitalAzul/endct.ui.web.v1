@@ -35,7 +35,8 @@ export enum FABRICANTE_EVENTOS {
 
 export enum FORMULARIO {
     "NENHUM" = "NENHUM",
-    "PRODUTO" = "PRODUTO"
+    "PRODUTO" = "PRODUTO",
+    "PROD_PSQ_AVANCAO" = "PROD_PSQ_AVANCAO"
 }
 export enum EVENTO {
     "NENHUM" = "NENHUM",
@@ -43,5 +44,6 @@ export enum EVENTO {
     "EDITAR" = "EDITAR",
     "EXCLUIR" = "EXCLUIR",
     "ATIVA" = "ATIVA",
-    "DESTATIVAR" = "DESATIVAR"
+    "DESTATIVAR" = "DESATIVAR",
+    "FILTRAR" = "FILTRAR"
 }

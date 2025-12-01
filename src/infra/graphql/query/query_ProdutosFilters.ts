@@ -11,8 +11,8 @@ query Produtos {
     _excluido_em
     _excluido_por_id
     produto_marcaId
-    produto_grupoId
-    produto_sub_grupoId
+    grupoId
+    sub_grupoId
     sigla_unidade_primariaId
     fator_conversao_primaria
     ha_segunda_unidade
@@ -35,6 +35,31 @@ query Produtos {
     imagem
     temp_max_conservacao
     temp_min_conservacao
+    grupo {
+      _id
+      titulo
+      descricao
+    }
+    subgrupo {
+      _id
+      titulo
+      descricao
+    }
+    marca {
+      _id
+      titulo
+      descricao
+    }
+    sigla_primaria {
+      _id
+      sigla
+      descricao
+    }
+    sigla_secundaria {
+      _id
+      sigla
+      descricao
+    }
   }
 }
 `);
