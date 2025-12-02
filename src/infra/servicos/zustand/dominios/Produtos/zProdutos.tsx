@@ -1,6 +1,6 @@
 //import { ulid } from "ulid";
 import { create } from 'zustand';
-import type { IMesaDominio } from '../../types/mesaDominio/interfaces';
+import { SUB_DOMINIO, type IMesaDominio } from '../../types/mesaDominio/interfaces';
 
 
 
@@ -26,7 +26,8 @@ export const zMesaDominioProduto = create<zMesaDominioProduto>()((set) => ({
     mesaCorrente: {
         index: -1,
         janela: '',
-        titulo: ''
+        titulo: '',
+        subDominio: SUB_DOMINIO.VISAO,
     },
     tituloContexto: {
         titulo: '',

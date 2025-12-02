@@ -12,7 +12,7 @@ import InputTexto from '@/components/da/Inputs/Texto';
 import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
-import { TopoForm } from '@/Dominios/comuns/components/forms/topoForm';
+import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
 import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
 
 
@@ -39,9 +39,9 @@ export type InsProdutoGrupoEntradaDto = {
 
 export function ProdutoGrupoForm(props: Tprops) {
 
+    let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
-
-    const [cadPro, { data, loading, error }] = useMutation(CAD_GRUPO_PRODUTOS, {
+    const [cadProdutoGrupo, { data, loading, error }] = useMutation(CAD_GRUPO_PRODUTOS, {
         onCompleted(data, clientOptions) {
             if (!error) {
                 console.log(data, clientOptions)
@@ -54,7 +54,6 @@ export function ProdutoGrupoForm(props: Tprops) {
 
 
 
-    const { formState: { errors } } = useForm<FormProps>()
 
     const _form = useForm<FormProps>({
         resolver: zodResolver(ProdutoGrupoArgs),
@@ -89,7 +88,7 @@ export function ProdutoGrupoForm(props: Tprops) {
     const _onSubmit: SubmitHandler<FormProps> = async (dataForm: FormProps) => {
         console.log(dataForm)
 
-        cadPro({ variables: { insProdutoGrupoDto: { ...dataForm } } })
+        cadProdutoGrupo({ variables: { insProdutoGrupoDto: { ...dataForm } } })
     }
 
 
@@ -106,7 +105,7 @@ export function ProdutoGrupoForm(props: Tprops) {
                             _cancela={(v: Tcf) => _onCancelar(v)}
                             _situacao={{
                                 loading: loading,
-                                errors: errors
+                                errors: errorGql
                             }}
                             acao={'cadastrando'}
                             entidade={'grupo de produto'}

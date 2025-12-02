@@ -7,7 +7,7 @@ import { EVENTO, FORMULARIO } from './types/eventTypes';
 
 
 
-interface IzEventosForm {
+interface IzAcoesDataTable {
 
     formSheet: {
         form: FORMULARIO,
@@ -15,13 +15,13 @@ interface IzEventosForm {
         entity: any,
         dados: any
     };
-    setFormSheet: (form: FORMULARIO, acao: EVENTO, entity: any, dados?: any) => void
+    setAcoesDataTable: (form: FORMULARIO, acao: EVENTO, entity: any, dados?: any) => void
     resetFormSheet: () => void
 
 }
 
 
-export const zEVFormSheet = create<IzEventosForm>()(
+export const zAcoesDataTable = create<IzAcoesDataTable>()(
     persist(
         (set) => ({
 
@@ -34,7 +34,7 @@ export const zEVFormSheet = create<IzEventosForm>()(
 
 
 
-            setFormSheet: (form: FORMULARIO, acao: EVENTO, entity: any, dados: any) => {
+            setAcoesDataTable: (form: FORMULARIO, acao: EVENTO, entity: any, dados: any) => {
                 set(() => ({ formSheet: { acao: acao, form: form, entity: typeof entity, dados: dados } }))
             },
             resetFormSheet: () => {

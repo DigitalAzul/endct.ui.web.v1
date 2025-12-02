@@ -36,7 +36,8 @@ export enum FABRICANTE_EVENTOS {
 export enum FORMULARIO {
     "NENHUM" = "NENHUM",
     "PRODUTO" = "PRODUTO",
-    "PROD_PSQ_AVANCAO" = "PROD_PSQ_AVANCAO"
+    "GRUPO" = "GRUPO",
+    "SUB_GRUPO" = "SUB_GRUPO",
 }
 export enum EVENTO {
     "NENHUM" = "NENHUM",

@@ -3,29 +3,30 @@ import { ButtonGroup } from "@/components/ui/button-group"
 import { Input } from "@/components/ui/input"
 import { InputGroupButton } from "@/components/ui/input-group"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { ProdutoEntity, ProdutoPsqAvancado } from "@/Dominios/Produto/types/ProdutoEntity"
+import { ProdutoPsqAvancado } from "@/Dominios/Produto/types/ProdutoEntity"
 import { EVENTO, FORMULARIO } from "@/infra/servicos/zustand/types/eventTypes"
-import { zEVFormSheet } from "@/infra/servicos/zustand/zEventosForm"
+import { zAcoesDataTable } from "@/infra/servicos/zustand/zEventosForm"
 import { PlusIcon, SearchIcon } from "lucide-react"
+import { ProdutoSubGrupoEntity } from "../../types/ProdutoSubGrupoEntity"
 
-export function GrupoAcoesProduto() {
+export function GrupoAcoesProdutoSubGrupo() {
 
-    const { setFormSheet } = zEVFormSheet()
+    const { setAcoesDataTable } = zAcoesDataTable()
 
 
-    const _novoProduto = () => {
+    const _novo = () => {
 
-        setFormSheet(
-            FORMULARIO.PRODUTO,
+        setAcoesDataTable(
+            FORMULARIO.SUB_GRUPO,
             EVENTO.CRIAR,
-            typeof ProdutoEntity,
+            typeof ProdutoSubGrupoEntity,
             null
-        )   
+        )
     }
     const _pesquisaAvancada = () => {
 
-        setFormSheet(
-            FORMULARIO.PROD_PSQ_AVANCAO,
+        setAcoesDataTable(
+            FORMULARIO.SUB_GRUPO,
             EVENTO.FILTRAR,
             typeof ProdutoPsqAvancado,
             null
@@ -33,19 +34,19 @@ export function GrupoAcoesProduto() {
 
     }
     return (
-        <div className="w-full flex flex-row justify-between items-center">
+        <div className="w-full flex md:flex-row flex-col gap-4 md:justify-between nd:items-center">
 
             <ButtonGroup>
                 <Button
-                    onClick={() => _novoProduto()}
+                    onClick={() => _novo()}
                     variant="outline" size="lg">
-                    <PlusIcon /> Cadastrar Produto
+                    <PlusIcon /> Cadastrar Sub Grupo
                 </Button>
             </ButtonGroup>
 
-            <ButtonGroup className="flex flex-row items-center">
-                <Input placeholder="Pesquisa rápida..." className="h-10" />
-                <Button variant="outline" aria-label="Search" className="h-10">
+            <ButtonGroup className="flex flex-row items-center w-full md:w-fit">
+                <Input placeholder="Pesquisa rápida..." className="h-20 md:h-10 pl-10 md:pl-4" />
+                <Button variant="outline" aria-label="Search" className="h-20 md:h-10">
                     <SearchIcon />
                 </Button>
 
@@ -55,7 +56,7 @@ export function GrupoAcoesProduto() {
                             size="icon-xs"
                             data-active={true}
                             onClick={() => _pesquisaAvancada()}
-                            variant="outline" aria-label="Search" className="h-10"
+                            variant="outline" aria-label="Search" className="h-20 md:h-10"
                         >
                             <PlusIcon />
                         </InputGroupButton>

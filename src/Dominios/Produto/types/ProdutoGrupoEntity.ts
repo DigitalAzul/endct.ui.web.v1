@@ -22,3 +22,10 @@ export const ProdutoGrupoArgs = z.object({
 
     descricao: z.string().min(1)
 })
+
+
+export const ProdutoGRupoPsqAvancado = z.object({
+    titulo: z.string().min(1),
+    descricao: z.string().min(1)
+
+})

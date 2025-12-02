@@ -7,16 +7,13 @@ import {
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TableFormProduto } from "@/Dominios/Produto/dataTable/TableTuplaProduto";
-import { TableFormGrupo } from "@/Dominios/Produto/dataTable/TableTuplaProdutoGrupo";
-import { TableFormSubGrupo } from "@/Dominios/Produto/dataTable/TableTuplaProdutoSubGrupo";
-import { TableFormProdutoVisao } from "@/Dominios/Produto/dataTable/TableTuplaProdutoVisao";
 import { zMesaDominioProduto } from '@/infra/servicos/zustand/dominios/Produtos/zProdutos';
 import { SUB_DOMINIO, type IMesaDominio } from '@/infra/servicos/zustand/types/mesaDominio/interfaces';
 import { createFileRoute } from '@tanstack/react-router';
 import { Grip, Slash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { ulid } from "ulid";
-export const Route = createFileRoute('/produto/')({
+export const Route = createFileRoute('/dominioBasico/')({
   component: RouteComponent,
 })
 
@@ -115,7 +112,7 @@ function RouteComponent() {
   const mesaDoDominioTitulo = () => {
 
     return (
-      <div className='flex md:flex-row  flex-col md:gap-10 gap-3 md:mb-0 mb-6'>
+      <div className='flex flex-row gap-10'>
         <div className='leading-relaxed'>
           <p className='text-xl font-semibold'>{tituloContexto.titulo}</p>
           <p className='text-3xl font-semibold'>{tituloContexto.subTitulo}</p>
@@ -164,16 +161,16 @@ function RouteComponent() {
     switch (mesa.subDominio) {
 
       case 'VISAO':
-        return <TableFormProdutoVisao />
+        return <div>Visão Geral</div>
         break;
       case 'PRODUTO':
         return <TableFormProduto />
         break;
       case 'GRUPO':
-        return <TableFormGrupo />
+        return <div>grupo</div>
         break;
       case 'SUBGRUPO':
-        return <TableFormSubGrupo />
+        return <div>sub grupo</div>
         break;
 
       default:

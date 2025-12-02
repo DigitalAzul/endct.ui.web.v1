@@ -10,8 +10,9 @@ import InputTexto from '@/components/da/Inputs/Texto';
 import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
-import { TopoForm } from '@/Dominios/comuns/components/forms/topoForm';
-import { useState } from 'react';
+import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
+import { CAD_SUB_GRUPO_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_cad_sub_grupo_produto';
+import { useMutation } from '@apollo/client/react';
 import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
 
 
@@ -26,11 +27,21 @@ type Tprops = {
 
 export function ProdutoSubGrupoForm(props: Tprops) {
 
-    const [loading, setLoading] = useState(false)
+    let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
 
+    const [cadProdutoSubGrupo, { data, loading, error }] = useMutation(CAD_SUB_GRUPO_PRODUTOS, {
+        onCompleted(data, clientOptions) {
+            if (!error) {
+                console.log(data, clientOptions)
+                props.callBackFunction({ exe: 'DISMISS', data: [] })
+            }
+        },
+    });
 
-    const { formState: { errors } } = useForm<FormProps>()
+    console.log(data, loading, error)
+
+
 
     const _form = useForm<FormProps>({
         resolver: zodResolver(ProdutoSubGrupoEntity),
@@ -49,7 +60,14 @@ export function ProdutoSubGrupoForm(props: Tprops) {
         console.log('resetou')
         _form.reset()
     }
-    const _onSubmit: SubmitHandler<FormProps> = (data: FormProps) => console.log(data)
+    const _onSubmit: SubmitHandler<FormProps> = (data: FormProps) => {
+
+
+        console.log(data)
+
+        cadProdutoSubGrupo({ variables: { insProdutoGrupoDto: { ...data } } })
+
+    }
 
 
     return (
@@ -65,7 +83,7 @@ export function ProdutoSubGrupoForm(props: Tprops) {
                             _cancela={(v: Tcf) => _onCancelar(v)}
                             _situacao={{
                                 loading: loading,
-                                errors: errors
+                                errors: errorGql
                             }}
                             acao={'cadastrando'}
                             entidade={'sub grupo de produto'}
