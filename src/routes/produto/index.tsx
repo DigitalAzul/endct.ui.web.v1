@@ -26,7 +26,7 @@ interface IMesas {
 }
 function RouteComponent() {
 
-  const { setMesas, mesas, setMesaCorrente, mesaCorrente } = zMesaDominioProduto()
+  const { setMesas, mesas, setMesaCorrente, mesaCorrente, setTituloContexto, tituloContexto } = zMesaDominioProduto()
 
 
   const [api, setApi] = useState<CarouselApi>()
@@ -71,6 +71,7 @@ function RouteComponent() {
   // INICIA A MESA AO CARREGAR
   useEffect(() => {
     setMesaCorrente(mesas[0])
+    setTituloContexto({ titulo: 'Contexto de', subTitulo: 'Produtos & Afins' })
   }, [mesas])
 
 
@@ -107,7 +108,6 @@ function RouteComponent() {
     setCurrent(api.selectedScrollSnap() + 1)
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap() + 1)
-      // console.log('api.selectedScrollSnap()', api.selectedScrollSnap())
     })
   }, [api])
 
@@ -117,8 +117,8 @@ function RouteComponent() {
     return (
       <div className='flex flex-row gap-10'>
         <div className='leading-relaxed'>
-          <p className='text-xl font-semibold'>Contexto de</p>
-          <p className='text-3xl font-semibold'>Produtos & Afins</p>
+          <p className='text-xl font-semibold'>{tituloContexto.titulo}</p>
+          <p className='text-3xl font-semibold'>{tituloContexto.subTitulo}</p>
         </div>
         <div className='flex flex-row items-center gap-3'>
           <Slash size={18} className="text-lime-500" />
@@ -169,7 +169,6 @@ function RouteComponent() {
         {
           mesaDoDominioTitulo()
         }
-
 
         {
           mesaDoDominioTopoAcoes()

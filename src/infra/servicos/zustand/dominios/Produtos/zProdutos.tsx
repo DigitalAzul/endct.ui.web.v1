@@ -15,6 +15,7 @@ interface zMesaDominioProduto {
     },
     setMesas: (mesas: IMesaDominio[]) => void;
     setMesaCorrente: (mesa: IMesaDominio) => void;
+    setTituloContexto: (tituloContexto: { titulo: string, subTitulo: string }) => void;
 
 }
 
@@ -39,6 +40,14 @@ export const zMesaDominioProduto = create<zMesaDominioProduto>()((set) => ({
     setMesaCorrente: (mesa: IMesaDominio) => {
         set(() => ({
             mesaCorrente: mesa
+        }))
+    },
+    setTituloContexto: (tituloContexto: { titulo: string, subTitulo: string }) => {
+        set(() => ({
+            tituloContexto: {
+                titulo: tituloContexto.titulo,
+                subTitulo: tituloContexto.subTitulo
+            },
         }))
     },
 
