@@ -146,7 +146,7 @@ export function TableFormProduto() {
 
     return (
 
-        <div className="flex flex-col border  rounded-2xl pb-10">
+        <div className="flex flex-col pb-10">
 
             <div className="flex w-full items-center p-10">
                 <GrupoAcoesProduto />
