@@ -58,8 +58,10 @@ export function AppSidebar() {
         }
     }
 
+
+
     return (
-        <Sidebar>
+        <Sidebar id="_SIDEBRAR-ID">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>

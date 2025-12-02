@@ -1,51 +1,45 @@
-import { PRODUTO_FORMULARIOS, type TZLink } from '@/Dominios/comuns/types/Formularios';
 //import { ulid } from "ulid";
 import { create } from 'zustand';
+import type { IMesaDominio } from '../../types/mesaDominio/interfaces';
 
 
 
 
 
-interface zProdutos {
-    formulario: TZLink;
-    setFormulario: (formulario: TZLink) => void;
+interface zMesaDominioProduto {
+    mesas: IMesaDominio[],
+    mesaCorrente: IMesaDominio,
+    tituloContexto: {
+        titulo: string,
+        subTitulo: string
+    },
+    setMesas: (mesas: IMesaDominio[]) => void;
+    setMesaCorrente: (mesa: IMesaDominio) => void;
+
 }
 
 
 
-export const zProdutos = create<zProdutos>()((set) => ({
-    formulario: {
-        id: '',
-        form: PRODUTO_FORMULARIOS.NENHUM,
-        tituloJanela: '',
+export const zMesaDominioProduto = create<zMesaDominioProduto>()((set) => ({
+    mesas: [],
+    mesaCorrente: {
+        index: -1,
+        janela: '',
+        titulo: ''
+    },
+    tituloContexto: {
         titulo: '',
-        subTitulo: '',
-        aberto: false,
+        subTitulo: ''
     },
-    setFormulario: (formulario) => {
-        if (formulario) {
-            set(() => ({
-                formulario: {
-                    id: formulario.id,
-                    form: formulario.form,
-                    tituloJanela: formulario.tituloJanela,
-                    titulo: formulario.titulo,
-                    subTitulo: formulario.subTitulo,
-                    aberto: true,
-                }
-            }))
-        } else {
-            set(() => ({
-                formulario: {
-                    id: '',
-                    form: PRODUTO_FORMULARIOS.NENHUM,
-                    tituloJanela: '',
-                    titulo: '',
-                    subTitulo: '',
-                    aberto: false,
-                }
-            }))
-        }
+    setMesas: (mesas: IMesaDominio[]) => {
+        set(() => ({
+            mesas: mesas
+        }))
+    },
+    setMesaCorrente: (mesa: IMesaDominio) => {
+        set(() => ({
+            mesaCorrente: mesa
+        }))
+    },
 
-    },
 }))
