@@ -12,6 +12,17 @@ export default defineConfig({
   //   exclude: ['@graphql-typed-document-node/core'],
   // },
   //plugins: [TanStackRouterVite({ autoCodeSplitting: true }), viteReact()],
+  build: {
+    // chunkSizeWarningLimit: 100,
+    rollupOptions: {
+      onwarn(warning, warn) {
+        if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
+          return;
+        }
+        warn(warning);
+      },
+    },
+  },
   plugins: [
     // Please make sure that '@tanstack/router-plugin' is passed before '@vitejs/plugin-react'
     tanstackRouter({
