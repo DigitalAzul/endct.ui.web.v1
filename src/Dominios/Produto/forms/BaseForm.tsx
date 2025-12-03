@@ -9,7 +9,7 @@ import InputTextarea from '@/components/da/Inputs/Textarea';
 import InputTexto from '@/components/da/Inputs/Texto';
 import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
+import type { crudForm, TcallBackFunction } from '../../comuns/types/crudFormEnum';
 
 import InputNumero2 from '@/components/da/Inputs/Numero2';
 import SSelectClassificacaoProduto from '@/components/da/Inputs/SSelectClassificacaoProduto';
@@ -59,7 +59,6 @@ export function BaseForm(props: Tprops) {
     }
     let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
-    const { formState: { errors } } = useForm<baseFormProps>({ mode: "onChange" })
 
     const _form = useForm<baseFormProps>({
         resolver: zodResolver(BaseEntity),
@@ -70,7 +69,7 @@ export function BaseForm(props: Tprops) {
     });
 
 
-    const _onCancelar = (v: Tcf) => {
+    const _onCancelar = () => {
         props.callBackFunction({ exe: 'DISMISS', data: [] })
     }
     const _onResetar = () => {
@@ -110,7 +109,7 @@ export function BaseForm(props: Tprops) {
                         <TopoForm
                             _submit={() => _form.handleSubmit}
                             _reset={() => _onResetar()}
-                            _cancela={(v: Tcf) => _onCancelar(v)}
+                            _cancela={() => _onCancelar()}
                             _situacao={{
                                 loading: loading,
                                 errors: errorGql

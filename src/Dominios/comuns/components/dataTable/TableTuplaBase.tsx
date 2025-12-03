@@ -2,13 +2,13 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "
 import { Tupla } from "@/components/da/Tupla";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Tcf } from "@/Dominios/comuns/types/crudFormEnum";
-import { GrupoAcoesProduto } from "@/Dominios/Produto/_dataTable/produto/comuns/GrupoAcoes";
+import { GrupoAcoesProduto } from "@/Dominios/Produto/dataTable/GrupoAcoes/GrupoAcoesProduto";
 import { BaseForm } from "@/Dominios/Produto/forms/BaseForm";
 import { BaseEntity } from "@/Dominios/Produto/types/comuns/BaseEntity";
 import { OBTER_PRODUTOS_TODOS } from "@/infra/graphql/query/query_ProdutosFilters";
 import { pause } from "@/infra/lib/utils";
 import { EVENTO, FORMULARIO } from "@/infra/servicos/zustand/types/eventTypes";
-import { zEVFormSheet } from "@/infra/servicos/zustand/zEventosForm";
+import { zAcoesDataTable } from "@/infra/servicos/zustand/zEventosForm";
 import { useLazyQuery } from "@apollo/client/react";
 import { useEffect, useState } from "react";
 import type z from "zod";
@@ -21,7 +21,7 @@ type Entity = z.infer<typeof BaseEntity>;
 
 
 export function TableFormBase() {
-    const { setFormSheet, formSheet } = zEVFormSheet()
+    const { setAcoesDataTable, formSheet } = zAcoesDataTable()
     const [abreSheetForm, setAbreSheetForm] = useState(false);
 
 
@@ -42,6 +42,7 @@ export function TableFormBase() {
 
     const [obtProdutos, { loading, error, data }] = useLazyQuery<{ Produtos: Entity[] }>(OBTER_PRODUTOS_TODOS);
 
+    console.log(error)
     useEffect(() => {
         obtProdutos()
     }, [])
@@ -63,7 +64,7 @@ export function TableFormBase() {
     const _callBackAcoes = async (carga: { acao: string, dados: Entity }) => {
         switch (carga.acao) {
             case 'EDITAR':
-                setFormSheet(
+                setAcoesDataTable(
                     FORMULARIO.PRODUTO,
                     EVENTO.EDITAR,
                     typeof BaseEntity,
@@ -73,7 +74,7 @@ export function TableFormBase() {
                 setAbreSheetForm(true)
                 break;
             case 'CRIAR':
-                setFormSheet(
+                setAcoesDataTable(
                     FORMULARIO.PRODUTO,
                     EVENTO.CRIAR,
                     typeof BaseEntity,

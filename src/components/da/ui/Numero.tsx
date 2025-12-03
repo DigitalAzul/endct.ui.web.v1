@@ -34,9 +34,9 @@ export default function InputNumero(props: TextInputProps) {
         ? props.valor
         : "";
 
-    const maxLenth = props.maxLenth
-        ? props.maxLenth
-        : 254;
+    // const maxLenth = props.maxLenth
+    //     ? props.maxLenth
+    //     : 254;
 
     const [value, setValue] = useState(initialValue);
 

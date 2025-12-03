@@ -18,10 +18,7 @@ type TextInputProps = {
     desabilitado?: boolean;
     callBackFunction: (a: any) => void
 };
-type TOpcoes = {
-    value: boolean,
-    label: string
-}
+
 type _TOpcoes = {
     value: string,
     label: string
@@ -29,18 +26,6 @@ type _TOpcoes = {
 
 
 export default function SSelectSimNao(props: TextInputProps) {
-
-    const opcoes: TOpcoes[] = [
-        {
-            value: true,
-            label: 'SIM'
-        },
-        {
-            value: false,
-            label: 'NÃO'
-        },
-    ]
-
 
 
 

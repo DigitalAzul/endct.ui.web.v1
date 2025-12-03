@@ -1,7 +1,6 @@
 
 
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
 import { EVENTO, FORMULARIO } from './types/eventTypes';
 
 
@@ -22,7 +21,7 @@ interface IzAcoesDataTable {
 
 
 export const zAcoesDataTable = create<IzAcoesDataTable>()(
-    persist(
+
         (set) => ({
 
             formSheet: {
@@ -41,14 +40,7 @@ export const zAcoesDataTable = create<IzAcoesDataTable>()(
                 set(() => ({ formSheet: { acao: EVENTO.NENHUM, form: FORMULARIO.NENHUM, entity: null, dados: null } }))
             },
         }),
-        {
-            name: 'da-rc0',
-            storage: createJSONStorage(() => localStorage),
-            partialize: (state) => ({
-                // usuarioCorrente: state.usuarioCorrente,
-                // token: state.token,
-            }),
-        }
-    )
+
+
 )
 

@@ -1,14 +1,13 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
 import { GripVertical } from "lucide-react"
-import type { ElementType } from "react"
 
 
-interface ITuplaMenuDireitoProps {
-    icon?: ElementType
-}
+// interface ITuplaMenuDireitoProps {
+//     icon?: ElementType
+// }
 
-export function TuplaMenuDireito({ icon: Icon }: ITuplaMenuDireitoProps) {
+export function TuplaMenuDireito() {
 
     return (
         <div className="relative w-[40px] h-[180px] rounded-r-[10px] flex flex-row justify-between">

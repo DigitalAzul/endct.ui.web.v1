@@ -8,7 +8,7 @@ interface ITuplaMenuEsquerdoProps {
     expandidoFn?: () => void;
 }
 
-export function TuplaMenuEsquerdo({ icon: Icon, expandidoFn = () => { } }: ITuplaMenuEsquerdoProps) {
+export function TuplaMenuEsquerdo({ expandidoFn = () => { } }: ITuplaMenuEsquerdoProps) {
 
     const [espandido, setExpadido] = useState(false)
 

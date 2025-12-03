@@ -31,12 +31,13 @@ type Tprops = {
 
 export function ProdutoPsqForm(props: Tprops) {
 
-    const [loading, setLoading] = useState(false)
+    console.log('ProdutoPsqForm', props)
+
+    const [loading] = useState(false)
 
     let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
 
-    const { formState: { errors }, reset } = useForm<FormProps>()
 
     const _form = useForm<FormProps>({
         resolver: zodResolver(ProdutoPsqAvancado),
@@ -60,7 +61,6 @@ export function ProdutoPsqForm(props: Tprops) {
         console.log(v)
     }
     const _onResetar = () => {
-        reset()
         _form.reset()
         _form.setValue('classificacao', undefined)
     }

@@ -47,7 +47,7 @@ export default function InputNumeroFloat(props: TextInputProps) {
         let digits
 
         const _digits = v.replace(/\D+/, '')
-        const m = "/^(\d+)(\d{1})$/"
+        //const m = "/^(\d+)(\d{1})$/"
         switch (decimais) {
             case 1:
                 digits = _digits.replace(/^(\d+)(\d{1})$/, '$1,$2');

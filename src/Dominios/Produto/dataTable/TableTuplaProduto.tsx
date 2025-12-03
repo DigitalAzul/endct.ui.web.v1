@@ -41,7 +41,7 @@ export function TableFormProduto() {
     }
 
 
-    const [obtProdutos, { loading, error, data }] = useLazyQuery<{ Produtos: Entity[] }>(OBTER_PRODUTOS_TODOS);
+    const [obtProdutos, { loading, data }] = useLazyQuery<{ Produtos: Entity[] }>(OBTER_PRODUTOS_TODOS);
 
     useEffect(() => {
         obtProdutos()

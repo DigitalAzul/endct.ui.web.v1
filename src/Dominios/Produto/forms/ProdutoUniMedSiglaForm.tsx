@@ -12,7 +12,7 @@ import InputTexto from '@/components/da/Inputs/Texto';
 import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
-import { TopoForm } from '@/Dominios/comuns/components/forms/topoForm';
+import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
 import { useState } from 'react';
 import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
 
@@ -28,11 +28,13 @@ type Tprops = {
 
 export function ProdutoUniMedSiglaForm(props: Tprops) {
 
-    const [loading, setLoading] = useState(false)
+    console.log('ProdutoUniMedSiglaForm', props)
+
+    const [loading] = useState(false)
+    let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
 
 
-    const { formState: { errors } } = useForm<FormProps>()
 
     const _form = useForm<FormProps>({
         resolver: zodResolver(ProdutoUniMedSiglaEntity),
@@ -67,7 +69,7 @@ export function ProdutoUniMedSiglaForm(props: Tprops) {
                             _cancela={(v: Tcf) => _onCancelar(v)}
                             _situacao={{
                                 loading: loading,
-                                errors: errors
+                                errors: errorGql
                             }}
                             acao={'cadastrando'}
                             entidade={'sigla de uni. medida '}

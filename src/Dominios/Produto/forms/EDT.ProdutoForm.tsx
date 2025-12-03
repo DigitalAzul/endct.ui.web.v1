@@ -10,7 +10,7 @@ import InputTextarea from '@/components/da/Inputs/Textarea';
 import InputTexto from '@/components/da/Inputs/Texto';
 import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
+import type { crudForm, TcallBackFunction } from '../../comuns/types/crudFormEnum';
 
 import InputNumero2 from '@/components/da/Inputs/Numero2';
 import SSelectClassificacaoProduto from '@/components/da/Inputs/SSelectClassificacaoProduto';
@@ -59,7 +59,6 @@ export function EDTProdutoForm(props: Tprops) {
     }
     let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
-    const { formState: { errors } } = useForm<produtoFormProps>({ mode: "onChange" })
 
     const _form = useForm<produtoFormProps>({
         resolver: zodResolver(produtoEschema),
@@ -95,7 +94,7 @@ export function EDTProdutoForm(props: Tprops) {
     });
 
 
-    const _onCancelar = (v: Tcf) => {
+    const _onCancelar = () => {
         props.callBackFunction({ exe: 'DISMISS', data: [] })
     }
     const _onResetar = () => {
@@ -103,7 +102,7 @@ export function EDTProdutoForm(props: Tprops) {
         _form.reset()
     }
 
-    const [cadPro, { data, loading, error }] = useMutation(CAD_PRODUTOS, {
+    const [cadPro, { loading, error }] = useMutation(CAD_PRODUTOS, {
         onCompleted(data, clientOptions) {
             if (!error) {
                 console.log('(data, clientOptions', data, clientOptions)
@@ -134,7 +133,7 @@ export function EDTProdutoForm(props: Tprops) {
                         <TopoForm
                             _submit={() => _form.handleSubmit}
                             _reset={() => _onResetar()}
-                            _cancela={(v: Tcf) => _onCancelar(v)}
+                            _cancela={() => _onCancelar()}
                             _situacao={{
                                 loading: loading,
                                 errors: errorGql
