@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install y --legacy-peer-deps
+RUN npm install 
 RUN npm run build
 
 EXPOSE 65311
