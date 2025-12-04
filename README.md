@@ -293,6 +293,6 @@ You can learn more about all of the offerings from TanStack in the [TanStack doc
 # criar o volume
 # sudo docker volume create certificados
 # build
-# docker build -t da.api.delta-checklist .
+# docker build -t da.endct.ui.web.v1 .
 
-# docker run -p 65311:65311 -d --name da.api.delta-ckecklist 
+# docker run -p 65310:65310 -d --name da.endct.ui.web.v1 da.endct.ui.web.v1 
