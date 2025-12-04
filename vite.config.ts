@@ -13,15 +13,7 @@ export default defineConfig({
   // },
   //plugins: [TanStackRouterVite({ autoCodeSplitting: true }), viteReact()],
   build: {
-    // chunkSizeWarningLimit: 100,
-    rollupOptions: {
-      onwarn(warning, warn) {
-        if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
-          return;
-        }
-        warn(warning);
-      },
-    },
+    chunkSizeWarningLimit: 100,
   },
   plugins: [
     // Please make sure that '@tanstack/router-plugin' is passed before '@vitejs/plugin-react'

@@ -1,11 +1,11 @@
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import { AppSidebar } from '@/infra/sideBar/sidebar'
-import { ThemeProvider } from '@/infra/tema/theme-provider'
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client"
-import { ApolloProvider } from "@apollo/client/react"
-import { Outlet, createRootRoute } from '@tanstack/react-router'
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client/react";
 
-import { TanStackQueryProvider } from '@/providers/TanStackQueryProvider'
+
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/infra/sideBar/sidebar';
+import { ThemeProvider } from '@/infra/tema/theme-provider';
+import { Outlet, createRootRoute } from '@tanstack/react-router';
 
 
 
@@ -17,7 +17,6 @@ const client = new ApolloClient({
 export const Route = createRootRoute({
   component: () => (
     <ApolloProvider client={client}>
-      <TanStackQueryProvider>
         <ThemeProvider defaultTheme="system" storageKey="da-ui-theme">
           <SidebarProvider>
             <AppSidebar />
@@ -33,8 +32,7 @@ export const Route = createRootRoute({
               </main>
             </SidebarInset>
           </SidebarProvider>
-        </ThemeProvider>
-      </TanStackQueryProvider>
+      </ThemeProvider>
     </ApolloProvider>
   ),
 })
