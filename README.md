@@ -295,4 +295,8 @@ You can learn more about all of the offerings from TanStack in the [TanStack doc
 # build
 # docker build -t da.endct.ui.web.v1 .
 
-# docker run -p 65310:65310 -d --name da.endct.ui.web.v1 da.endct.ui.web.v1 
+# docker run --network ip6net -p 65310:65310 -d --name da.endct.ui.web.v1 da.endct.ui.web.v1 
+
+# docker run -it da.endct.ui.web.v1 /bin/sh
+
+# docker run --network ip6net  -p 65311:65311 -d --name da.endct.api.web.v1 da.endct.api.web.v1
