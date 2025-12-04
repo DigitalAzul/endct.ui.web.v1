@@ -288,3 +288,11 @@ Files prefixed with `demo` can be safely deleted. They are there to provide a st
 # Learn More
 
 You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
+
+
+# criar o volume
+# sudo docker volume create certificados
+# build
+# docker build -t da.api.delta-checklist .
+
+# docker run -p 65311:65311 -d --name da.api.delta-ckecklist 

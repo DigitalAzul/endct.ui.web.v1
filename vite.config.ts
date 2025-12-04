@@ -35,6 +35,13 @@ export default defineConfig({
     },
   },
   server: {
+    port: 65310,
+    strictPort: true,
+    host: true,
+    origin: "http://0.0.0.0:65310",
+    allowedHosts: [
+      '*',
+    ],
     proxy: {
       '/graphql': {
         target: 'http://localhost:65311/graphql/',
