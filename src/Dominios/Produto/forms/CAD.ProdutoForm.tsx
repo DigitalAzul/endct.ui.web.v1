@@ -392,7 +392,7 @@ export function CADProdutoForm(props: Tprops) {
                                                 <SSelectSubGruposProduto
                                                     form={_form}
                                                     label="Sub Grupo do produto"
-                                                    name="produto_sub_grupoId"
+                                                    name="sub_grupoId"
                                                     requerido
                                                 />
 

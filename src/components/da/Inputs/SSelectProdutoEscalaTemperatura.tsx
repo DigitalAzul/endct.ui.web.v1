@@ -54,6 +54,7 @@ export default function SSelectProdutoEscalaTemperatura(props: TextInputProps) {
 
     useEffect(() => {
         setValue(initialValue);
+        console.log('escala de temperatura', initialValue);
     }, [initialValue]);
 
 
@@ -74,13 +75,13 @@ export default function SSelectProdutoEscalaTemperatura(props: TextInputProps) {
                         <FormControl>
 
                             <Select
-
                                 onValueChange={(v) => {
                                     setValue(v)
                                     _change(v)
                                     props.callBackFunction(v)
                                 }
-                                }
+                            }
+                                defaultValue={value}
 
                             >
                                 <SelectTrigger className="w-full">

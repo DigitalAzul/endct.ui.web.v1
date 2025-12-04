@@ -2,6 +2,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "
 import { Tupla } from "@/components/da/Tupla";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Tcf } from "@/Dominios/comuns/types/crudFormEnum";
+import type { TGrupoDeAcoesCBProps } from "@/Dominios/comuns/types/grupoDeAcoesTableTupla";
 import { OBTER_PRODUTOS_TODOS } from "@/infra/graphql/query/query_ProdutosFilters";
 import { pause } from "@/infra/lib/utils";
 import { EVENTO, FORMULARIO } from "@/infra/servicos/zustand/types/eventTypes";
@@ -41,7 +42,7 @@ export function TableFormProduto() {
     }
 
 
-    const [obtProdutos, { loading, data }] = useLazyQuery<{ Produtos: Entity[] }>(OBTER_PRODUTOS_TODOS);
+    const [obtProdutos, { loading, data, refetch }] = useLazyQuery<{ Produtos: Entity[] }>(OBTER_PRODUTOS_TODOS);
 
     useEffect(() => {
         obtProdutos()
@@ -49,17 +50,9 @@ export function TableFormProduto() {
 
 
 
-    // ************* SHEETS ********************
 
-    useEffect(() => {
-        if (formSheet.acao == 'NENHUM' && formSheet.form == 'NENHUM' && formSheet.entity == null && formSheet.dados == null) {
-            return
-        } else {
-            FabriqueFormSheet()
-            setAbreSheetForm(true)
-        }
-    }, [formSheet])
 
+    // ************* CALLBACKS ********************
 
     const _callBackAcoes = async (carga: { acao: string, dados: Entity }) => {
         switch (carga.acao) {
@@ -91,31 +84,51 @@ export function TableFormProduto() {
         }
 
     };
-    const _evCallback = async (c: Tcf) => {
+    const _evCallbackForms = async (c: Tcf) => {
         if (c.exe == 'DISMISS') {
-            obtProdutos()
+            refetch()
             await pause(500)
             setAbreSheetForm(false)
         }
     }
 
+    const callbackGrupoAcoes = (a: TGrupoDeAcoesCBProps) => {
+        if (a.exe == 'RECARREGAR') refetch()
+
+    }
+    // ************* CALLBACKS ********************
+
+
+
+    // ************* SHEETS ********************
+
+    useEffect(() => {
+        if (formSheet.acao == 'NENHUM' && formSheet.form == 'NENHUM' && formSheet.entity == null && formSheet.dados == null) {
+            return
+        } else {
+            FabriqueFormSheet()
+            setAbreSheetForm(true)
+        }
+    }, [formSheet])
+
     const FabriqueFormSheet = () => {
 
         if (formSheet.form != "PRODUTO") return
-        console.log(formSheet.form, formSheet.form)
+        console.log('formSheet', formSheet)
         const i = () => {
             switch (formSheet.acao) {
                 case EVENTO.CRIAR:
                     return <CADProdutoForm
-                        callBackFunction={(c) => _evCallback(c)} />
+                        callBackFunction={(c) => _evCallbackForms(c)} />
                     break;
                 case EVENTO.EDITAR:
                     return <EDTProdutoForm
-                        callBackFunction={(c) => _evCallback(c)} />
+                        dataForm={formSheet.dados}
+                        callBackFunction={(c) => _evCallbackForms(c)} />
                     break;
                 case EVENTO.FILTRAR:
                     return <ProdutoPsqForm
-                        callBackFunction={(c) => _evCallback(c)} />
+                        callBackFunction={(c) => _evCallbackForms(c)} />
                     break;
 
                 default:
@@ -146,12 +159,14 @@ export function TableFormProduto() {
 
 
 
+
+
     return (
 
         <div className="flex flex-col pb-10">
 
             <div className="flex w-full items-center p-10">
-                <GrupoAcoesProduto />
+                <GrupoAcoesProduto callBackFunction={(a) => callbackGrupoAcoes(a)} trabalhando={loading} />
             </div>
 
             {loading ?

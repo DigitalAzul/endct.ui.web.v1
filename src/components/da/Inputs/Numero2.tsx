@@ -42,7 +42,6 @@ export default function InputNumero2(props: TextInputProps) {
 
         if (v) {
 
-            console.log(Intl.NumberFormat('en-US', { maximumFractionDigits: 2, }).format(Number(v)));
             const _v = Intl.NumberFormat('en-US', { maximumFractionDigits: 2, }).format(Number(v))
             setValue(parseFloat(_v))
             realChangeFn(parseFloat(_v));

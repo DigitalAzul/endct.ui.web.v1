@@ -3,12 +3,18 @@ import { ButtonGroup } from "@/components/ui/button-group"
 import { Input } from "@/components/ui/input"
 import { InputGroupButton } from "@/components/ui/input-group"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import type { TGrupoDeAcoesCB } from "@/Dominios/comuns/types/grupoDeAcoesTableTupla"
 import { ProdutoEntity, ProdutoPsqAvancado } from "@/Dominios/Produto/types/ProdutoEntity"
 import { EVENTO, FORMULARIO } from "@/infra/servicos/zustand/types/eventTypes"
 import { zAcoesDataTable } from "@/infra/servicos/zustand/zEventosForm"
-import { PlusIcon, SearchIcon } from "lucide-react"
+import { PlusIcon, RefreshCcw, SearchIcon } from "lucide-react"
 
-export function GrupoAcoesProduto() {
+
+interface Iprops {
+    callBackFunction: TGrupoDeAcoesCB,
+    trabalhando?: boolean
+}
+export function GrupoAcoesProduto(props: Iprops) {
 
     const { setAcoesDataTable } = zAcoesDataTable()
 
@@ -30,6 +36,9 @@ export function GrupoAcoesProduto() {
             typeof ProdutoPsqAvancado,
             null
         )
+    }
+    const _atualizarLista = () => {
+        props.callBackFunction({ exe: 'RECARREGAR' })
 
     }
     return (
@@ -39,7 +48,12 @@ export function GrupoAcoesProduto() {
                 <Button
                     onClick={() => _novoProduto()}
                     variant="outline" size="lg">
-                    <PlusIcon /> Cadastrar Produto
+                    <PlusIcon className="mr-2" /> Cadastrar Produto
+                </Button>
+                <Button
+                    onClick={() => _atualizarLista()}
+                    variant="outline" size="lg">
+                    <RefreshCcw className={`ml-2 ${props.trabalhando ? 'animate-spin' : 'animate-none'}`} /> Atualizar Lista
                 </Button>
             </ButtonGroup>
 

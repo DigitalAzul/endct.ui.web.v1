@@ -1,7 +1,6 @@
 
 import { z } from 'zod';
-import { ESCALA_TEMRATURA_ENUM } from './ProdutoTypesComuns';
-import { PRODUTO_CLASSIFICACAO_ENUN, SITUACAO_PRODUTO } from './comuns/produto.enum';
+import { ESCALA_TEMRATURA_ENUM, PRODUTO_CLASSIFICACAO_ENUN, SITUACAO_PRODUTO } from './ProdutoTypesComuns';
 
 
 
@@ -14,7 +13,7 @@ export const produtoEschema = z.object({
     grupoId: z.string(),
 
 
-    produto_sub_grupoId: z.string(),
+    sub_grupoId: z.string(),
 
 
     sigla_unidade_primariaId: z.string(),
@@ -72,16 +71,17 @@ export const produtoEschema = z.object({
     descricao_tecnica: z.string().optional(),
 
 
-    observacoes: z.string().optional(),
+    observacoes: z.string().optional().nullable(),
 
 
-    imagem: z.string().optional(),
+    imagem: z.string().optional().nullable(),
 
 
-    temp_max_conservacao: z.float64(),
+    temp_max_conservacao: z.float64().nullable(),
 
 
-    temp_min_conservacao: z.float64(),
+    temp_min_conservacao: z.float64().nullable()
+
 
 
 
@@ -172,16 +172,16 @@ export const ProdutoEntity = z.object({
     descricao_tecnica: z.string().optional(),
 
 
-    observacoes: z.string().optional(),
+    observacoes: z.string().optional().nullable(),
 
 
-    imagem: z.string().optional(),
+    imagem: z.string().optional().nullable(),
 
 
-    temp_max_conservacao: z.float64(),
+    temp_max_conservacao: z.float64().nullable(),
 
 
-    temp_min_conservacao: z.float64(),
+    temp_min_conservacao: z.float64().nullable()
 })
 
 

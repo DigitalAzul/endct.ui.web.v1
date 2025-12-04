@@ -30,9 +30,10 @@ import {
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
 import { CampoLinhaForm } from '@/Dominios/comuns/components/forms/CampoLinhaForm';
 import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
-import { CAD_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_cad_produto';
+import { EDT_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_edt_produto';
 import { useMutation } from '@apollo/client/react';
 import { useState } from 'react';
+import { ESCALA_TEMRATURA_ENUM } from '../types/ProdutoTypesComuns';
 
 
 
@@ -42,16 +43,17 @@ type produtoFormProps = z.infer<typeof produtoEschema>;
 type Tprops = {
     create?: crudForm,
     callBackFunction: TcallBackFunction,
-    dataForm?: produtoFormProps | null
+    dataForm: produtoFormProps
 
 }
 
 
 export function EDTProdutoForm(props: Tprops) {
 
-    const [_escala_temperatura, setEscalaTemperatura] = useState('NAO_APLICADO')
+    const [_escala_temperatura, setEscalaTemperatura] = useState(props.dataForm.escala_temperatura.toString())
     const _callBackFunction = (a: any) => {
         setEscalaTemperatura(a)
+        fabricaconservacao()
     }
     const [_segundaUnidade, setSegundaUnidade] = useState(false)
     const cbSegundaUnd = () => {
@@ -59,40 +61,100 @@ export function EDTProdutoForm(props: Tprops) {
     }
     let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
+    // formState: { dirtyFields },
+
 
     const _form = useForm<produtoFormProps>({
         resolver: zodResolver(produtoEschema),
         defaultValues: {
-            // produto_marcaId: props.dataForm.produto_marcaId,
-            // produto_grupoId: props.dataForm.,
-            // produto_sub_grupoId: props.dataForm.,
-            // sigla_unidade_primariaId: props.dataForm.,
-            // fator_conversao_primaria: number,
-            // ha_segunda_unidade: false,
-            // codigo_produto: props.dataForm.,
-            // licenca_anvisa_num: props.dataForm.,
-            // data_validade_licenca_anvisa: Date,
-            // referencia: props.dataForm.,
-            // peso_bruto: number,
-            // peso_liquido: number,
-            // situacao: unknown,
-            // classificacao: unknown,
-            // escala_temperatura: unknown,
-            // temp_max_conservacao: number,
-            // temp_min_conservacao: number,
+            produto_marcaId: props.dataForm.produto_marcaId,
+            grupoId: props.dataForm.grupoId,
+            sub_grupoId: props.dataForm.sub_grupoId,
+            sigla_unidade_primariaId: props.dataForm.sigla_unidade_primariaId,
+            fator_conversao_primaria: props.dataForm.fator_conversao_primaria,
+            fator_conversao_secundaria: props.dataForm.fator_conversao_secundaria,
+            ha_segunda_unidade: props.dataForm.ha_segunda_unidade,
+            codigo_produto: props.dataForm.codigo_produto,
+            licenca_anvisa_num: props.dataForm.licenca_anvisa_num,
+            data_validade_licenca_anvisa: new Date(props.dataForm.data_validade_licenca_anvisa),
+            referencia: props.dataForm.referencia,
+            peso_bruto: props.dataForm.peso_bruto,
+            peso_liquido: props.dataForm.peso_liquido,
+            situacao: props.dataForm.situacao,
+            classificacao: props.dataForm.classificacao,
+            escala_temperatura: props.dataForm.escala_temperatura,
+            temp_max_conservacao: props.dataForm.temp_max_conservacao,
+            temp_min_conservacao: props.dataForm.temp_min_conservacao,
 
-            // fator_conversao_secundaria: number,
-            // sigla_unidade_secundariaId: '',
-            // codigo_ncm: props.dataForm. | undefined,
-            // codigo_rms: '',
-            // descricao: '',
-            // descricao_tecnica: '',
-            // observacoes: '',
-            // imagem: '',
-
-        }
+            sigla_unidade_secundariaId: props.dataForm.sigla_unidade_primariaId,
+            codigo_ncm: props.dataForm.codigo_ncm,
+            codigo_rms: props.dataForm.codigo_rms,
+            descricao: props.dataForm.descricao,
+            descricao_tecnica: props.dataForm.descricao_tecnica,
+            observacoes: props.dataForm.observacoes,
+            imagem: props.dataForm.imagem,
+        },
+        mode: 'all'
     });
 
+
+
+
+
+
+    // *******************  FABRICA *************************
+
+    const fabricaconservacao = () => {
+
+
+        return (
+            <>
+                <CampoLinhaForm>
+                    <div className='w-[47%]'>
+                        <SSelectProdutoEscalaTemperatura
+                            form={_form}
+                            label="escala de temperatura"
+                            name="escala_temperatura"
+                            callBackFunction={(a: any) => _callBackFunction(a)}
+                        />
+                    </div>
+                </CampoLinhaForm>
+
+
+                <CampoLinhaForm>
+
+                    <div className='w-[47%]'>
+                        <InputNumero2
+                            form={_form}
+                            label={`temp max. ( ${_escala_temperatura} )`}
+                            name="temp_max_conservacao"
+                            placeholder='36,5'
+                            desabilitado={_escala_temperatura == 'NAO_APLICADO'}
+
+                        />
+                    </div>
+
+                    <div className='w-[47%]'>
+                        <InputNumero2
+                            form={_form}
+                            label={`temp min. ( ${_escala_temperatura} )`}
+                            name="temp_min_conservacao"
+                            placeholder='36,5'
+                            desabilitado={_escala_temperatura == 'NAO_APLICADO'}
+
+                        />
+                    </div>
+
+                </CampoLinhaForm>
+            </>
+        )
+    }
+    // *******************  FABRICA *************************
+
+
+    // const alterado = _form.watch()
+    console.log(_form.formState.dirtyFields)
+    const alt = _form.formState.dirtyFields
 
     const _onCancelar = () => {
         props.callBackFunction({ exe: 'DISMISS', data: [] })
@@ -102,7 +164,7 @@ export function EDTProdutoForm(props: Tprops) {
         _form.reset()
     }
 
-    const [cadPro, { loading, error }] = useMutation(CAD_PRODUTOS, {
+    const [edtPro, { loading, error }] = useMutation(EDT_PRODUTOS, {
         onCompleted(data, clientOptions) {
             if (!error) {
                 console.log('(data, clientOptions', data, clientOptions)
@@ -115,9 +177,28 @@ export function EDTProdutoForm(props: Tprops) {
     });
 
 
-    const _onSubmit: SubmitHandler<produtoFormProps> = (dataForm: produtoFormProps) => {
 
-        cadPro({ variables: { insProdutoEntraDto: { ...dataForm } } })
+
+
+    const _onSubmit: SubmitHandler<produtoFormProps> = (dataForm: any) => {
+
+        const changedData = Object.keys(alt).reduce((acc, key) => {
+            if (alt[key]) {
+                acc[key] = dataForm[key];
+            }
+            return acc;
+        }, {} as Partial<any>);
+        return
+
+        if (dataForm.escala_temperatura == ESCALA_TEMRATURA_ENUM.NAO_APLICADO) {
+            dataForm.temp_max_conservacao = null
+            dataForm.temp_min_conservacao = null
+        }
+    //         const {id, ...dto} = dataForm;
+    // id: $produtoEdicaoId, updateProdutoInput: $updateProdutoInput 
+
+
+        edtPro({ variables: { insProdutoEntraDto: { id: '', ...dataForm } } })
 
 
     }
@@ -387,14 +468,14 @@ export function EDTProdutoForm(props: Tprops) {
                                                 <SSelectGruposProduto
                                                     form={_form}
                                                     label="Grupo do produto"
-                                                    name="produto_grupoId"
+                                                    name="grupoId"
                                                 />
                                             </div>
                                             <div className='w-[47%]'>
                                                 <SSelectSubGruposProduto
                                                     form={_form}
                                                     label="Sub Grupo do produto"
-                                                    name="produto_sub_grupoId"
+                                                    name="sub_grupoId"
                                                     requerido
                                                 />
 
@@ -441,43 +522,10 @@ export function EDTProdutoForm(props: Tprops) {
                                         <ItemTitle className='text-2xl uppercase font-black'>conservação</ItemTitle>
 
                                         <ItemSeparator className='mt-2 mb-3' />
-                                        <CampoLinhaForm>
-                                            <div className='w-[47%]'>
-                                                <SSelectProdutoEscalaTemperatura
-                                                    form={_form}
-                                                    label="escala de temperatura"
-                                                    name="escala_temperatura"
-                                                    callBackFunction={(a: any) => _callBackFunction(a)}
-                                                />
-                                            </div>
-                                        </CampoLinhaForm>
 
-
-                                        <CampoLinhaForm>
-                                            <div className='w-[47%]'>
-                                                <InputNumero2
-                                                    form={_form}
-                                                    label={`temp max. ( ${_escala_temperatura} )`}
-                                                    name="temp_max_conservacao"
-                                                    placeholder='36,5'
-                                                    desabilitado={_escala_temperatura == 'NAO_APLICADO'}
-
-                                                />
-                                            </div>
-
-                                            <div className='w-[47%]'>
-                                                <InputNumero2
-                                                    form={_form}
-                                                    label={`temp min. ( ${_escala_temperatura} )`}
-                                                    name="temp_min_conservacao"
-                                                    placeholder='36,5'
-                                                    desabilitado={_escala_temperatura == 'NAO_APLICADO'}
-
-                                                />
-                                            </div>
-
-                                        </CampoLinhaForm>
-
+                                        {/* fabrica conservacao */}
+                                        {fabricaconservacao()}
+                                        {/* fabrica conservacao */}
 
 
                                     </ItemContent>
