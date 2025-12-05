@@ -111,10 +111,10 @@ export const ProdutoEntity = z.object({
     produto_marcaId: z.string(),
 
 
-    produto_grupoId: z.string(),
+    grupoId: z.string(),
 
 
-    produto_sub_grupoId: z.string(),
+    sub_grupoId: z.string(),
 
 
     sigla_unidade_primariaId: z.string(),

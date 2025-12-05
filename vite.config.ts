@@ -44,7 +44,8 @@ export default defineConfig({
     ],
     proxy: {
       '/graphql': {
-        target: 'http://192.168.0.40:65311/graphql/',
+        target: 'http://localhost:65311/graphql/',
+        // target: 'http://192.168.0.40:65311/graphql/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/graphql/, ''),
       },

@@ -22,6 +22,11 @@ type TProps = {
     acao: string,
     entidade: string,
     botao_submit?: string,
+    desabilitaAcao?: {
+        salvar?: boolean,
+        limpar?: boolean,
+        cancelar?: boolean
+    }
 }
 
 
@@ -53,7 +58,10 @@ export function TopoForm(props: TProps) {
                         type='submit'
                         onClick={() => props._submit}
                         variant={"ghost"}
-                        className="rounded-none    h-[30px]">{props.botao_submit ? props.botao_submit : 'SALVAR'}</Button>
+                        disabled={props.desabilitaAcao?.salvar}
+                        className="rounded-none    h-[30px]">
+                        {props.botao_submit ? props.botao_submit : 'SALVAR'}
+                    </Button>
                 </div>
                 <div className="flex flex-row">
                     <Button

@@ -2,7 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from 'zod';
-import { produtoEschema } from '../types/ProdutoEntity';
+import { ProdutoEntity } from '../types/ProdutoEntity';
 
 import Calendario from '@/components/da/Inputs/Calendario';
 import InputNumero from '@/components/da/Inputs/Numero';
@@ -31,6 +31,7 @@ import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaF
 import { CampoLinhaForm } from '@/Dominios/comuns/components/forms/CampoLinhaForm';
 import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
 import { EDT_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_edt_produto';
+import { CamposAlterados } from '@/infra/lib/utils';
 import { useMutation } from '@apollo/client/react';
 import { useState } from 'react';
 import { ESCALA_TEMRATURA_ENUM } from '../types/ProdutoTypesComuns';
@@ -39,7 +40,7 @@ import { ESCALA_TEMRATURA_ENUM } from '../types/ProdutoTypesComuns';
 
 
 
-type produtoFormProps = z.infer<typeof produtoEschema>;
+type produtoFormProps = z.infer<typeof ProdutoEntity>;
 type Tprops = {
     create?: crudForm,
     callBackFunction: TcallBackFunction,
@@ -61,12 +62,19 @@ export function EDTProdutoForm(props: Tprops) {
     }
     let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
-    // formState: { dirtyFields },
-
-
     const _form = useForm<produtoFormProps>({
-        resolver: zodResolver(produtoEschema),
+        resolver: zodResolver(ProdutoEntity),
         defaultValues: {
+            _id: props.dataForm._id,
+            _criado_em: new Date(props.dataForm._criado_em),
+            _criado_por_id: props.dataForm._criado_por_id,
+            // _atualizado_em: props.dataForm._atualizado_em,
+            // _atualizado_por_id: props.dataForm._atualizado_por_id,
+            // _excluido_em: props.dataForm._excluido_em,
+            // _excluido_por_id: props.dataForm._excluido_por_id,
+
+
+
             produto_marcaId: props.dataForm.produto_marcaId,
             grupoId: props.dataForm.grupoId,
             sub_grupoId: props.dataForm.sub_grupoId,
@@ -152,11 +160,9 @@ export function EDTProdutoForm(props: Tprops) {
     // *******************  FABRICA *************************
 
 
-    // const alterado = _form.watch()
-    console.log(_form.formState.dirtyFields)
-    const alt = _form.formState.dirtyFields
 
     const _onCancelar = () => {
+
         props.callBackFunction({ exe: 'DISMISS', data: [] })
     }
     const _onResetar = () => {
@@ -179,26 +185,22 @@ export function EDTProdutoForm(props: Tprops) {
 
 
 
+    const _camposAlterados = _form.formState.dirtyFields
+    const _onSubmit: SubmitHandler<produtoFormProps> = (dataForm: produtoFormProps) => {
 
-    const _onSubmit: SubmitHandler<produtoFormProps> = (dataForm: any) => {
+        const dto = CamposAlterados(dataForm, _camposAlterados)
 
-        const changedData = Object.keys(alt).reduce((acc, key) => {
-            if (alt[key]) {
-                acc[key] = dataForm[key];
-            }
-            return acc;
-        }, {} as Partial<any>);
-        return
+        console.log(dto)
 
+        // DEFINE VALORES NULL EM ESCALA_TEMRATURA_ENUM.NAO_APLICADO
         if (dataForm.escala_temperatura == ESCALA_TEMRATURA_ENUM.NAO_APLICADO) {
             dataForm.temp_max_conservacao = null
             dataForm.temp_min_conservacao = null
         }
-    //         const {id, ...dto} = dataForm;
-    // id: $produtoEdicaoId, updateProdutoInput: $updateProdutoInput 
 
 
-        edtPro({ variables: { insProdutoEntraDto: { id: '', ...dataForm } } })
+        // edtPro({ variables: { insProdutoEntraDto: { produtoEdicaoId: props.dataForm._id, ...dto } } })
+        edtPro({ variables: { updateProdutoInput: { ...dto }, produtoEdicaoId: props.dataForm._id } })
 
 
     }
@@ -221,6 +223,9 @@ export function EDTProdutoForm(props: Tprops) {
                             }}
                             acao={'editando'}
                             entidade={'produto'}
+                            desabilitaAcao={
+                                { salvar: Object.keys(_camposAlterados).length > 0 ? false : true }
+                            }
                         />
 
 
