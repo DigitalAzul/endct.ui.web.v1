@@ -3,18 +3,15 @@ import { ButtonGroup } from "@/components/ui/button-group"
 import { Input } from "@/components/ui/input"
 import { InputGroupButton } from "@/components/ui/input-group"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import type { TGrupoDeAcoesCB } from "@/Dominios/comuns/types/grupoDeAcoesTableTupla"
+import type { IGrupoDeAcoesProps } from "@/Dominios/comuns/types/grupoDeAcoesTableTupla"
 import { ProdutoEntity, ProdutoPsqAvancado } from "@/Dominios/Produto/types/ProdutoEntity"
 import { EVENTO, FORMULARIO } from "@/infra/servicos/zustand/types/eventTypes"
 import { zAcoesDataTable } from "@/infra/servicos/zustand/zEventosForm"
 import { PlusIcon, RefreshCcw, SearchIcon } from "lucide-react"
 
 
-interface Iprops {
-    callBackFunction: TGrupoDeAcoesCB,
-    trabalhando?: boolean
-}
-export function GrupoAcoesProduto(props: Iprops) {
+
+export function GrupoAcoesProduto(props: IGrupoDeAcoesProps) {
 
     const { setAcoesDataTable } = zAcoesDataTable()
 

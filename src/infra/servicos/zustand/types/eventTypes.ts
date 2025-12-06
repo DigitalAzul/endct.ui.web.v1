@@ -38,6 +38,8 @@ export enum FORMULARIO {
     "PRODUTO" = "PRODUTO",
     "GRUPO" = "GRUPO",
     "SUB_GRUPO" = "SUB_GRUPO",
+    "SIGLA_UNIDADE" = "SIGLA_UNIDADE",
+    "MARCAS" = "MARCAS",
 }
 export enum EVENTO {
     "NENHUM" = "NENHUM",

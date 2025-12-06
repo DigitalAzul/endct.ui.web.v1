@@ -1,30 +1,30 @@
 import z from "zod";
 
 
-export const ProdutoUniMedSiglaCriar = z.object({
+export const ProdutoMarcasCriar = z.object({
 
 
-    sigla: z.string().min(3, { error: 'Campo requerido! (MIM. 3 caracteres)' }),
+    titulo: z.string().min(3, { error: 'Campo requerido! (MIM. 3 caracteres)' }),
 
     descricao: z.string(),
 
 
 })
-export const ProdutoUniMedSiglaEditar = z.object({
+export const ProdutoMarcasEditar = z.object({
     _id: z.string().optional(),
 
     descricao: z.string(),
 
-    sigla: z.string().optional().refine(val => {
+    titulo: z.string().optional().refine(val => {
         if (val !== undefined && val.length < 3) {
             return false;
         }
         return true;
-    }, { message: "Must be at least 10 if provided" })
+    }, { message: "Informação requerida!" })
 
 
 })
-export const ProdutoUniMedSiglaEntity = z.object({
+export const ProdutoMarcasEntity = z.object({
 
     _id: z.string(),
     _criado_em: z.date(),
@@ -34,7 +34,7 @@ export const ProdutoUniMedSiglaEntity = z.object({
     _excluido_em: z.date().optional(),
     _excluido_por_id: z.string().optional(),
 
-    sigla: z.string(),
+    titulo: z.string(),
 
     descricao: z.string(),
 

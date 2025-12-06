@@ -2,7 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from 'zod';
-import { ProdutoMarcaEntity } from '../types/ProdutoMarcaEntity';
+import { EDTProdutoSubGrupoArgs } from '../types/ProdutoSubGrupoEntity';
 
 
 import InputTextarea from '@/components/da/Inputs/Textarea';
@@ -11,11 +11,13 @@ import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
 import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
-import { useState } from 'react';
+import { EDT_SUB_GRUPO_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_edt_sub_grupo_produto';
+import { CamposAlterados } from '@/infra/lib/utils';
+import { useMutation } from '@apollo/client/react';
 import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
 
-
-type FormProps = z.infer<typeof ProdutoMarcaEntity>;
+const _ARGS_FORM_ = EDTProdutoSubGrupoArgs
+type FormProps = z.infer<typeof _ARGS_FORM_>;
 type Tprops = {
     create?: crudForm,
     callBackFunction: TcallBackFunction,
@@ -24,21 +26,30 @@ type Tprops = {
 }
 
 
-export function ProdutoMarcaForm(props: Tprops) {
+export function EDTProdutoSubGrupoForm(props: Tprops) {
 
-
-    console.log('ProdutoMarcaForm', props)
     let errorGql: TTopoFormErros = { erro: false, msg: '' }
-    const [loading] = useState(false)
 
+
+    const [execMutation, { data, loading, error }] = useMutation(EDT_SUB_GRUPO_PRODUTOS, {
+        onCompleted(data, clientOptions) {
+            if (!error) {
+                console.log(data, clientOptions)
+                props.callBackFunction({ exe: 'DISMISS', data: [] })
+            }
+        },
+    });
+
+    console.log(data, loading, error)
 
 
 
     const _form = useForm<FormProps>({
-        resolver: zodResolver(ProdutoMarcaEntity),
+        resolver: zodResolver(_ARGS_FORM_),
         defaultValues: {
-            titulo: '',
-            descricao: '',
+            _id: props.dataForm?._id,
+            titulo: props.dataForm?.titulo,
+            descricao: props.dataForm?.descricao,
 
         }
     });
@@ -51,7 +62,16 @@ export function ProdutoMarcaForm(props: Tprops) {
         console.log('resetou')
         _form.reset()
     }
-    const _onSubmit: SubmitHandler<FormProps> = (data: FormProps) => console.log(data)
+
+    const _camposAlterados = _form.formState.dirtyFields
+    const _onSubmit: SubmitHandler<FormProps> = (data: FormProps) => {
+
+
+        console.log(data)
+        const dto = CamposAlterados(data, _camposAlterados)
+        execMutation({ variables: { produtoSubGrupoEdicaoId: props.dataForm?._id, dados: { ...dto } } })
+
+    }
 
 
     return (
@@ -70,7 +90,10 @@ export function ProdutoMarcaForm(props: Tprops) {
                                 errors: errorGql
                             }}
                             acao={'cadastrando'}
-                            entidade={'marca de produto'}
+                            entidade={'sub grupo de produto'}
+                            desabilitaAcao={
+                                { salvar: Object.keys(_camposAlterados).length > 0 ? false : true }
+                            }
                         />
 
 

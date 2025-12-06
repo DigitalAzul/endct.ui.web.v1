@@ -2,6 +2,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "
 import { Tupla } from "@/components/da/Tupla";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Tcf } from "@/Dominios/comuns/types/crudFormEnum";
+import type { TGrupoDeAcoesCBProps } from "@/Dominios/comuns/types/grupoDeAcoesTableTupla";
 import { OBTER_PRODUTO_SUB_GRUPOS } from "@/infra/graphql/query/query_Produto_SubGrupo";
 import { pause } from "@/infra/lib/utils";
 import { EVENTO, FORMULARIO } from "@/infra/servicos/zustand/types/eventTypes";
@@ -9,7 +10,8 @@ import { zAcoesDataTable } from "@/infra/servicos/zustand/zEventosForm";
 import { useLazyQuery } from "@apollo/client/react";
 import { useEffect, useState } from "react";
 import type z from "zod";
-import { ProdutoSubGrupoForm } from "../forms/ProdutoSubGrupoForm";
+import { CADProdutoSubGrupoForm } from "../forms/CAD.ProdutoSubGrupoForm";
+import { EDTProdutoSubGrupoForm } from "../forms/EDT.ProdutoSubGrupoForm";
 import { ProdutoSubGrupoEntity } from "../types/ProdutoSubGrupoEntity";
 import { GrupoAcoesProdutoSubGrupo } from "./GrupoAcoes/GrupoAcoesProdutoSubGrupo";
 
@@ -39,7 +41,7 @@ export function TableFormSubGrupo() {
     }
 
 
-    const [obtSubGruposProduto, { loading, error, data }] = useLazyQuery<{ Produto_SubGrupos: Entity[] }>(OBTER_PRODUTO_SUB_GRUPOS);
+    const [obtSubGruposProduto, { loading, error, data, refetch }] = useLazyQuery<{ Produto_SubGrupos: Entity[] }>(OBTER_PRODUTO_SUB_GRUPOS);
 
     if (error) console.log('ERRO EM CARREGAR SUB GRUPOS', error)
 
@@ -93,7 +95,7 @@ export function TableFormSubGrupo() {
     };
     const _evCallback = async (c: Tcf) => {
         if (c.exe == 'DISMISS') {
-            obtSubGruposProduto()
+            refetch()
             await pause(500)
             setAbreSheetForm(false)
         }
@@ -106,15 +108,16 @@ export function TableFormSubGrupo() {
         const i = () => {
             switch (formSheet.acao) {
                 case EVENTO.CRIAR:
-                    return <ProdutoSubGrupoForm
+                    return <CADProdutoSubGrupoForm
                         callBackFunction={(c) => _evCallback(c)} />
                     break;
                 case EVENTO.EDITAR:
-                    return <ProdutoSubGrupoForm
+                    return <EDTProdutoSubGrupoForm
+                        dataForm={formSheet.dados}
                         callBackFunction={(c) => _evCallback(c)} />
                     break;
                 case EVENTO.FILTRAR:
-                    return <ProdutoSubGrupoForm
+                    return <CADProdutoSubGrupoForm
                         callBackFunction={(c) => _evCallback(c)} />
                     break;
 
@@ -144,14 +147,17 @@ export function TableFormSubGrupo() {
 
     // ************* SHEETS ********************
 
+    const callbackGrupoAcoes = (a: TGrupoDeAcoesCBProps) => {
+        if (a.exe == 'RECARREGAR') refetch()
 
+    }
 
     return (
 
         <div className="flex flex-col pb-10">
 
             <div className="flex w-full items-center p-10">
-                <GrupoAcoesProdutoSubGrupo />
+                <GrupoAcoesProdutoSubGrupo callBackFunction={(a) => callbackGrupoAcoes(a)} trabalhando={loading} />
             </div>
 
             {loading ?
@@ -278,7 +284,7 @@ export function TableFormSubGrupo() {
                             <Tupla.MenuDireito icon={Checkbox}
                                 acoes={
                                     [
-                                        { titulo: 'editar', descricao: 'editar', acao: 'EDITAR' },
+                                        { titulo: 'editar', descricao: 'editar', acao: EVENTO.EDITAR },
                                         { titulo: 'desativar', descricao: 'desativar', acao: EVENTO.DESTATIVAR },
 
                                     ]}

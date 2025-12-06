@@ -31,13 +31,13 @@ type produtoUniMedSiglaEntity = z.infer<typeof ProdutoUniMedSiglaEntity>;
 export default function SSelectSigla(props: TextInputProps) {
 
     const opcoes: Topcoes[] = []
-    const [obtSigla, { loading, error, data }] = useLazyQuery<{ ListarTodasSiglasUnidadeMedidaDeProduto: produtoUniMedSiglaEntity[] }>(OBTER_SIGLA_UNIDADE_MEDIDA);
+    const [obtSigla, { loading, error, data }] = useLazyQuery<{ TodasSiglasUnidadeMedidaDeProduto: produtoUniMedSiglaEntity[] }>(OBTER_SIGLA_UNIDADE_MEDIDA);
 
 
 
 
     if (data && !loading && !error) {
-        data.ListarTodasSiglasUnidadeMedidaDeProduto.map((a: produtoUniMedSiglaEntity) => {
+        data.TodasSiglasUnidadeMedidaDeProduto.map((a: produtoUniMedSiglaEntity) => {
             opcoes.push(
                 {
                     value: a._id,

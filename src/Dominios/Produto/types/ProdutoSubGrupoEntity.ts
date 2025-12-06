@@ -17,7 +17,15 @@ export const ProdutoSubGrupoEntity = z.object({
 })
 
 
-export const ProdutoSubGrupoArgs = z.object({
+export const CADProdutoSubGrupoArgs = z.object({
+
+    titulo: z.string(),
+
+    descricao: z.string(),
+})
+
+export const EDTProdutoSubGrupoArgs = z.object({
+    _id: z.string(),
 
     titulo: z.string(),
 

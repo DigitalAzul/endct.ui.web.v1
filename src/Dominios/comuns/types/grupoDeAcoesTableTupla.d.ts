@@ -6,3 +6,10 @@ interface TGrupoDeAcoesCBProps {
 };
 
 export type TGrupoDeAcoesCB = ({ exe, data }: Tcf) => any;
+
+
+
+export interface IGrupoDeAcoesProps {
+    callBackFunction: TGrupoDeAcoesCB,
+    trabalhando?: boolean
+}

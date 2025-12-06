@@ -21,6 +21,7 @@ export const ProdutoMarcaEntity = z.object({
 
 export const ProdutoMarcaArgs = z.object({
 
+    _id: z.string().optional(),
 
     titulo: z.string(),
 

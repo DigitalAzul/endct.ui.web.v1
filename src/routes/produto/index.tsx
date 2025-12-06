@@ -8,6 +8,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TableFormProduto } from "@/Dominios/Produto/dataTable/TableTuplaProduto";
 import { TableFormGrupo } from "@/Dominios/Produto/dataTable/TableTuplaProdutoGrupo";
+import { TableFormMarcas } from "@/Dominios/Produto/dataTable/TableTuplaProdutoMarcas";
+import { TableFormSiglaUnidade } from "@/Dominios/Produto/dataTable/TableTuplaProdutoSiglaUnidade";
 import { TableFormSubGrupo } from "@/Dominios/Produto/dataTable/TableTuplaProdutoSubGrupo";
 import { TableFormProdutoVisao } from "@/Dominios/Produto/dataTable/TableTuplaProdutoVisao";
 import { zMesaDominioProduto } from '@/infra/servicos/zustand/dominios/Produtos/zProdutos';
@@ -77,6 +79,18 @@ function RouteComponent() {
           janela: "Contexto de Produto/Grupo/Sub Gupo",
           index: 3,
           subDominio: SUB_DOMINIO.SUBGRUPO,
+        },
+        {
+          titulo: "SIGLAS UNIDADES",
+          janela: "Contexto de Produto/Siglas de Unidades",
+          index: 4,
+          subDominio: SUB_DOMINIO.SIGLA_UNIDADE,
+        },
+        {
+          titulo: "MARCAS",
+          janela: "Contexto de Produto/Marcas",
+          index: 5,
+          subDominio: SUB_DOMINIO.MARCAS,
         },
       ]
     )
@@ -174,6 +188,12 @@ function RouteComponent() {
         break;
       case 'SUBGRUPO':
         return <TableFormSubGrupo />
+        break;
+      case 'SIGLA_UNIDADE':
+        return <TableFormSiglaUnidade />
+        break;
+      case 'MARCAS':
+        return <TableFormMarcas />
         break;
 
       default:

@@ -3,7 +3,9 @@ export enum SUB_DOMINIO {
     "VISAO" = "VISAO",
     "PRODUTO" = "PRODUTO",
     "GRUPO" = "GRUPO",
-    "SUBGRUPO" = "SUBGRUPO"
+    "SUBGRUPO" = "SUBGRUPO",
+    "SIGLA_UNIDADE" = "SIGLA_UNIDADE",
+    "MARCAS" = "MARCAS"
 }
 
 export interface IMesaDominio {

@@ -1,10 +1,8 @@
 
-//import { graphql } from '@/infra/graphql/';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from 'zod';
-import { ProdutoGrupoArgs } from '../types/ProdutoGrupoEntity';
+import { CADProdutoSubGrupoArgs } from '../types/ProdutoSubGrupoEntity';
 
 
 import InputTextarea from '@/components/da/Inputs/Textarea';
@@ -13,14 +11,12 @@ import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
 import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
+import { CAD_SUB_GRUPO_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_cad_sub_grupo_produto';
+import { useMutation } from '@apollo/client/react';
 import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
 
 
-
-import { CAD_GRUPO_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_cad_grupo_produto';
-import { useMutation } from '@apollo/client/react';
-
-type FormProps = z.infer<typeof ProdutoGrupoArgs>;
+type FormProps = z.infer<typeof CADProdutoSubGrupoArgs>;
 type Tprops = {
     create?: crudForm,
     callBackFunction: TcallBackFunction,
@@ -28,20 +24,13 @@ type Tprops = {
 
 }
 
-export type InsProdutoGrupoEntradaDto = {
-    descricao: string,
-    titulo: string,
-}
 
-
-
-
-
-export function ProdutoGrupoForm(props: Tprops) {
+export function CADProdutoSubGrupoForm(props: Tprops) {
 
     let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
-    const [cadProdutoGrupo, { data, loading, error }] = useMutation(CAD_GRUPO_PRODUTOS, {
+
+    const [cadProdutoSubGrupo, { data, loading, error }] = useMutation(CAD_SUB_GRUPO_PRODUTOS, {
         onCompleted(data, clientOptions) {
             if (!error) {
                 console.log(data, clientOptions)
@@ -54,16 +43,14 @@ export function ProdutoGrupoForm(props: Tprops) {
 
 
 
-
     const _form = useForm<FormProps>({
-        resolver: zodResolver(ProdutoGrupoArgs),
+        resolver: zodResolver(CADProdutoSubGrupoArgs),
         defaultValues: {
             titulo: '',
             descricao: '',
 
         }
     });
-
 
 
     const _onCancelar = (v: Tcf) => {
@@ -73,22 +60,13 @@ export function ProdutoGrupoForm(props: Tprops) {
         console.log('resetou')
         _form.reset()
     }
+    const _onSubmit: SubmitHandler<FormProps> = (data: FormProps) => {
 
 
+        console.log(data)
 
+        cadProdutoSubGrupo({ variables: { inserirSubGrupoProdutoArgs: { ...data } } })
 
-
-
-
-
-
-
-
-
-    const _onSubmit: SubmitHandler<FormProps> = async (dataForm: FormProps) => {
-        console.log(dataForm)
-
-        cadProdutoGrupo({ variables: { insProdutoGrupoDto: { ...dataForm } } })
     }
 
 
@@ -108,7 +86,7 @@ export function ProdutoGrupoForm(props: Tprops) {
                                 errors: errorGql
                             }}
                             acao={'cadastrando'}
-                            entidade={'grupo de produto'}
+                            entidade={'sub grupo de produto'}
                         />
 
 

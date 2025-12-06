@@ -1,8 +1,10 @@
 
+//import { graphql } from '@/infra/graphql/';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from 'zod';
-import { ProdutoSubGrupoEntity } from '../types/ProdutoSubGrupoEntity';
+import { EDTProdutoGrupoArgs } from '../types/ProdutoGrupoEntity';
 
 
 import InputTextarea from '@/components/da/Inputs/Textarea';
@@ -11,12 +13,15 @@ import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
 import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
-import { CAD_SUB_GRUPO_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_cad_sub_grupo_produto';
-import { useMutation } from '@apollo/client/react';
 import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
 
 
-type FormProps = z.infer<typeof ProdutoSubGrupoEntity>;
+
+import { EDT_GRUPO_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_edt_grupo_produto';
+import { CamposAlterados } from '@/infra/lib/utils';
+import { useMutation } from '@apollo/client/react';
+
+type FormProps = z.infer<typeof EDTProdutoGrupoArgs>;
 type Tprops = {
     create?: crudForm,
     callBackFunction: TcallBackFunction,
@@ -24,13 +29,20 @@ type Tprops = {
 
 }
 
+export type InsProdutoGrupoEntradaDto = {
+    descricao: string,
+    titulo: string,
+}
 
-export function ProdutoSubGrupoForm(props: Tprops) {
+
+
+
+
+export function EDTProdutoGrupoForm(props: Tprops) {
 
     let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
-
-    const [cadProdutoSubGrupo, { data, loading, error }] = useMutation(CAD_SUB_GRUPO_PRODUTOS, {
+    const [exeMutation, { loading, error }] = useMutation(EDT_GRUPO_PRODUTOS, {
         onCompleted(data, clientOptions) {
             if (!error) {
                 console.log(data, clientOptions)
@@ -39,18 +51,21 @@ export function ProdutoSubGrupoForm(props: Tprops) {
         },
     });
 
-    console.log(data, loading, error)
+
+
 
 
 
     const _form = useForm<FormProps>({
-        resolver: zodResolver(ProdutoSubGrupoEntity),
+        resolver: zodResolver(EDTProdutoGrupoArgs),
         defaultValues: {
-            titulo: '',
-            descricao: '',
+            _id: props.dataForm?._id,
+            titulo: props.dataForm?.titulo,
+            descricao: props.dataForm?.descricao,
 
         }
     });
+
 
 
     const _onCancelar = (v: Tcf) => {
@@ -60,13 +75,24 @@ export function ProdutoSubGrupoForm(props: Tprops) {
         console.log('resetou')
         _form.reset()
     }
-    const _onSubmit: SubmitHandler<FormProps> = (data: FormProps) => {
 
 
-        console.log(data)
 
-        cadProdutoSubGrupo({ variables: { insProdutoGrupoDto: { ...data } } })
 
+
+
+
+
+
+
+
+    const _camposAlterados = _form.formState.dirtyFields
+    const _onSubmit: SubmitHandler<FormProps> = async (dataForm: FormProps) => {
+
+        const dto = CamposAlterados(dataForm, _camposAlterados)
+        console.log(dataForm)
+
+        exeMutation({ variables: { produtoGrupoEdicaoId: props.dataForm?._id, dados: { ...dto } } })
     }
 
 
@@ -85,8 +111,11 @@ export function ProdutoSubGrupoForm(props: Tprops) {
                                 loading: loading,
                                 errors: errorGql
                             }}
-                            acao={'cadastrando'}
-                            entidade={'sub grupo de produto'}
+                            acao={'editando'}
+                            entidade={'grupo de produto'}
+                            desabilitaAcao={
+                                { salvar: Object.keys(_camposAlterados).length > 0 ? false : true }
+                            }
                         />
 
 

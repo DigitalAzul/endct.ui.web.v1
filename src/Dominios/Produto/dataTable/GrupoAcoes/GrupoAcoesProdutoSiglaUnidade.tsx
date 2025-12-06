@@ -7,11 +7,11 @@ import type { IGrupoDeAcoesProps } from "@/Dominios/comuns/types/grupoDeAcoesTab
 import { EVENTO, FORMULARIO } from "@/infra/servicos/zustand/types/eventTypes"
 import { zAcoesDataTable } from "@/infra/servicos/zustand/zEventosForm"
 import { PlusIcon, RefreshCcw, SearchIcon } from "lucide-react"
-import { ProdutoSubGrupoEntity } from "../../types/ProdutoSubGrupoEntity"
+import { ProdutoUniMedSiglaEntity } from "../../types/ProdutoUniMedSiglaEntity"
 
 
 
-export function GrupoAcoesProdutoSubGrupo(props: IGrupoDeAcoesProps) {
+export function GrupoAcoesProdutoSiglaUnidade(props: IGrupoDeAcoesProps) {
 
     const { setAcoesDataTable } = zAcoesDataTable()
 
@@ -19,9 +19,9 @@ export function GrupoAcoesProdutoSubGrupo(props: IGrupoDeAcoesProps) {
     const _novo = () => {
 
         setAcoesDataTable(
-            FORMULARIO.SUB_GRUPO,
+            FORMULARIO.SIGLA_UNIDADE,
             EVENTO.CRIAR,
-            typeof ProdutoSubGrupoEntity,
+            typeof ProdutoUniMedSiglaEntity,
             null
         )
     }
@@ -30,7 +30,7 @@ export function GrupoAcoesProdutoSubGrupo(props: IGrupoDeAcoesProps) {
         setAcoesDataTable(
             FORMULARIO.SUB_GRUPO,
             EVENTO.FILTRAR,
-            typeof ProdutoSubGrupoEntity,
+            typeof ProdutoUniMedSiglaEntity,
             null
         )
     }
@@ -45,7 +45,7 @@ export function GrupoAcoesProdutoSubGrupo(props: IGrupoDeAcoesProps) {
                 <Button
                     onClick={() => _novo()}
                     variant="outline" size="lg">
-                    <PlusIcon /> Cadastrar Sub Grupo
+                    <PlusIcon /> Cadastrar Sigla Unidade
                 </Button>
                 <Button
                     onClick={() => _atualizarLista()}

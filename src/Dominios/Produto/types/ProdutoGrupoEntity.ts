@@ -16,6 +16,13 @@ export const ProdutoGrupoEntity = z.object({
 })
 
 
+export const EDTProdutoGrupoArgs = z.object({
+    _id: z.string(),
+    titulo: z.string().min(1),
+    descricao: z.string().min(1)
+})
+
+
 export const ProdutoGrupoArgs = z.object({
 
     titulo: z.string().min(1),

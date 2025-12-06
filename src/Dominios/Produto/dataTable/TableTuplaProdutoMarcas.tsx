@@ -3,29 +3,29 @@ import { Tupla } from "@/components/da/Tupla";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Tcf } from "@/Dominios/comuns/types/crudFormEnum";
 import type { TGrupoDeAcoesCBProps } from "@/Dominios/comuns/types/grupoDeAcoesTableTupla";
-import { OBTER_PRODUTO_GRUPOS } from "@/infra/graphql/query/query_Produto_Grupo";
+import { OBTER_PRODUTO_MARCA } from "@/infra/graphql/query/query_Produto_Marca";
 import { pause } from "@/infra/lib/utils";
 import { EVENTO, FORMULARIO } from "@/infra/servicos/zustand/types/eventTypes";
 import { zAcoesDataTable } from "@/infra/servicos/zustand/zEventosForm";
 import { useLazyQuery } from "@apollo/client/react";
 import { useEffect, useState } from "react";
 import type z from "zod";
-import { CADProdutoGrupoForm } from "../forms/CAD.ProdutoGrupoForm";
-import { EDTProdutoGrupoForm } from "../forms/EDT.ProdutoGrupoForm";
-import { ProdutoEntity } from "../types/ProdutoEntity";
-import { ProdutoGrupoEntity } from "../types/ProdutoGrupoEntity";
-import { GrupoAcoesProdutoGrupo } from "./GrupoAcoes/GrupoAcoesProdutoGrupo";
+import { CADProdutoMarcaForm } from "../forms/CAD.ProdutoMarcaForm";
+import { CADProdutoSubGrupoForm } from "../forms/CAD.ProdutoSubGrupoForm";
+import { EDTProdutoMarcaForm } from "../forms/EDT.ProdutoMarcaForm";
+import { ProdutoMarcasEntity } from "../types/ProdutoMarcasEntity";
+import { GrupoAcoesProdutoMarca } from "./GrupoAcoes/GrupoAcoesProdutoMarca";
 
 
 
 
-type Entity = z.infer<typeof ProdutoGrupoEntity>;
+type Entity = z.infer<typeof ProdutoMarcasEntity>;
 
 
-export function TableFormGrupo() {
+export function TableFormMarcas() {
     const { setAcoesDataTable, formSheet } = zAcoesDataTable()
     const [abreSheetForm, setAbreSheetForm] = useState(false);
-    const _INFOEMLOADING_ = 'Fabricando Lista de Grupos de Produto'
+    const _INFOEMLOADING_ = 'Fabricando Lista de Marcas de produtos'
 
 
     const [expande, setExpande] = useState<string[]>([])
@@ -42,12 +42,12 @@ export function TableFormGrupo() {
     }
 
 
-    const [obtGruposProduto, { loading, error, data, refetch }] = useLazyQuery<{ Produto_Grupos: Entity[] }>(OBTER_PRODUTO_GRUPOS);
+    const [execQuery, { loading, error, data, refetch }] = useLazyQuery<{ Produto_Marcas: Entity[] }>(OBTER_PRODUTO_MARCA);
 
-    if (error) console.log('ERRO EM CARREGAR GRUPOS', error)
+    if (error) console.log('ERRO EM CARREGAR SIGLAS', error)
 
     useEffect(() => {
-        obtGruposProduto()
+        execQuery()
     }, [])
 
 
@@ -65,13 +65,12 @@ export function TableFormGrupo() {
 
 
     const _callBackAcoes = async (carga: { acao: string, dados: Entity }) => {
-        console.log(carga.dados)
         switch (carga.acao) {
             case 'EDITAR':
                 setAcoesDataTable(
-                    FORMULARIO.GRUPO,
+                    FORMULARIO.MARCAS,
                     EVENTO.EDITAR,
-                    typeof ProdutoEntity,
+                    typeof ProdutoMarcasEntity,
                     carga.dados
                 )
                 FabriqueFormSheet()
@@ -79,9 +78,9 @@ export function TableFormGrupo() {
                 break;
             case 'CRIAR':
                 setAcoesDataTable(
-                    FORMULARIO.GRUPO,
+                    FORMULARIO.MARCAS,
                     EVENTO.CRIAR,
-                    typeof ProdutoEntity,
+                    typeof ProdutoMarcasEntity,
                     carga.dados
                 )
                 FabriqueFormSheet()
@@ -97,29 +96,29 @@ export function TableFormGrupo() {
     };
     const _evCallback = async (c: Tcf) => {
         if (c.exe == 'DISMISS') {
-            obtGruposProduto()
+            refetch()
             await pause(500)
             setAbreSheetForm(false)
         }
     }
 
     const FabriqueFormSheet = () => {
-        if (formSheet.form != "GRUPO") return
+        if (formSheet.form != "MARCAS") return
 
 
         const i = () => {
             switch (formSheet.acao) {
                 case EVENTO.CRIAR:
-                    return <CADProdutoGrupoForm
+                    return <CADProdutoMarcaForm
                         callBackFunction={(c) => _evCallback(c)} />
                     break;
                 case EVENTO.EDITAR:
-                    return <EDTProdutoGrupoForm
+                    return <EDTProdutoMarcaForm
                         dataForm={formSheet.dados}
                         callBackFunction={(c) => _evCallback(c)} />
                     break;
                 case EVENTO.FILTRAR:
-                    return <CADProdutoGrupoForm
+                    return <CADProdutoSubGrupoForm
                         callBackFunction={(c) => _evCallback(c)} />
                     break;
 
@@ -159,14 +158,14 @@ export function TableFormGrupo() {
         <div className="flex flex-col pb-10">
 
             <div className="flex w-full items-center p-10">
-                <GrupoAcoesProdutoGrupo callBackFunction={(a) => callbackGrupoAcoes(a)} trabalhando={loading} />
+                <GrupoAcoesProdutoMarca callBackFunction={(a) => callbackGrupoAcoes(a)} trabalhando={loading} />
             </div>
 
             {loading ?
                 <div className="grid grid-rows-1 justify-center items-center w-full h-[360px] text-4xl italic text-slate-500 animate-pulse">{_INFOEMLOADING_}</div>
                 :
                 <div className="px-10 flex flex-col gap-6 animate-in">
-                    {data && data.Produto_Grupos.map((a: any) => (
+                    {data && data.Produto_Marcas.map((a: any) => (
                         <Tupla.Root
                             key={a._id}
                         >
