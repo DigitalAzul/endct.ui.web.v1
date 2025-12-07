@@ -1,7 +1,7 @@
 import { Tupla } from "@/components/da/Tupla";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
-import { GrupoAcoesProduto } from "@/Dominios/Produto/dataTable/GrupoAcoes/GrupoAcoesProduto";
+import { GrupoAcoesProduto } from "@/Dominios/Produto/DataTable/GrupoAcoes/GrupoAcoesProduto";
 import { OBTER_PRODUTOS_TODOS } from "@/infra/graphql/query/query_ProdutosFilters";
 import { useLazyQuery } from "@apollo/client/react";
 import { useEffect, useState } from "react";
@@ -60,7 +60,7 @@ export function TableForm() {
         <div className="flex flex-col border  rounded-2xl pb-10">
 
             <div className="flex w-full items-center p-10">
-                <GrupoAcoesProduto />
+                <GrupoAcoesProduto callBackFunction={() => console.log()} />
             </div>
 
             <div className="px-10 flex flex-col gap-6">

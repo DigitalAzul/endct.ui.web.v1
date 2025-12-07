@@ -2,7 +2,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from 'zod';
-import { produtoEschema } from '../types/ProdutoEntity';
 
 import Calendario from '@/components/da/Inputs/Calendario';
 import InputNumero from '@/components/da/Inputs/Numero';
@@ -33,21 +32,22 @@ import { TopoForm, type TTopoFormErros } from '@/Dominios/_Comuns/components/for
 import { CAD_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_cad_produto';
 import { useMutation } from '@apollo/client/react';
 import { useState } from 'react';
+import { BaseEntity } from '../../_Comuns/types/BaseEntity';
 
 
 
 
 
-type produtoFormProps = z.infer<typeof produtoEschema>;
+type baseFormProps = z.infer<typeof BaseEntity>;
 type Tprops = {
     create?: crudForm,
     callBackFunction: TcallBackFunction,
-    dataForm?: produtoFormProps | null
+    dataForm?: baseFormProps | null
 
 }
 
 
-export function CADProdutoForm(props: Tprops) {
+export function BaseForm(props: Tprops) {
 
     const [_escala_temperatura, setEscalaTemperatura] = useState('NAO_APLICADO')
     const _callBackFunction = (a: any) => {
@@ -60,35 +60,10 @@ export function CADProdutoForm(props: Tprops) {
     let errorGql: TTopoFormErros = { erro: false, msg: '' }
 
 
-    const _form = useForm<produtoFormProps>({
-        resolver: zodResolver(produtoEschema),
+    const _form = useForm<baseFormProps>({
+        resolver: zodResolver(BaseEntity),
         defaultValues: {
-            //     produto_marcaId: string,
-            //     produto_grupoId: string,
-            //     produto_sub_grupoId: string,
-            //     sigla_unidade_primariaId: string,
-            //     fator_conversao_primaria: number,
-            ha_segunda_unidade: false,
-            //     codigo_produto: string,
-            //     licenca_anvisa_num: string,
-            //     data_validade_licenca_anvisa: Date,
-            //     referencia: string,
-            //     peso_bruto: number,
-            //     peso_liquido: number,
-            //     situacao: unknown,
-            //     classificacao: unknown,
-            //     escala_temperatura: unknown,
-            //     temp_max_conservacao: number,
-            //     temp_min_conservacao: number,
 
-            //     fator_conversao_secundaria: number,
-            //     sigla_unidade_secundariaId: '',
-            //     codigo_ncm: string | undefined,
-            //     codigo_rms: '',
-            //     descricao: '',
-            //     descricao_tecnica: '',
-            //     observacoes: '',
-            //     imagem: '',
 
         }
     });
@@ -102,7 +77,7 @@ export function CADProdutoForm(props: Tprops) {
         _form.reset()
     }
 
-    const [cadPro, { loading, error }] = useMutation(CAD_PRODUTOS, {
+    const [cadPro, { data, loading, error }] = useMutation(CAD_PRODUTOS, {
         onCompleted(data, clientOptions) {
             if (!error) {
                 console.log('(data, clientOptions', data, clientOptions)
@@ -113,9 +88,10 @@ export function CADProdutoForm(props: Tprops) {
             }
         },
     });
+    console.log(data)
 
 
-    const _onSubmit: SubmitHandler<produtoFormProps> = (dataForm: produtoFormProps) => {
+    const _onSubmit: SubmitHandler<baseFormProps> = (dataForm: baseFormProps) => {
 
         cadPro({ variables: { insProdutoEntraDto: { ...dataForm } } })
 
@@ -138,8 +114,8 @@ export function CADProdutoForm(props: Tprops) {
                                 loading: loading,
                                 errors: errorGql
                             }}
-                            acao={'cadastrando'}
-                            entidade={'produto'}
+                            acao={'Ação Base'}
+                            entidade={'Base'}
                         />
 
 
@@ -392,7 +368,7 @@ export function CADProdutoForm(props: Tprops) {
                                                 <SSelectSubGruposProduto
                                                     form={_form}
                                                     label="Sub Grupo do produto"
-                                                    name="sub_grupoId"
+                                                    name="produto_sub_grupoId"
                                                     requerido
                                                 />
 

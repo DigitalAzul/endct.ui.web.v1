@@ -12,11 +12,11 @@ import SSelectSubGruposProduto from '@/components/da/Inputs/SSelectSubGruposProd
 import InputTexto from '@/components/da/Inputs/Texto';
 import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
-import { CampoLinhaForm } from '@/Dominios/comuns/components/forms/CampoLinhaForm';
-import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
+import { CampoColunaForm } from '@/Dominios/_Comuns/components/forms/CampoColunaForm';
+import { CampoLinhaForm } from '@/Dominios/_Comuns/components/forms/CampoLinhaForm';
+import { TopoForm, type TTopoFormErros } from '@/Dominios/_Comuns/components/forms/topoForm';
 import { useState } from 'react';
-import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
+import type { crudForm, TcallBackFunction, Tcf } from '../../_Comuns/types/crudFormEnum';
 import { ProdutoPsqAvancado } from '../types/ProdutoEntity';
 
 

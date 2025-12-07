@@ -10,10 +10,10 @@ import InputTextarea from '@/components/da/Inputs/Textarea';
 import InputTexto from '@/components/da/Inputs/Texto';
 import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
-import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
+import { CampoColunaForm } from '@/Dominios/_Comuns/components/forms/CampoColunaForm';
+import { TopoForm, type TTopoFormErros } from '@/Dominios/_Comuns/components/forms/topoForm';
 import { useState } from 'react';
-import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
+import type { crudForm, TcallBackFunction, Tcf } from '../../_Comuns/types/crudFormEnum';
 
 
 type FormProps = z.infer<typeof ProdutoUniMedidaEntity>;

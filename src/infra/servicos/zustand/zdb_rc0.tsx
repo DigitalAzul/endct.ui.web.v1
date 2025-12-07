@@ -41,7 +41,7 @@ export const zdb_RC0 = create<zIRC0>()((set) => ({
                                 tituloJanela: 'Cadastro Pesssoas Físicas e Júridicas',
                                 titulo: 'Pessoas',
                                 subTitulo: '',
-                                url: '/pesssoas',
+                                url: '/pessoa',
                                 aberto: false,
                             },
                             {

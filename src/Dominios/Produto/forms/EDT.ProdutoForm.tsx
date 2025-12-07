@@ -10,7 +10,7 @@ import InputTextarea from '@/components/da/Inputs/Textarea';
 import InputTexto from '@/components/da/Inputs/Texto';
 import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import type { crudForm, TcallBackFunction } from '../../comuns/types/crudFormEnum';
+import type { crudForm, TcallBackFunction } from '../../_Comuns/types/crudFormEnum';
 
 import InputNumero2 from '@/components/da/Inputs/Numero2';
 import SSelectClassificacaoProduto from '@/components/da/Inputs/SSelectClassificacaoProduto';
@@ -27,9 +27,9 @@ import {
     ItemSeparator,
     ItemTitle
 } from "@/components/ui/item";
-import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
-import { CampoLinhaForm } from '@/Dominios/comuns/components/forms/CampoLinhaForm';
-import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
+import { CampoColunaForm } from '@/Dominios/_Comuns/components/forms/CampoColunaForm';
+import { CampoLinhaForm } from '@/Dominios/_Comuns/components/forms/CampoLinhaForm';
+import { TopoForm, type TTopoFormErros } from '@/Dominios/_Comuns/components/forms/topoForm';
 import { EDT_PRODUTOS } from '@/infra/graphql/mutations/DProduto/Produto/mutation_edt_produto';
 import { CamposAlterados } from '@/infra/lib/utils';
 import { useMutation } from '@apollo/client/react';

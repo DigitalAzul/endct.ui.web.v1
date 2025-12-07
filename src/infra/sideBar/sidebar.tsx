@@ -16,7 +16,7 @@ import {
     SidebarMenuSubButton,
     SidebarMenuSubItem
 } from "@/components/ui/sidebar"
-import type { IGrupoRota, TZLink } from "@/Dominios/comuns/types/Formularios"
+import type { IGrupoRota, TZLink } from "@/Dominios/_Comuns/types/Formularios"
 import { Link } from "@tanstack/react-router"
 import { BadgeCheck, ChevronDown, ChevronRight, ChevronsUpDown, LogOut, SunMoon } from "lucide-react"
 import { useEffect, useRef } from "react"

@@ -11,9 +11,9 @@ import InputTextarea from '@/components/da/Inputs/Textarea';
 import InputTexto from '@/components/da/Inputs/Texto';
 import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { CampoColunaForm } from '@/Dominios/comuns/components/forms/CampoColunaForm';
-import { TopoForm, type TTopoFormErros } from '@/Dominios/comuns/components/forms/topoForm';
-import type { crudForm, TcallBackFunction, Tcf } from '../../comuns/types/crudFormEnum';
+import { CampoColunaForm } from '@/Dominios/_Comuns/components/forms/CampoColunaForm';
+import { TopoForm, type TTopoFormErros } from '@/Dominios/_Comuns/components/forms/topoForm';
+import type { crudForm, TcallBackFunction, Tcf } from '../../_Comuns/types/crudFormEnum';
 
 
 

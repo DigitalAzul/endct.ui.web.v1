@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProdutoIndexRouteImport } from './routes/produto/index'
-import { Route as DominioBasicoIndexRouteImport } from './routes/dominioBasico/index'
+import { Route as PessoaIndexRouteImport } from './routes/pessoa/index'
 import { Route as CompraIndexRouteImport } from './routes/compra/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -24,9 +24,9 @@ const ProdutoIndexRoute = ProdutoIndexRouteImport.update({
   path: '/produto/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DominioBasicoIndexRoute = DominioBasicoIndexRouteImport.update({
-  id: '/dominioBasico/',
-  path: '/dominioBasico/',
+const PessoaIndexRoute = PessoaIndexRouteImport.update({
+  id: '/pessoa/',
+  path: '/pessoa/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompraIndexRoute = CompraIndexRouteImport.update({
@@ -38,34 +38,34 @@ const CompraIndexRoute = CompraIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/compra': typeof CompraIndexRoute
-  '/dominioBasico': typeof DominioBasicoIndexRoute
+  '/pessoa': typeof PessoaIndexRoute
   '/produto': typeof ProdutoIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/compra': typeof CompraIndexRoute
-  '/dominioBasico': typeof DominioBasicoIndexRoute
+  '/pessoa': typeof PessoaIndexRoute
   '/produto': typeof ProdutoIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/compra/': typeof CompraIndexRoute
-  '/dominioBasico/': typeof DominioBasicoIndexRoute
+  '/pessoa/': typeof PessoaIndexRoute
   '/produto/': typeof ProdutoIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/compra' | '/dominioBasico' | '/produto'
+  fullPaths: '/' | '/compra' | '/pessoa' | '/produto'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/compra' | '/dominioBasico' | '/produto'
-  id: '__root__' | '/' | '/compra/' | '/dominioBasico/' | '/produto/'
+  to: '/' | '/compra' | '/pessoa' | '/produto'
+  id: '__root__' | '/' | '/compra/' | '/pessoa/' | '/produto/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CompraIndexRoute: typeof CompraIndexRoute
-  DominioBasicoIndexRoute: typeof DominioBasicoIndexRoute
+  PessoaIndexRoute: typeof PessoaIndexRoute
   ProdutoIndexRoute: typeof ProdutoIndexRoute
 }
 
@@ -85,11 +85,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutoIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dominioBasico/': {
-      id: '/dominioBasico/'
-      path: '/dominioBasico'
-      fullPath: '/dominioBasico'
-      preLoaderRoute: typeof DominioBasicoIndexRouteImport
+    '/pessoa/': {
+      id: '/pessoa/'
+      path: '/pessoa'
+      fullPath: '/pessoa'
+      preLoaderRoute: typeof PessoaIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/compra/': {
@@ -105,7 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CompraIndexRoute: CompraIndexRoute,
-  DominioBasicoIndexRoute: DominioBasicoIndexRoute,
+  PessoaIndexRoute: PessoaIndexRoute,
   ProdutoIndexRoute: ProdutoIndexRoute,
 }
 export const routeTree = rootRouteImport
